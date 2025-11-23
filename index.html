@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fidora V2 - Circular Orbit Animation</title>
+    <meta name="description" content="Automatización WhatsApp para inmobiliarias, hoteles y restaurantes. Tu trabajador digital que nunca duerme.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="/" class="logo">FIDORA</a>
+            <div class="nav-links">
+                <a href="#real-estate">Inmobiliarias</a>
+                <a href="#hotels">Hoteles</a>
+                <a href="#restaurants">Restaurantes</a>
+                <a href="/pricing.html">Precios</a>
+                <a href="/demo.html" class="btn-nav">Ver Demo</a>
+            </div>
+            <button class="mobile-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-wrapper">
+            <!-- Left Side: Content Only -->
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>Disponible 24/7</span>
+                </div>
+                <h1 class="hero-title">
+                    Tu empleado de<br>
+                    <span class="gradient-text">WhatsApp</span><br>
+                    que nunca duerme
+                </h1>
+                <p class="hero-description">
+                    Automatiza conversaciones, gestiona reservas y cierra ventas mientras duermes. Conectado a tu calendario, CRM y sistemas.
+                </p>
+
+                <div class="hero-cta">
+                    <a href="/demo.html" class="btn-primary">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                    <a href="/pricing.html" class="btn-secondary">Ver Precios</a>
+                </div>
+            </div>
+
+            <!-- Right Side: Industry Toggles + Animation & Chat Side by Side -->
+            <div class="hero-right">
+                <!-- Industry Toggles -->
+                <div class="industry-toggles">
+                    <button class="toggle-btn active" data-industry="real-estate">
+                        <span class="toggle-icon">🏢</span>
+                        <span>Inmobiliarias</span>
+                    </button>
+                    <button class="toggle-btn" data-industry="hotels">
+                        <span class="toggle-icon">🏨</span>
+                        <span>Hoteles</span>
+                    </button>
+                    <button class="toggle-btn" data-industry="restaurants">
+                        <span class="toggle-icon">🍽️</span>
+                        <span>Restaurantes</span>
+                    </button>
+                </div>
+
+                <!-- Animation and Chat Container -->
+                <div class="right-content">
+                    <!-- Flow Animation V2: Circular Orbit -->
+                    <div class="flow-animation flow-animation-v2">
+                        <!-- Central WhatsApp Hub -->
+                        <div class="whatsapp-center">
+                            <svg width="80" height="80" viewBox="0 0 175.216 175.552" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="whatsappGradient" x1="85.915" x2="86.535" y1="32.567" y2="137.092" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0" stop-color="#57d163"/>
+                                        <stop offset="1" stop-color="#23b33a"/>
+                                    </linearGradient>
+                                </defs>
+                                <path fill="url(#whatsappGradient)" d="M87.184 25.227c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.312-6.179 22.559 23.146-6.069 2.235 1.324c9.387 5.571 20.15 8.518 31.126 8.524h.023c33.707 0 61.14-27.426 61.153-61.135a60.75 60.75 0 0 0-17.895-43.251 60.75 60.75 0 0 0-43.235-17.929z"/>
+                                <path fill="#fff" d="M68.772 55.603c-1.378-3.061-2.828-3.123-4.137-3.176l-3.524-.043c-1.226 0-3.218.46-4.902 2.3s-6.435 6.287-6.435 15.332 6.588 17.785 7.506 19.013 12.718 20.381 31.405 27.75c15.529 6.124 18.689 4.906 22.061 4.6s10.877-4.447 12.408-8.74 1.532-7.971 1.073-8.74-1.685-1.226-3.525-2.146-10.877-5.367-12.562-5.981-2.91-.919-4.137.921-4.746 5.979-5.819 7.206-2.144 1.381-3.984.462-7.76-2.861-14.784-9.124c-5.465-4.873-9.154-10.891-10.228-12.73s-.114-2.835.808-3.751c.825-.824 1.838-2.147 2.759-3.22s1.224-1.84 1.836-3.065.307-2.301-.153-3.22-4.032-10.011-5.666-13.647"/>
+                            </svg>
+                        </div>
+
+                        <!-- Orbiting Nodes -->
+                        <div class="orbit-ring">
+                            <div class="flow-node orbit-node orbit-node-1">
+                                <div class="node-icon-sm">📅</div>
+                                <span>Calendario</span>
+                            </div>
+
+                            <div class="flow-node orbit-node orbit-node-2">
+                                <div class="node-icon-sm">💼</div>
+                                <span>CRM</span>
+                            </div>
+
+                            <div class="flow-node orbit-node orbit-node-3">
+                                <div class="node-icon-sm">💳</div>
+                                <span>Pagos</span>
+                            </div>
+
+                            <div class="flow-node orbit-node orbit-node-4">
+                                <div class="node-icon-sm">✉️</div>
+                                <span>Email</span>
+                            </div>
+                        </div>
+
+                        <!-- Connection Lines -->
+                        <svg class="connection-lines" viewBox="0 0 400 400">
+                            <line class="connect-line line-1" x1="200" y1="160" x2="200" y2="55" />
+                            <line class="connect-line line-2" x1="240" y1="200" x2="345" y2="200" />
+                            <line class="connect-line line-3" x1="200" y1="240" x2="200" y2="345" />
+                            <line class="connect-line line-4" x1="160" y1="200" x2="55" y2="200" />
+                        </svg>
+
+                        <!-- Orbital Rings -->
+                        <svg class="orbit-circles" viewBox="0 0 400 400">
+                            <circle cx="200" cy="200" r="60" class="orbit-path-inner" />
+                            <circle cx="200" cy="200" r="70" class="orbit-path-inner-2" />
+                            <circle cx="200" cy="200" r="140" class="orbit-path" />
+                            <circle cx="200" cy="200" r="150" class="orbit-path-outer" />
+                        </svg>
+                    </div>
+
+                    <style>
+                        .flow-animation-v2 {
+                            position: relative;
+                            width: 100%;
+                            height: 400px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        .whatsapp-center {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            z-index: 10;
+                            pointer-events: none;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        .whatsapp-center svg {
+                            display: block;
+                        }
+
+                        .orbit-ring {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                        }
+
+                        .orbit-node {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            animation: orbit 8s linear infinite;
+                            width: 80px;
+                            height: 80px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 4px;
+                        }
+
+                        .orbit-node .node-icon-sm {
+                            font-size: 24px;
+                            width: 40px;
+                            height: 40px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+
+                        .orbit-node span {
+                            font-size: 11px;
+                            white-space: nowrap;
+                        }
+
+                        .orbit-node-1 {
+                            animation-delay: 0s;
+                        }
+
+                        .orbit-node-2 {
+                            animation-delay: -2s;
+                        }
+
+                        .orbit-node-3 {
+                            animation-delay: -4s;
+                        }
+
+                        .orbit-node-4 {
+                            animation-delay: -6s;
+                        }
+
+                        @keyframes orbit {
+                            from {
+                                transform: translate(-50%, -50%) rotate(0deg) translateX(145px) rotate(0deg);
+                            }
+                            to {
+                                transform: translate(-50%, -50%) rotate(360deg) translateX(145px) rotate(-360deg);
+                            }
+                        }
+
+                        .connection-lines {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            top: 0;
+                            left: 0;
+                            pointer-events: none;
+                            z-index: 5;
+                        }
+
+                        .connect-line {
+                            stroke: rgba(37, 211, 102, 0.3);
+                            stroke-width: 2;
+                            stroke-dasharray: 6, 6;
+                            animation: dashFlow 1.5s linear infinite;
+                        }
+
+                        .line-1 { animation-delay: 0s; }
+                        .line-2 { animation-delay: 0.375s; }
+                        .line-3 { animation-delay: 0.75s; }
+                        .line-4 { animation-delay: 1.125s; }
+
+                        @keyframes dashFlow {
+                            0% { stroke-dashoffset: 0; }
+                            100% { stroke-dashoffset: -12; }
+                        }
+
+                        .orbit-circles {
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            top: 0;
+                            left: 0;
+                            pointer-events: none;
+                        }
+
+                        .orbit-path-inner {
+                            fill: none;
+                            stroke: rgba(37, 211, 102, 0.3);
+                            stroke-width: 2;
+                            stroke-dasharray: 4, 4;
+                            animation: rotate 15s linear infinite;
+                        }
+
+                        .orbit-path-inner-2 {
+                            fill: none;
+                            stroke: rgba(37, 211, 102, 0.2);
+                            stroke-width: 1;
+                            stroke-dasharray: 3, 3;
+                            animation: rotate 18s linear infinite reverse;
+                        }
+
+                        .orbit-path {
+                            fill: none;
+                            stroke: rgba(37, 211, 102, 0.2);
+                            stroke-width: 2;
+                            stroke-dasharray: 5, 5;
+                            animation: rotate 20s linear infinite;
+                        }
+
+                        .orbit-path-outer {
+                            fill: none;
+                            stroke: rgba(37, 211, 102, 0.1);
+                            stroke-width: 1;
+                            stroke-dasharray: 3, 3;
+                            animation: rotate 30s linear infinite reverse;
+                        }
+
+                        @keyframes rotate {
+                            from { transform: rotate(0deg); }
+                            to { transform: rotate(360deg); }
+                        }
+                    </style>
+
+                    <!-- Chat Interface -->
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <div class="chat-avatar">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 2C5.58172 2 2 5.58172 2 10C2 11.8993 2.62305 13.6569 3.68862 15.0822L2.26667 18.7333L5.91778 17.3114C7.34287 18.377 9.10067 19 11 19H10C14.4183 19 18 15.4183 18 11C18 6.58172 14.4183 2 10 2Z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="chat-info">
+                                <div class="chat-name">Helen de Fidora Labs</div>
+                                <div class="chat-status">
+                                    <span class="status-dot"></span>
+                                    <span>En línea</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Real Estate Messages -->
+                        <div class="chat-messages active" data-industry="real-estate">
+                            <div class="message incoming">
+                                <div class="message-bubble">He visto que tenéis un ático en alquiler en Marbella</div>
+                                <div class="message-time">10:23</div>
+                            </div>
+                            <div class="message outgoing">
+                                <div class="message-bubble">¡Perfecto! Te envío los detalles y agendo una visita. ¿Cuándo te viene bien?</div>
+                                <div class="message-time">10:23</div>
+                            </div>
+                            <div class="message incoming">
+                                <div class="message-bubble">Mañana por la tarde</div>
+                                <div class="message-time">10:24</div>
+                            </div>
+                            <div class="message outgoing">
+                                <div class="message-bubble">✓ Visita confirmada para mañana 17:00. Te envío la ubicación</div>
+                                <div class="message-time">10:24</div>
+                            </div>
+                        </div>
+
+                        <!-- Hotels Messages -->
+                        <div class="chat-messages" data-industry="hotels">
+                            <div class="message incoming">
+                                <div class="message-bubble">Necesito una habitación doble para el 25 de diciembre</div>
+                                <div class="message-time">14:15</div>
+                            </div>
+                            <div class="message outgoing">
+                                <div class="message-bubble">Tenemos disponibilidad. Suite con vistas al mar, ¿te interesa?</div>
+                                <div class="message-time">14:15</div>
+                            </div>
+                            <div class="message incoming">
+                                <div class="message-bubble">Sí, perfecto</div>
+                                <div class="message-time">14:16</div>
+                            </div>
+                            <div class="message outgoing">
+                                <div class="message-bubble">✓ Reserva confirmada. Te envío el link de pago</div>
+                                <div class="message-time">14:16</div>
+                            </div>
+                        </div>
+
+                        <!-- Restaurants Messages -->
+                        <div class="chat-messages" data-industry="restaurants">
+                            <div class="message incoming">
+                                <div class="message-bubble">Hola, quisiera reservar una mesa para 4 personas</div>
+                                <div class="message-time">20:30</div>
+                            </div>
+                            <div class="message outgoing">
+                                <div class="message-bubble">¡Perfecto! ¿Para qué día y hora?</div>
+                                <div class="message-time">20:30</div>
+                            </div>
+                            <div class="message incoming">
+                                <div class="message-bubble">Viernes a las 21:00</div>
+                                <div class="message-time">20:31</div>
+                            </div>
+                            <div class="message outgoing">
+                                <div class="message-bubble">✓ Mesa reservada para 4 personas el viernes 21:00</div>
+                                <div class="message-time">20:31</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries Section -->
+    <section class="industries" id="como-funciona">
+        <div class="section-container">
+            <div class="section-header-minimal">
+                <h2>Especializado en tu industria</h2>
+                <p>Soluciones diseñadas específicamente para cada sector</p>
+            </div>
+
+            <div class="industries-grid">
+                <div class="industry-card" id="real-estate">
+                    <div class="industry-icon">🏢</div>
+                    <h3>Inmobiliarias</h3>
+                    <p>Califica leads, agenda visitas y cierra ventas automáticamente</p>
+                    <div class="industry-features">
+                        <span>Calificación de leads</span>
+                        <span>Agendamiento automático</span>
+                        <span>Seguimiento inteligente</span>
+                    </div>
+                </div>
+
+                <div class="industry-card" id="hotels">
+                    <div class="industry-icon">🏨</div>
+                    <h3>Hoteles</h3>
+                    <p>Gestiona reservas, check-in/out y servicios de habitación</p>
+                    <div class="industry-features">
+                        <span>Reservas 24/7</span>
+                        <span>Check-in digital</span>
+                        <span>Concierge virtual</span>
+                    </div>
+                </div>
+
+                <div class="industry-card" id="restaurants">
+                    <div class="industry-icon">🍽️</div>
+                    <h3>Restaurantes</h3>
+                    <p>Reservas, pedidos y atención al cliente sin intervención humana</p>
+                    <div class="industry-features">
+                        <span>Reservas automáticas</span>
+                        <span>Pedidos a domicilio</span>
+                        <span>Menú digital</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="section-container">
+            <div class="section-header-minimal">
+                <h2>Cómo funciona</h2>
+                <p>Tres pasos para tener tu empleado digital activo</p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <h3>Conecta tu WhatsApp</h3>
+                    <p>Vincula tu número de WhatsApp Business en menos de 2 minutos</p>
+                </div>
+
+                <div class="step-connector"></div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <h3>Configura tus flujos</h3>
+                    <p>Define cómo quieres que responda y qué acciones debe tomar</p>
+                </div>
+
+                <div class="step-connector"></div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <h3>Deja que trabaje</h3>
+                    <p>Tu asistente digital gestiona conversaciones 24/7 automáticamente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews">
+        <div class="section-container">
+            <div class="section-header-minimal">
+                <h2>Lo que dicen nuestros clientes</h2>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Fidora ha transformado completamente nuestra gestión de leads. Ahora cerramos 3x más visitas sin aumentar el equipo."</p>
+                    <div class="review-author">
+                        <div class="author-info">
+                            <div class="author-name">Carlos Martínez</div>
+                            <div class="author-role">Director, Inmobiliaria Premium</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Las reservas automáticas por WhatsApp han sido un cambio radical. Nuestros huéspedes están encantados con la rapidez."</p>
+                    <div class="review-author">
+                        <div class="author-info">
+                            <div class="author-name">Ana García</div>
+                            <div class="author-role">Gerente, Hotel Boutique Mar</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Increíble. Gestionamos 200+ reservas diarias sin intervención humana. El ROI fue inmediato."</p>
+                    <div class="review-author">
+                        <div class="author-info">
+                            <div class="author-name">Miguel Rodríguez</div>
+                            <div class="author-role">Propietario, Restaurante La Terraza</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="section-container">
+            <div class="cta-content">
+                <h2>Automatiza tu WhatsApp hoy</h2>
+                <p>Configuración en 5 minutos. Soporte dedicado incluido.</p>
+                <div class="cta-buttons">
+                    <a href="/demo.html" class="btn-primary btn-large">
+                        <span>Ver Demo</span>
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </a>
+                    <a href="/pricing.html" class="btn-secondary btn-large">Ver Precios</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">Fidora</div>
+                    <p>Tu empleado de WhatsApp que nunca duerme</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Industrias</h4>
+                        <a href="#real-estate">Inmobiliarias</a>
+                        <a href="#hotels">Hoteles</a>
+                        <a href="#restaurants">Restaurantes</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Producto</h4>
+                        <a href="/features.html">Características</a>
+                        <a href="/pricing.html">Precios</a>
+                        <a href="/demo.html">Demo</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Empresa</h4>
+                        <a href="/about.html">Sobre nosotros</a>
+                        <a href="/contact.html">Contacto</a>
+                        <a href="/blog.html">Blog</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Fidora. Todos los derechos reservados.</p>
+                <div class="footer-legal">
+                    <a href="/privacy.html">Privacidad</a>
+                    <a href="/terms.html">Términos</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
