@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fidora - Automatización WhatsApp con IA</title>
+    <title>Fidora V2 - Circular Orbit Animation</title>
     <meta name="description" content="Automatización WhatsApp para inmobiliarias, hoteles y restaurantes. Tu trabajador digital que nunca duerme.">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,17 +14,13 @@
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="#home" class="logo">
-                <div class="logo-text">FIDORA</div>
-                <div class="logo-subtext">LABS</div>
-            </a>
+            <a href="/" class="logo">FIDORA</a>
             <div class="nav-links">
                 <a href="#real-estate">Inmobiliarias</a>
                 <a href="#hotels">Hoteles</a>
                 <a href="#restaurants">Restaurantes</a>
-                <a href="#integration">Integración</a>
-                <a href="#pricing">Precios</a>
-                <a href="#contact" class="btn-nav">Contactar</a>
+                <a href="/pricing.html">Precios</a>
+                <a href="/demo.html" class="btn-nav">Ver Demo</a>
             </div>
             <button class="mobile-toggle" aria-label="Menu">
                 <span></span>
@@ -34,7 +30,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section class="hero">
         <div class="hero-wrapper">
             <!-- Left Side: Content Only -->
             <div class="hero-left">
@@ -52,13 +48,13 @@
                 </p>
 
                 <div class="hero-cta">
-                    <a href="#pricing" class="btn-primary">
-                        <span>Ver Precios</span>
+                    <a href="/demo.html" class="btn-primary">
+                        <span>Ver Demo</span>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </a>
-                    <a href="#contact" class="btn-secondary">Contactar</a>
+                    <a href="/pricing.html" class="btn-secondary">Ver Precios</a>
                 </div>
             </div>
 
@@ -67,31 +63,15 @@
                 <!-- Industry Toggles -->
                 <div class="industry-toggles">
                     <button class="toggle-btn active" data-industry="real-estate">
-                        <span class="toggle-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
-                                <path d="M3 9H21M9 3V21M15 9V21" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                        </span>
+                        <span class="toggle-icon">🏢</span>
                         <span>Inmobiliarias</span>
                     </button>
                     <button class="toggle-btn" data-industry="hotels">
-                        <span class="toggle-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3 20V8L12 3L21 8V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M9 20V14H15V20M3 20H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="12" cy="8" r="1.5" fill="currentColor"/>
-                            </svg>
-                        </span>
+                        <span class="toggle-icon">🏨</span>
                         <span>Hoteles</span>
                     </button>
                     <button class="toggle-btn" data-industry="restaurants">
-                        <span class="toggle-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16 3V8C16 9.1 16.9 10 18 10H20V21C20 21.5 19.5 22 19 22H5C4.5 22 4 21.5 4 21V3C4 2.5 4.5 2 5 2H15C15.5 2 16 2.5 16 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                                <path d="M8 7H12M8 11H12M8 15H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                        </span>
+                        <span class="toggle-icon">🍽️</span>
                         <span>Restaurantes</span>
                     </button>
                 </div>
@@ -440,310 +420,6 @@
         </div>
     </section>
 
-    <!-- Integration Section -->
-    <section class="integration" id="integration">
-        <div class="section-container">
-            <div class="section-header-minimal">
-                <h2>Integración Total con tus Sistemas</h2>
-                <p>Conecta Fidora con las herramientas que ya usas</p>
-            </div>
-
-            <div class="integration-content">
-                <div class="integration-main">
-                    <h3>Conecta tu CRM y Automatiza Todo</h3>
-                    <p>Fidora se integra perfectamente con tu CRM existente para sincronizar contactos, actualizar estados de leads y registrar todas las interacciones automáticamente.</p>
-                    
-                    <div class="integration-benefits">
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20" stroke="#5B21B6" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4" stroke="#6D28D9" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M15 9L9 15M9 9L15 15" stroke="#5B21B6" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div class="benefit-content">
-                                <h4>Sincronización Bidireccional</h4>
-                                <p>Los datos fluyen automáticamente entre WhatsApp y tu CRM en tiempo real</p>
-                            </div>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="3" y="3" width="7" height="7" rx="1" stroke="#5B21B6" stroke-width="2"/>
-                                    <rect x="3" y="14" width="7" height="7" rx="1" stroke="#5B21B6" stroke-width="2"/>
-                                    <rect x="14" y="3" width="7" height="7" rx="1" stroke="#6D28D9" stroke-width="2"/>
-                                    <rect x="14" y="14" width="7" height="7" rx="1" stroke="#6D28D9" stroke-width="2"/>
-                                    <path d="M6.5 10V14M17.5 10V14" stroke="#5B21B6" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div class="benefit-content">
-                                <h4>Actualización Automática</h4>
-                                <p>Cada conversación actualiza el estado del lead sin intervención manual</p>
-                            </div>
-                        </div>
-                        
-                        <div class="benefit-item">
-                            <div class="benefit-icon">
-                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="9" stroke="#5B21B6" stroke-width="2"/>
-                                    <circle cx="12" cy="12" r="5" stroke="#6D28D9" stroke-width="2"/>
-                                    <circle cx="12" cy="12" r="2" fill="#5B21B6"/>
-                                    <path d="M12 3V5M12 19V21M21 12H19M5 12H3" stroke="#5B21B6" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <div class="benefit-content">
-                                <h4>Segmentación Inteligente</h4>
-                                <p>Clasifica y etiqueta contactos automáticamente según sus interacciones</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="integration-platforms">
-                    <h4>Plataformas Compatibles</h4>
-                    <div class="platforms-grid">
-                        <div class="platform-item">
-                            <div class="platform-logo">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#5B21B6" stroke-width="2" stroke-linejoin="round"/>
-                                    <path d="M2 17L12 22L22 17" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M2 12L12 17L22 12" stroke="#6D28D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <span>Salesforce</span>
-                        </div>
-                        <div class="platform-item">
-                            <div class="platform-logo">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="9" stroke="#5B21B6" stroke-width="2"/>
-                                    <path d="M12 8V12L15 15" stroke="#6D28D9" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <span>HubSpot</span>
-                        </div>
-                        <div class="platform-item">
-                            <div class="platform-logo">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3 17L9 11L13 15L21 7" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M21 7V13M21 7H15" stroke="#6D28D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <span>Pipedrive</span>
-                        </div>
-                        <div class="platform-item">
-                            <div class="platform-logo">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <span>Zoho CRM</span>
-                        </div>
-                        <div class="platform-item">
-                            <div class="platform-logo">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" stroke="#5B21B6" stroke-width="2"/>
-                                    <path d="M3 10H21M8 3V7M16 3V7" stroke="#6D28D9" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-                            <span>Google Calendar</span>
-                        </div>
-                        <div class="platform-item">
-                            <div class="platform-logo">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="3" y="5" width="18" height="14" rx="2" stroke="#5B21B6" stroke-width="2"/>
-                                    <path d="M3 9L12 14L21 9" stroke="#6D28D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <span>Outlook</span>
-                        </div>
-                        <div class="platform-item">
-                            <div class="platform-logo">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="2" y="5" width="20" height="14" rx="2" stroke="#5B21B6" stroke-width="2"/>
-                                    <path d="M2 10H22" stroke="#6D28D9" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <span>Stripe</span>
-                        </div>
-                        <div class="platform-item">
-                            <div class="platform-logo">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="6" cy="12" r="3" stroke="#5B21B6" stroke-width="2"/>
-                                    <circle cx="18" cy="6" r="3" stroke="#6D28D9" stroke-width="2"/>
-                                    <circle cx="18" cy="18" r="3" stroke="#5B21B6" stroke-width="2"/>
-                                    <path d="M8.5 13.5L15.5 16.5M8.5 10.5L15.5 7.5" stroke="#6D28D9" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <span>Zapier</span>
-                        </div>
-                    </div>
-                    <p class="integration-note">¿No ves tu plataforma? Contáctanos para integraciones personalizadas</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="section-container">
-            <div class="section-header-minimal">
-                <h2>Planes y Precios</h2>
-                <p>Elige el plan que mejor se adapte a tu negocio</p>
-            </div>
-
-            <div class="pricing-grid">
-                <!-- Pro Plan -->
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Pro</h3>
-                        <div class="pricing-price">
-                            <span class="price-amount">299€</span>
-                            <span class="price-period">/mes</span>
-                        </div>
-                        <p class="pricing-description">Perfecto para pequeñas y medianas empresas</p>
-                    </div>
-
-                    <div class="pricing-features">
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Hasta 5,000 conversaciones/mes</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>1 número de WhatsApp</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Integración con CRM</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Calendario y agendamiento</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Respuestas automáticas con IA</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Análisis y reportes básicos</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Soporte por email</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Flujos de conversación personalizados</span>
-                        </div>
-                    </div>
-
-                    <a href="#contact" class="pricing-cta btn-secondary">Comenzar con Pro</a>
-                </div>
-
-                <!-- Enterprise Plan -->
-                <div class="pricing-card featured">
-                    <div class="featured-badge">Más Popular</div>
-                    <div class="pricing-header">
-                        <h3>Enterprise</h3>
-                        <div class="pricing-price">
-                            <span class="price-amount">699€</span>
-                            <span class="price-period">/mes</span>
-                        </div>
-                        <p class="pricing-description">Para empresas que necesitan máxima potencia</p>
-                    </div>
-
-                    <div class="pricing-features">
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span><strong>Conversaciones ilimitadas</strong></span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span><strong>Hasta 5 números de WhatsApp</strong></span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Integración avanzada con múltiples CRMs</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>API completa para integraciones personalizadas</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>IA personalizada con tu base de conocimiento</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Análisis avanzado y reportes personalizados</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Soporte prioritario 24/7</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Gestor de cuenta dedicado</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>Onboarding personalizado</span>
-                        </div>
-                        <div class="feature-item">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M16.6667 5L7.50004 14.1667L3.33337 10" stroke="#5B21B6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>SLA garantizado</span>
-                        </div>
-                    </div>
-
-                    <a href="#contact" class="pricing-cta btn-primary">Comenzar con Enterprise</a>
-                </div>
-            </div>
-
-            <div class="pricing-note">
-                <p>Todos los planes incluyen actualizaciones automáticas y sin costes adicionales. Sin permanencia.</p>
-            </div>
-        </div>
-    </section>
-
     <!-- How It Works -->
     <section class="how-it-works">
         <div class="section-container">
@@ -822,19 +498,19 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="cta" id="contact">
+    <section class="cta">
         <div class="section-container">
             <div class="cta-content">
                 <h2>Automatiza tu WhatsApp hoy</h2>
                 <p>Configuración en 5 minutos. Soporte dedicado incluido.</p>
                 <div class="cta-buttons">
-                    <a href="mailto:contacto@fidora.io" class="btn-primary btn-large">
-                        <span>Contactar</span>
+                    <a href="/demo.html" class="btn-primary btn-large">
+                        <span>Ver Demo</span>
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                             <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </a>
-                    <a href="#pricing" class="btn-secondary btn-large">Ver Precios</a>
+                    <a href="/pricing.html" class="btn-secondary btn-large">Ver Precios</a>
                 </div>
             </div>
         </div>
@@ -845,10 +521,7 @@
         <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="logo">
-                        <div class="logo-text">FIDORA</div>
-                        <div class="logo-subtext">LABS</div>
-                    </div>
+                    <div class="logo">Fidora</div>
                     <p>Tu empleado de WhatsApp que nunca duerme</p>
                 </div>
                 <div class="footer-links">
@@ -860,19 +533,24 @@
                     </div>
                     <div class="footer-column">
                         <h4>Producto</h4>
-                        <a href="#integration">Integración</a>
-                        <a href="#pricing">Precios</a>
-                        <a href="#contact">Contacto</a>
+                        <a href="/features.html">Características</a>
+                        <a href="/pricing.html">Precios</a>
+                        <a href="/demo.html">Demo</a>
                     </div>
                     <div class="footer-column">
                         <h4>Empresa</h4>
-                        <a href="#contact">Contacto</a>
-                        <a href="mailto:contacto@fidora.io">Email</a>
+                        <a href="/about.html">Sobre nosotros</a>
+                        <a href="/contact.html">Contacto</a>
+                        <a href="/blog.html">Blog</a>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 Fidora. Todos los derechos reservados.</p>
+                <div class="footer-legal">
+                    <a href="/privacy.html">Privacidad</a>
+                    <a href="/terms.html">Términos</a>
+                </div>
             </div>
         </div>
     </footer>

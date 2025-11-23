@@ -71,11 +71,58 @@ body {
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     text-decoration: none;
-    letter-spacing: -0.5px;
+    line-height: 1;
+    gap: 3px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    background: linear-gradient(135deg, rgba(91, 33, 182, 0.05), rgba(109, 40, 217, 0.05));
+    border: 1px solid rgba(91, 33, 182, 0.2);
+}
+
+.logo:hover {
+    background: linear-gradient(135deg, rgba(91, 33, 182, 0.15), rgba(109, 40, 217, 0.1));
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(91, 33, 182, 0.3);
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+}
+
+.logo-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-light));
+    border-radius: 2px;
+}
+
+.logo-subtext {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 1;
+}
+
+.logo:hover .logo-subtext {
+    color: var(--text-primary);
 }
 
 .nav-links {
@@ -287,7 +334,17 @@ body {
 }
 
 .toggle-icon {
-    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+.toggle-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
 }
 
 .hero-cta {
@@ -876,6 +933,239 @@ body {
     color: var(--text-secondary);
 }
 
+/* === INTEGRATION SECTION === */
+.integration {
+    background: var(--bg-primary);
+}
+
+.integration-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.integration-main h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.integration-main > p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.integration-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.benefit-item {
+    display: flex;
+    gap: 16px;
+    align-items: start;
+}
+
+.benefit-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+}
+
+.benefit-content h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.benefit-content p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.integration-platforms {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 32px;
+}
+
+.integration-platforms h4 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.platform-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.platform-item:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+}
+
+.platform-logo {
+    font-size: 24px;
+}
+
+.platform-item span {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.integration-note {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    text-align: center;
+    font-style: italic;
+}
+
+/* === PRICING SECTION === */
+.pricing {
+    background: var(--bg-secondary);
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    max-width: 1000px;
+    margin: 0 auto 40px;
+}
+
+.pricing-card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 40px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-4px);
+}
+
+.pricing-card.featured {
+    border-color: var(--accent-primary);
+    border-width: 2px;
+}
+
+.featured-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--accent-primary);
+    color: var(--text-primary);
+    padding: 6px 16px;
+    border-radius: 500px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pricing-header {
+    margin-bottom: 32px;
+}
+
+.pricing-header h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.pricing-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+.price-amount {
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--text-primary);
+    letter-spacing: -2px;
+}
+
+.price-period {
+    font-size: 18px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.pricing-description {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.pricing-features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.pricing-features .feature-item {
+    display: flex;
+    align-items: start;
+    gap: 12px;
+}
+
+.pricing-features .feature-item svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.pricing-features .feature-item span {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.pricing-cta {
+    width: 100%;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.pricing-note {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.pricing-note p {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    line-height: 1.6;
+}
+
 /* === RESPONSIVE === */
 @media (max-width: 1024px) {
     .hero-wrapper {
@@ -909,6 +1199,15 @@ body {
     }
     
     .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .integration-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .pricing-grid {
         grid-template-columns: 1fr;
     }
     
@@ -1003,6 +1302,23 @@ body {
     
     .footer-links {
         grid-template-columns: 1fr;
+    }
+    
+    .integration-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    
+    .platforms-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pricing-card {
+        padding: 32px 24px;
     }
     
     .footer-bottom {
