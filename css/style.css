@@ -1226,6 +1226,7 @@ body {
 @media (max-width: 768px) {
     .nav-container {
         padding: 0 16px;
+        max-width: 100%;
     }
     
     .nav-links {
@@ -1239,10 +1240,15 @@ body {
     .hero {
         padding-top: 80px;
         min-height: auto;
+        width: 100%;
+        max-width: 100vw;
     }
     
     .hero-wrapper {
         padding: 40px 16px;
+        width: 100%;
+        max-width: 100%;
+        gap: 40px;
     }
     
     .hero-title {
@@ -1260,6 +1266,8 @@ body {
     
     .hero-left {
         gap: 20px;
+        width: 100%;
+        max-width: 100%;
     }
     
     .hero-right {
@@ -1267,6 +1275,7 @@ body {
         flex-direction: column;
         gap: 16px;
         width: 100%;
+        max-width: 100%;
     }
     
     .industry-toggles {
@@ -1275,11 +1284,14 @@ body {
         flex-wrap: nowrap;
         gap: 8px;
         width: 100%;
+        max-width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         -ms-overflow-style: none;
         padding-bottom: 4px;
+        margin-left: 0;
+        margin-right: 0;
     }
     
     .industry-toggles::-webkit-scrollbar {
@@ -1296,11 +1308,13 @@ body {
     .hero-cta {
         flex-direction: column;
         width: 100%;
+        max-width: 100%;
     }
     
     .btn-primary,
     .btn-secondary {
         width: 100%;
+        max-width: 100%;
         justify-content: center;
     }
     
@@ -1309,26 +1323,33 @@ body {
         flex-direction: column;
         gap: 16px;
         width: 100%;
+        max-width: 100%;
     }
     
     .flow-animation {
         order: 2;
         min-height: 280px;
         width: 100%;
+        max-width: 100%;
+        padding: 10px;
     }
     
     .chat-container {
         order: 1;
         width: 100%;
+        max-width: 100%;
     }
     
     .chat-messages {
         min-height: 220px;
         max-height: 280px;
+        width: 100%;
     }
     
     .section-container {
         padding: 60px 16px;
+        width: 100%;
+        max-width: 100%;
     }
     
     .section-header-minimal h2 {
@@ -1387,23 +1408,49 @@ body {
 @media (max-width: 480px) {
     .nav-container {
         padding: 0 12px;
+        max-width: 100%;
+    }
+    
+    .hero {
+        width: 100%;
+        max-width: 100vw;
     }
     
     .hero-wrapper {
         padding: 32px 12px;
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .hero-left {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .hero-right {
+        width: 100%;
+        max-width: 100%;
     }
     
     .hero-title {
         font-size: 28px;
         letter-spacing: -0.5px;
+        max-width: 100%;
     }
     
     .hero-description {
         font-size: 15px;
+        max-width: 100%;
+    }
+    
+    .hero-badge {
+        max-width: fit-content;
     }
     
     .section-container {
         padding: 48px 12px;
+        width: 100%;
+        max-width: 100%;
     }
     
     .section-header-minimal h2 {
@@ -1416,11 +1463,20 @@ body {
     
     .flow-animation {
         min-height: 250px;
+        width: 100%;
+        max-width: 100%;
+        padding: 8px;
+    }
+    
+    .chat-container {
+        width: 100%;
+        max-width: 100%;
     }
     
     .chat-messages {
         min-height: 200px;
         max-height: 250px;
+        width: 100%;
     }
     
     .flow-node {
@@ -1438,11 +1494,22 @@ body {
     .message-bubble {
         font-size: 13px;
         padding: 10px 12px;
+        max-width: 85%;
     }
     
     .toggle-btn {
         padding: 8px 14px;
         font-size: 12px;
+    }
+    
+    .industry-toggles {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .right-content {
+        width: 100%;
+        max-width: 100%;
     }
     
     .pricing-card {
