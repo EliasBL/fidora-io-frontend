@@ -167,5 +167,31 @@ function pulseNodes() {
 // Start node pulse animation
 setInterval(pulseNodes, 3000);
 
+// WhatsApp Float Button Effects
+const whatsappFloat = document.querySelector('.whatsapp-float');
+
+if (whatsappFloat) {
+    // Pulse animation
+    setInterval(() => {
+        whatsappFloat.style.animation = 'none';
+        setTimeout(() => {
+            whatsappFloat.style.animation = 'whatsappPulse 1s ease-in-out';
+        }, 10);
+    }, 5000);
+    
+    // Bounce on hover
+    whatsappFloat.addEventListener('mouseenter', () => {
+        whatsappFloat.style.animation = 'whatsappBounce 0.5s ease';
+    });
+    
+    // Shake effect periodically
+    setInterval(() => {
+        whatsappFloat.style.animation = 'whatsappShake 0.5s ease';
+        setTimeout(() => {
+            whatsappFloat.style.animation = 'none';
+        }, 500);
+    }, 10000);
+}
+
 console.log('%c🚀 Fidora', 'font-size: 20px; font-weight: bold; color: #7C3AED;');
 console.log('%cTu empleado de WhatsApp que nunca duerme', 'font-size: 12px; color: #B3B3B3;');
