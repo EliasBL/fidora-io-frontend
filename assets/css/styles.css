@@ -2351,6 +2351,21 @@ body.light-theme select:focus {
 }
 
 @media (max-width: 768px) {
+    /* Ensure mobile layout doesn't break */
+    body {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    .section-container,
+    .hero-container,
+    .nav-container,
+    .footer-container {
+        max-width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
     .sidebar {
         width: 240px;
     }
@@ -4430,6 +4445,13 @@ body.light-theme select:focus {
     max-width: 700px;
     margin: 0 auto;
     font-weight: 400;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .section-description {
+        display: none;
+    }
 }
 
 /* Features Section */

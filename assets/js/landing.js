@@ -270,43 +270,48 @@ document.addEventListener('DOMContentLoaded', function() {
         const lastName = formData.get('lastName');
         const email = formData.get('email');
         const company = formData.get('company');
-        const teamSize = formData.get('teamSize');
         
         // Show loading state
         const submitBtn = trialForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
         submitBtn.disabled = true;
         
-        // Simulate API call
-        setTimeout(() => {
-            if (firstName && lastName && email && company && teamSize) {
-                // Store trial signup data
-                localStorage.setItem('trialUser', JSON.stringify({
-                    firstName,
-                    lastName,
-                    email,
-                    company,
-                    teamSize,
-                    signupDate: new Date().toISOString()
-                }));
-                
-                alert(`Welcome ${firstName}! Your free trial has been activated. Check your email for setup instructions.`);
+        // Send to webhook
+        const webhookUrl = 'https://n.fidora.es/webhook/Fidora-demo';
+        
+        fetch(webhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstName,
+                lastName,
+                email,
+                company,
+                timestamp: new Date().toISOString(),
+                source: 'landing_page'
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert(`¡Gracias ${firstName}! Hemos recibido tu solicitud. Te contactaremos pronto.`);
                 closeModal(modals.trial);
-                
-                // Reset form
                 trialForm.reset();
-                
-                // Could redirect to onboarding flow
-                // window.location.href = '/onboarding';
             } else {
-                alert('Please fill in all required fields');
+                throw new Error('Error al enviar la solicitud');
             }
-            
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo.');
+        })
+        .finally(() => {
             // Reset button
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
-        }, 2000);
+        });
     }
     
     // Smooth Scrolling for Navigation Links
