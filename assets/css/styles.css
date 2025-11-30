@@ -4440,6 +4440,7 @@ body.light-theme select:focus {
     backdrop-filter: blur(10px);
     margin-bottom: var(--spacing-xl);
     transition: all var(--transition-normal);
+    order: -1;
 }
 
 .section-badge:hover {
@@ -4463,6 +4464,7 @@ body.light-theme select:focus {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    order: 0;
 }
 
 .section-description {
@@ -4476,6 +4478,23 @@ body.light-theme select:focus {
 
 /* Mobile-specific styles */
 @media (max-width: 768px) {
+    .section-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .section-badge {
+        order: 1;
+        margin-bottom: var(--spacing-md);
+        margin-top: var(--spacing-md);
+    }
+    
+    .section-title {
+        order: 0;
+        margin-bottom: 0;
+    }
+    
     .section-description {
         display: none;
     }
@@ -5199,18 +5218,30 @@ body.light-theme select:focus {
 }
 
 .checkbox-label input[type="checkbox"] {
-    width: auto;
-    margin: 0;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 0;
+    height: 0;
 }
 
 .checkmark {
-    width: 18px;
-    height: 18px;
-    background: var(--bg-glass);
-    border: var(--glass-border);
+    width: 20px;
+    height: 20px;
+    background: var(--bg-secondary);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     position: relative;
     transition: all var(--transition-normal);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox-label:hover .checkmark {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: var(--bg-glass);
 }
 
 .checkbox-label input[type="checkbox"]:checked + .checkmark {
@@ -5221,12 +5252,62 @@ body.light-theme select:focus {
 .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
     content: '✓';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     color: var(--bg-primary);
-    font-size: var(--font-size-xs);
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.checkbox-label input[type="checkbox"]:focus + .checkmark {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+/* Consent Checkbox Styling */
+.consent-checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    padding: var(--spacing-md);
+    background: var(--bg-glass);
+    border: var(--glass-border);
+    border-radius: 8px;
+    transition: all var(--transition-normal);
+}
+
+.consent-checkbox:hover {
+    background: var(--bg-glass-hover);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.consent-checkbox .checkmark {
+    flex-shrink: 0;
+    align-self: flex-start;
+    margin-top: 0.15rem;
+}
+
+.consent-checkbox .consent-text {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.5;
+    text-align: left;
+}
+
+.consent-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.consent-text a {
+    color: var(--accent-primary);
+    text-decoration: underline;
+    transition: color var(--transition-normal);
+}
+
+.consent-text a:hover {
+    color: var(--text-primary);
 }
 
 .forgot-password {
@@ -6672,6 +6753,99 @@ body.light-theme select:focus {
     cursor: pointer;
 }
 
+/* Success Message Styles */
+.success-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: var(--bg-glass);
+    backdrop-filter: var(--glass-blur);
+    border: var(--glass-border);
+    border-radius: 16px;
+    padding: var(--spacing-2xl);
+    z-index: 3000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 400px;
+    max-width: 90vw;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.success-message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.success-message-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 2999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.success-message-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 3px solid var(--accent-success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-xl);
+    font-size: 2.5rem;
+    color: var(--accent-success);
+    animation: successPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes successPop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.success-message h3 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+}
+
+.success-message p {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xl);
+}
+
+.success-message .btn-primary {
+    margin: 0 auto;
+}
+
 /* Notification Styles */
 .notification {
     position: fixed;
@@ -6739,6 +6913,23 @@ body.light-theme select:focus {
     color: var(--text-primary);
     font-size: var(--font-size-sm);
     font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .success-message {
+        min-width: 90vw;
+        padding: var(--spacing-xl);
+    }
+    
+    .success-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .success-message h3 {
+        font-size: var(--font-size-xl);
+    }
 }
 
 /* WhatsApp Configuration States */
@@ -7829,16 +8020,66 @@ body.light-theme select:focus {
         gap: var(--spacing-lg);
     }
     
+    /* Footer mobile fixes */
+    .footer {
+        padding: 60px 0 30px;
+    }
+    
+    .footer-container {
+        padding: 0 var(--spacing-lg);
+    }
+    
     .footer-content {
         grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
-        text-align: center;
+        gap: var(--spacing-2xl);
+        text-align: left;
+    }
+    
+    .footer-section {
+        width: 100%;
+    }
+    
+    .footer-logo {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .footer-description {
+        text-align: left;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .social-links {
+        justify-content: flex-start;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .footer-links {
+        align-items: flex-start;
+    }
+    
+    .footer-links a {
+        text-align: left;
+        width: 100%;
+        padding: var(--spacing-xs) 0;
+    }
+    
+    .footer-bottom {
+        padding-top: var(--spacing-lg);
+        margin-top: var(--spacing-lg);
     }
     
     .footer-bottom-content {
         flex-direction: column;
-        gap: var(--spacing-md);
+        gap: var(--spacing-lg);
         text-align: center;
+    }
+    
+    .footer-bottom-links {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        align-items: center;
     }
     
     .form-row {
@@ -8436,4 +8677,14 @@ html {
         height: 80px;
         font-size: 2rem;
     }
+}
+.checkbox-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* space between checkbox and text */
+    cursor: pointer;
+}
+
+.checkbox-inline input[type="checkbox"] {
+    margin: 0;
 }

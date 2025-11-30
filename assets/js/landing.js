@@ -293,18 +293,72 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            alert(`¡Gracias ${firstName}! Hemos recibido tu solicitud. Te contactaremos pronto.`);
             closeModal(modals.trial);
             trialForm.reset();
+            showSuccessMessage(`¡Gracias ${firstName}!`, 'Hemos recibido tu solicitud. Te contactaremos pronto.');
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo.');
+            showSuccessMessage('Error', 'Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo.', 'error');
         })
         .finally(() => {
             // Reset button
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
+        });
+    }
+    
+    // Success message function
+    function showSuccessMessage(title, message, type = 'success') {
+        // Create overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'success-message-overlay';
+        
+        // Create success message
+        const successMessage = document.createElement('div');
+        successMessage.className = 'success-message';
+        
+        const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+        
+        successMessage.innerHTML = `
+            <div class="success-icon">
+                <i class="fas ${icon}"></i>
+            </div>
+            <h3>${title}</h3>
+            <p>${message}</p>
+            <button class="btn-primary" onclick="this.closest('.success-message-overlay').remove(); this.closest('.success-message').remove();">
+                Cerrar
+            </button>
+        `;
+        
+        // Add to body
+        document.body.appendChild(overlay);
+        document.body.appendChild(successMessage);
+        
+        // Show with animation
+        setTimeout(() => {
+            overlay.classList.add('show');
+            successMessage.classList.add('show');
+        }, 10);
+        
+        // Auto close after 5 seconds
+        setTimeout(() => {
+            overlay.classList.remove('show');
+            successMessage.classList.remove('show');
+            setTimeout(() => {
+                overlay.remove();
+                successMessage.remove();
+            }, 300);
+        }, 5000);
+        
+        // Close on overlay click
+        overlay.addEventListener('click', () => {
+            overlay.classList.remove('show');
+            successMessage.classList.remove('show');
+            setTimeout(() => {
+                overlay.remove();
+                successMessage.remove();
+            }, 300);
         });
     }
     
