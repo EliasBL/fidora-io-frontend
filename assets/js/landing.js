@@ -282,9 +282,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         fetch(webhookUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify({
                 firstName,
                 lastName,
@@ -294,14 +291,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 source: 'landing_page'
             })
         })
-        .then(response => {
-            if (response.ok) {
-                alert(`¡Gracias ${firstName}! Hemos recibido tu solicitud. Te contactaremos pronto.`);
-                closeModal(modals.trial);
-                trialForm.reset();
-            } else {
-                throw new Error('Error al enviar la solicitud');
-            }
+        .then(response => response.json())
+        .then(data => {
+            alert(`¡Gracias ${firstName}! Hemos recibido tu solicitud. Te contactaremos pronto.`);
+            closeModal(modals.trial);
+            trialForm.reset();
         })
         .catch(error => {
             console.error('Error:', error);
