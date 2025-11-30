@@ -35,3 +35,6 @@ npm-debug.log*
 .env
 .env.local
 .env.*.local
+
+# Zip
+v1.zip
