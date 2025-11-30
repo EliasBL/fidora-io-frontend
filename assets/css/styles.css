@@ -2357,6 +2357,14 @@ body.light-theme select:focus {
         overflow-x: hidden;
     }
     
+    html {
+        overflow-x: hidden;
+    }
+    
+    * {
+        max-width: 100%;
+    }
+    
     .section-container,
     .hero-container,
     .nav-container,
@@ -2364,6 +2372,25 @@ body.light-theme select:focus {
         max-width: 100%;
         padding-left: 1rem;
         padding-right: 1rem;
+        overflow-x: hidden;
+    }
+    
+    .hero-title,
+    .section-title,
+    .cta-title,
+    h1, h2, h3 {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        max-width: 100%;
+    }
+    
+    .hero-title {
+        font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
+    }
+    
+    .section-title {
+        font-size: clamp(1.5rem, 7vw, 2.5rem) !important;
     }
     
     .sidebar {
