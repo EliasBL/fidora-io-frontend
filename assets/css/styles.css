@@ -7746,26 +7746,8 @@ body.light-theme select:focus {
         gap: var(--spacing-sm);
     }
     
-    /* Navigation */
-    .nav-container {
-        padding: 0 var(--spacing-md);
-    }
-    
     .nav-links {
         display: none;
-    }
-    
-    .nav-actions {
-        gap: var(--spacing-sm);
-    }
-    
-    .nav-actions .lang-selector {
-        display: none;
-    }
-    
-    .nav-actions .theme-toggle {
-        position: static;
-        right: auto;
     }
     
     .nav-actions .btn-secondary,
@@ -7777,247 +7759,31 @@ body.light-theme select:focus {
         display: block;
     }
     
-    .mobile-menu {
-        top: 72px;
-    }
-    
-    /* Hero Section */
-    .hero {
-        padding: 100px 0 60px;
-        min-height: auto;
-    }
-    
-    .hero-container {
-        padding: 0 var(--spacing-md);
-    }
-    
-    .hero-content {
-        gap: var(--spacing-lg);
-    }
-    
-    .hero-title {
-        font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
-        line-height: 1.2;
-    }
-    
-    .hero-description {
-        font-size: var(--font-size-base);
-        max-width: 100%;
-    }
-    
-    .hero-description br {
-        display: none;
-    }
-    
     .hero-stats {
         justify-content: center;
         flex-wrap: wrap;
-        gap: var(--spacing-lg);
     }
     
     .hero-cta {
         flex-direction: column;
-        align-items: stretch;
-        gap: var(--spacing-md);
-        width: 100%;
-    }
-    
-    .btn-primary-large,
-    .btn-secondary-large {
-        width: 100%;
-        justify-content: center;
-        padding: var(--spacing-md) var(--spacing-lg);
-        font-size: var(--font-size-sm);
-    }
-    
-    .hero-trust {
-        gap: var(--spacing-sm);
-    }
-    
-    .trust-text {
-        font-size: var(--font-size-xs);
-        text-align: center;
+        align-items: center;
     }
     
     .trust-badges {
         flex-direction: column;
         align-items: center;
-        gap: var(--spacing-sm);
-    }
-    
-    .trust-badge {
-        font-size: 0.7rem;
-        justify-content: center;
-    }
-    
-    .hero-visual {
-        display: none;
-    }
-    
-    /* Features Section */
-    .features {
-        padding: 60px 0;
-    }
-    
-    .section-container {
-        padding: 0 var(--spacing-md);
-    }
-    
-    .section-header {
-        margin-bottom: var(--spacing-xl);
-        padding: 0;
-    }
-    
-    .section-badge {
-        font-size: var(--font-size-xs);
-        padding: var(--spacing-xs) var(--spacing-md);
-        margin-bottom: var(--spacing-md);
-    }
-    
-    .section-title {
-        font-size: clamp(1.75rem, 7vw, 2.5rem);
-        margin-bottom: var(--spacing-md);
-    }
-    
-    .section-description {
-        font-size: var(--font-size-sm);
-    }
-    
-    .features-grid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
-    }
-    
-    .feature-card {
-        padding: var(--spacing-lg);
-    }
-    
-    .feature-icon {
-        width: 50px;
-        height: 50px;
-        font-size: var(--font-size-lg);
-        margin-bottom: var(--spacing-md);
-    }
-    
-    .feature-title {
-        font-size: var(--font-size-lg);
-    }
-    
-    .feature-description {
-        font-size: var(--font-size-sm);
-    }
-    
-    /* Products/Pricing Section */
-    .social-proof {
-        padding: 60px 0;
-    }
-    
-    .pricing-grid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
-    }
-    
-    .pricing-card {
-        padding: var(--spacing-lg);
-    }
-    
-    .pricing-card.popular {
-        transform: scale(1);
-    }
-    
-    .pricing-card.popular:hover {
-        transform: translateY(-4px);
-    }
-    
-    .plan-name {
-        font-size: var(--font-size-lg);
-    }
-    
-    /* Testimonials Section */
-    .testimonials {
-        padding: 60px 0;
-    }
-    
-    .testimonials-grid {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
-    }
-    
-    .testimonial-card {
-        padding: var(--spacing-lg);
-    }
-    
-    .testimonial-text {
-        font-size: var(--font-size-sm);
-    }
-    
-    /* CTA Section */
-    .cta-section {
-        padding: 60px 0;
-    }
-    
-    .cta-content {
-        padding: 0 var(--spacing-md);
-    }
-    
-    .cta-title {
-        font-size: clamp(1.5rem, 6vw, 2rem);
-        margin-bottom: var(--spacing-md);
-    }
-    
-    .cta-description {
-        font-size: var(--font-size-sm);
-        margin-bottom: var(--spacing-lg);
-    }
-    
-    .cta-buttons {
-        flex-direction: column;
-        align-items: stretch;
         gap: var(--spacing-md);
-        width: 100%;
     }
     
-    .cta-buttons .btn-primary-large,
-    .cta-buttons .btn-secondary-large {
-        width: 100%;
-    }
-    
-    .cta-note {
-        font-size: var(--font-size-xs);
-        flex-wrap: wrap;
-        padding: 0 var(--spacing-sm);
-    }
-    
-    /* Footer */
-    .footer {
-        padding: 60px 0 30px;
-    }
-    
-    .footer-container {
-        padding: 0 var(--spacing-md);
+    .company-logos {
+        flex-direction: column;
+        gap: var(--spacing-lg);
     }
     
     .footer-content {
         grid-template-columns: 1fr;
-        gap: var(--spacing-xl);
+        gap: var(--spacing-lg);
         text-align: center;
-    }
-    
-    .footer-section {
-        padding: var(--spacing-lg) 0;
-        border-bottom: var(--border-secondary);
-    }
-    
-    .footer-section:last-child {
-        border-bottom: none;
-    }
-    
-    .social-links {
-        justify-content: center;
-    }
-    
-    .footer-bottom {
-        padding-top: var(--spacing-lg);
     }
     
     .footer-bottom-content {
@@ -8026,11 +7792,6 @@ body.light-theme select:focus {
         text-align: center;
     }
     
-    .copyright {
-        font-size: var(--font-size-xs);
-    }
-    
-    /* Forms */
     .form-row {
         grid-template-columns: 1fr;
     }
@@ -8039,7 +7800,6 @@ body.light-theme select:focus {
         flex-direction: column;
     }
     
-    /* Modals */
     .modal-overlay {
         padding: 0;
         align-items: stretch;
@@ -8112,11 +7872,6 @@ body.light-theme select:focus {
         width: 60px;
         height: 60px;
         font-size: var(--font-size-xl);
-    }
-    
-    .company-logos {
-        flex-direction: column;
-        gap: var(--spacing-lg);
     }
 }
 
