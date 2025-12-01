@@ -109,6 +109,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        
+        question.addEventListener('click', function() {
+            const isActive = item.classList.contains('active');
+            
+            // Close all FAQ items
+            faqItems.forEach(faqItem => {
+                faqItem.classList.remove('active');
+            });
+            
+            // If this item wasn't active, open it
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+    
     // Modal Management
     const modals = {
         login: document.getElementById('loginModal'),
