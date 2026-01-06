@@ -148,6 +148,17 @@ function t($key, $default = '') {
             <a href="#productos" class="mobile-nav-link"><?php echo t('nav.products', 'Productos'); ?></a>
             <a href="#testimonials" class="mobile-nav-link"><?php echo t('nav.testimonials', 'Testimonios'); ?></a>
             <a href="#faq" class="mobile-nav-link"><?php echo t('nav.faq', 'FAQ'); ?></a>
+            
+            <!-- Mobile Language Selector -->
+            <div class="mobile-lang-selector">
+                <span class="mobile-lang-label">Idioma / Language / Sprache</span>
+                <div class="mobile-lang-options">
+                    <a href="?lang=es" class="mobile-lang-option <?php echo $lang === 'es' ? 'active' : ''; ?>">🇪🇸 ES</a>
+                    <a href="?lang=en" class="mobile-lang-option <?php echo $lang === 'en' ? 'active' : ''; ?>">🇬🇧 EN</a>
+                    <a href="?lang=de" class="mobile-lang-option <?php echo $lang === 'de' ? 'active' : ''; ?>">🇩🇪 DE</a>
+                </div>
+            </div>
+            
             <div class="mobile-menu-actions">
                 <button class="btn-primary mobile-btn" id="mobileCtaBtn"><?php echo t('cta.requestDemo', 'Solicitar Demo'); ?></button>
             </div>
