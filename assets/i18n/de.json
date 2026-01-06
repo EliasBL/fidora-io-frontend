@@ -15,7 +15,10 @@
             "viewDemo": "Demo ansehen",
             "moreInfo": "Mehr Infos",
             "contact": "Kontakt",
-            "scheduleConsult": "Kostenlose Beratung anfragen"
+            "scheduleConsult": "Kostenlose Beratung anfragen",
+            "title": "Bereit, Ihr Unternehmen zu automatisieren?",
+            "description": "Entdecken Sie, wie FIDORA Labs Ihre Kundenkommunikation durch intelligente Automatisierung transformieren kann.",
+            "note": "Unverbindliche Beratung • Personalisierte Lösungen • Dedizierter Support"
         },
         "hero": {
             "title": "Hören Sie auf, Kunden zu verlieren, weil Sie nicht rechtzeitig <span class='gradient-text'>antworten.</span>",
@@ -109,11 +112,6 @@
             "a7": "Ja, alle unsere Lösungen sind hochgradig anpassbar. Wir entwickeln Automatisierungen, die speziell für Ihre Branche, Arbeitsprozesse und Geschäftsziele konzipiert sind. Jede Implementierung passt sich perfekt an Ihre individuellen Bedürfnisse an.",
             "q8": "Funktioniert es mit meinen aktuellen Systemen?",
             "a8": "Unsere Lösungen integrieren sich mit den meisten gängigen Geschäftssystemen wie CRM, ERP und Management-Tools. Wir führen vorab eine technische Bewertung durch, um eine nahtlose Integration mit Ihrer bestehenden Infrastruktur zu gewährleisten."
-        },
-        "cta": {
-            "title": "Bereit, Ihr Unternehmen zu automatisieren?",
-            "description": "Entdecken Sie, wie FIDORA Labs Ihre Kundenkommunikation durch intelligente Automatisierung transformieren kann.",
-            "note": "Unverbindliche Beratung • Personalisierte Lösungen • Dedizierter Support"
         },
         "footer": {
             "products": "Produkte",

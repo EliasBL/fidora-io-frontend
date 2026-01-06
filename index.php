@@ -13,9 +13,12 @@ setcookie('fidora_lang', $lang, time() + (30 * 24 * 60 * 60), '/');
 
 // Load translations
 $translationsFile = __DIR__ . '/assets/i18n/' . $lang . '.json';
-$translations = [];
+$translations = ['translations' => []];
 if (file_exists($translationsFile)) {
-    $translations = json_decode(file_get_contents($translationsFile), true);
+    $jsonData = json_decode(file_get_contents($translationsFile), true);
+    if (isset($jsonData['translations'])) {
+        $translations = $jsonData['translations'];
+    }
 }
 
 // Helper function to get translation
