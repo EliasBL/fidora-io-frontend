@@ -28,64 +28,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Translation System
+    // Translation System - Now handled by PHP server-side
+// The language selector in index.php uses ?lang= parameter to reload the page with the selected language
+// This JavaScript handles the language dropdown interactions
+
 let translations = {};
 let currentLang = 'es';
-
-// Load translations from JSON files
-async function loadTranslations(lang) {
-    try {
-        const response = await fetch(`assets/i18n/${lang}.json`);
-        if (response.ok) {
-            const data = await response.json();
-            translations = data.translations;
-            currentLang = lang;
-            applyTranslations();
-        }
-    } catch (error) {
-        console.error(`Error loading ${lang} translations:`, error);
-    }
-}
-
-// Apply translations to the page
-function applyTranslations() {
-    // Update all elements with data-i18n attribute
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        const translation = getNestedTranslation(key);
-        if (translation) {
-            element.innerHTML = translation;
-        }
-    });
-
-    // Update elements with data-i18n-text attribute (for plain text)
-    document.querySelectorAll('[data-i18n-text]').forEach(element => {
-        const key = element.getAttribute('data-i18n-text');
-        const translation = getNestedTranslation(key);
-        if (translation) {
-            element.textContent = translation;
-        }
-    });
-
-    // Update lang attribute on html
-    document.documentElement.lang = currentLang;
-}
-
-// Get nested translation from key path
-function getNestedTranslation(key) {
-    const keys = key.split('.');
-    let result = translations;
-    
-    for (const k of keys) {
-        if (result && result[k] !== undefined) {
-            result = result[k];
-        } else {
-            return null;
-        }
-    }
-    
-    return result;
-}
 
 // Language Selector
 const langBtn = document.getElementById('langBtn');
@@ -106,10 +54,11 @@ if (langBtn && langDropdown) {
         }
     });
     
-    // Handle language selection
+    // Handle language selection - navigate to new URL with lang parameter
     langOptions.forEach(option => {
         option.addEventListener('click', function(e) {
-            e.preventDefault();
+            // The href attribute already contains ?lang=XX, so let the link work naturally
+            // But we want to show the dropdown state
             const selectedLang = this.getAttribute('data-lang');
             
             // Update current language display
@@ -127,17 +76,11 @@ if (langBtn && langDropdown) {
             
             // Save preference
             localStorage.setItem('preferredLanguage', selectedLang);
-            
-            // Load translations
-            loadTranslations(selectedLang);
         });
     });
     
-    // Load saved language preference
+    // Load saved language preference on page load
     const savedLang = localStorage.getItem('preferredLanguage') || 'es';
-    loadTranslations(savedLang);
-    
-    // Update the display
     const savedOption = document.querySelector(`.lang-option[data-lang="${savedLang}"]`);
     if (savedOption) {
         const langCurrent = document.querySelector('.lang-current');
@@ -198,10 +141,9 @@ if (langBtn && langDropdown) {
         trial: document.getElementById('trialModal')
     };
     
-    // Modal trigger buttons (removed login buttons to allow normal navigation)
-    // "Ver Servicios" buttons now open the trial/consultation modal
+    // Modal trigger buttons
     const modalTriggers = {
-        trial: ['#ctaBtn', '#mobileCtaBtn', '#heroCtaBtn', '#finalCtaBtn', '#heroDemoBtn', '#finalDemoBtn']
+        trial: ['#ctaBtn', '#mobileCtaBtn', '#heroCtaBtn', '#finalCtaBtn']
     };
     
     // Setup modal triggers
@@ -661,10 +603,9 @@ if (langBtn && langDropdown) {
     // Add loading states to all CTA buttons
     const ctaButtons = document.querySelectorAll('.btn-primary-large, .btn-secondary-large');
     ctaButtons.forEach(button => {
-        if (!button.hasAttribute('data-modal-trigger')) {
+        if (!button.hasAttribute('data-modal-trigger') && !button.href) {
             button.addEventListener('click', function(e) {
-                // "Ver Servicios" buttons now open trial modal (consultation form)
-                if (this.textContent.includes('Servicios') || this.textContent.includes('Trial') || this.textContent.includes('Start')) {
+                if (this.textContent.includes('Trial') || this.textContent.includes('Start') || this.textContent.includes('Consulta')) {
                     e.preventDefault();
                     openModal('trial');
                 }
