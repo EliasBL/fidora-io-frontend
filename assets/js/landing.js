@@ -28,64 +28,125 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Language Selector
-    const langBtn = document.getElementById('langBtn');
-    const langDropdown = document.getElementById('langDropdown');
-    const langOptions = document.querySelectorAll('.lang-option');
+    // Translation System
+let translations = {};
+let currentLang = 'es';
+
+// Load translations from JSON files
+async function loadTranslations(lang) {
+    try {
+        const response = await fetch(`assets/i18n/${lang}.json`);
+        if (response.ok) {
+            const data = await response.json();
+            translations = data.translations;
+            currentLang = lang;
+            applyTranslations();
+        }
+    } catch (error) {
+        console.error(`Error loading ${lang} translations:`, error);
+    }
+}
+
+// Apply translations to the page
+function applyTranslations() {
+    // Update all elements with data-i18n attribute
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = getNestedTranslation(key);
+        if (translation) {
+            element.innerHTML = translation;
+        }
+    });
+
+    // Update elements with data-i18n-text attribute (for plain text)
+    document.querySelectorAll('[data-i18n-text]').forEach(element => {
+        const key = element.getAttribute('data-i18n-text');
+        const translation = getNestedTranslation(key);
+        if (translation) {
+            element.textContent = translation;
+        }
+    });
+
+    // Update lang attribute on html
+    document.documentElement.lang = currentLang;
+}
+
+// Get nested translation from key path
+function getNestedTranslation(key) {
+    const keys = key.split('.');
+    let result = translations;
     
-    if (langBtn && langDropdown) {
-        // Toggle dropdown
-        langBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            langDropdown.classList.toggle('active');
-        });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
-                langDropdown.classList.remove('active');
-            }
-        });
-        
-        // Handle language selection
-        langOptions.forEach(option => {
-            option.addEventListener('click', function(e) {
-                e.preventDefault();
-                const selectedLang = this.getAttribute('data-lang');
-                const langText = this.querySelector('span:last-child').textContent;
-                const langCode = selectedLang.toUpperCase();
-                
-                // Update current language display
-                const langCurrent = document.querySelector('.lang-current');
-                if (langCurrent) {
-                    langCurrent.textContent = langCode;
-                }
-                
-                // Update active state
-                langOptions.forEach(opt => opt.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Close dropdown
-                langDropdown.classList.remove('active');
-                
-                // Save preference
-                localStorage.setItem('preferredLanguage', selectedLang);
-                
-                // In a real app, you would load translations here
-                console.log(`Language changed to: ${langText} (${selectedLang})`);
-                
-                // Optional: Show notification
-                // showNotification(`Idioma cambiado a ${langText}`, 'success');
-            });
-        });
-        
-        // Load saved language preference
-        const savedLang = localStorage.getItem('preferredLanguage') || 'es';
-        const savedOption = document.querySelector(`.lang-option[data-lang="${savedLang}"]`);
-        if (savedOption) {
-            savedOption.click();
+    for (const k of keys) {
+        if (result && result[k] !== undefined) {
+            result = result[k];
+        } else {
+            return null;
         }
     }
+    
+    return result;
+}
+
+// Language Selector
+const langBtn = document.getElementById('langBtn');
+const langDropdown = document.getElementById('langDropdown');
+const langOptions = document.querySelectorAll('.lang-option');
+
+if (langBtn && langDropdown) {
+    // Toggle dropdown
+    langBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        langDropdown.classList.toggle('active');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) {
+            langDropdown.classList.remove('active');
+        }
+    });
+    
+    // Handle language selection
+    langOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.preventDefault();
+            const selectedLang = this.getAttribute('data-lang');
+            
+            // Update current language display
+            const langCurrent = document.querySelector('.lang-current');
+            if (langCurrent) {
+                langCurrent.textContent = selectedLang.toUpperCase();
+            }
+            
+            // Update active state
+            langOptions.forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Close dropdown
+            langDropdown.classList.remove('active');
+            
+            // Save preference
+            localStorage.setItem('preferredLanguage', selectedLang);
+            
+            // Load translations
+            loadTranslations(selectedLang);
+        });
+    });
+    
+    // Load saved language preference
+    const savedLang = localStorage.getItem('preferredLanguage') || 'es';
+    loadTranslations(savedLang);
+    
+    // Update the display
+    const savedOption = document.querySelector(`.lang-option[data-lang="${savedLang}"]`);
+    if (savedOption) {
+        const langCurrent = document.querySelector('.lang-current');
+        if (langCurrent) {
+            langCurrent.textContent = savedLang.toUpperCase();
+        }
+        savedOption.classList.add('active');
+    }
+}
     
     // Mobile Menu Toggle
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
@@ -138,9 +199,9 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     // Modal trigger buttons (removed login buttons to allow normal navigation)
+    // "Ver Servicios" buttons now open the trial/consultation modal
     const modalTriggers = {
-        demo: ['#heroDemoBtn', '#finalDemoBtn'],
-        trial: ['#ctaBtn', '#mobileCtaBtn', '#heroCtaBtn', '#finalCtaBtn']
+        trial: ['#ctaBtn', '#mobileCtaBtn', '#heroCtaBtn', '#finalCtaBtn', '#heroDemoBtn', '#finalDemoBtn']
     };
     
     // Setup modal triggers
@@ -602,10 +663,8 @@ document.addEventListener('DOMContentLoaded', function() {
     ctaButtons.forEach(button => {
         if (!button.hasAttribute('data-modal-trigger')) {
             button.addEventListener('click', function(e) {
-                if (this.textContent.includes('Demo') || this.textContent.includes('Schedule')) {
-                    e.preventDefault();
-                    openModal('demo');
-                } else if (this.textContent.includes('Trial') || this.textContent.includes('Start')) {
+                // "Ver Servicios" buttons now open trial modal (consultation form)
+                if (this.textContent.includes('Servicios') || this.textContent.includes('Trial') || this.textContent.includes('Start')) {
                     e.preventDefault();
                     openModal('trial');
                 }

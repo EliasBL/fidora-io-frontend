@@ -85,9 +85,9 @@
                             <span class="lang-flag">🇬🇧</span>
                             <span>English</span>
                         </a>
-                        <a href="#" class="lang-option" data-lang="fr">
-                            <span class="lang-flag">🇫🇷</span>
-                            <span>Français</span>
+                        <a href="#" class="lang-option" data-lang="de">
+                            <span class="lang-flag">🇩🇪</span>
+                            <span>Deutsch</span>
                         </a>
                     </div>
                 </div>
@@ -138,8 +138,8 @@
                         Solicitar Consulta
                     </button>
                     <button class="btn-secondary-large" id="heroDemoBtn">
-                        <i class="fas fa-play"></i>
-                        Ver Demo
+                        <i class="fas fa-cogs"></i>
+                        Ver Servicios
                     </button>
                 </div>
                 
@@ -255,145 +255,100 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
+    <!-- Features Section - Corporate Grade -->
+    <section class="features-corporate" id="features">
         <div class="section-container">
             <div class="section-header">
                 <div class="section-badge">
-                    <i class="fas fa-magic"></i>
-                    <span>Características Potentes</span>
+                    <i class="fas fa-rocket"></i>
+                    <span data-i18n="features.badge">Características Potentes</span>
                 </div>
-                <h2 class="section-title">Automatización Inteligente para tu Negocio</h2>
-                <p class="section-description">
-                    FIDORA Labs ofrece soluciones de automatización con IA que transforman la comunicación con tus clientes. 
-                    Desde VozAI hasta WhatsApp y automatizaciones a medida.
-                </p>
+                <h2 class="section-title" data-i18n="features.title">Automatización Inteligente para tu Negocio</h2>
+                <p class="section-description" data-i18n="features.description">FIDORA Labs ofrece soluciones de automatización con IA que transforman la comunicación con tus clientes.</p>
             </div>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
+            <div class="features-corporate-grid">
+                <div class="feature-corporate-card">
+                    <div class="feature-corporate-icon">
                         <i class="fas fa-microphone"></i>
                     </div>
-                    <h3 class="feature-title">VozAI - Asistente de Voz</h3>
-                    <p class="feature-description">
-                        Interacción por voz inteligente que entiende y responde a tus clientes 
-                        de forma natural y conversacional.
-                    </p>
-                    <div class="feature-benefits">
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Respuestas en tiempo real</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Procesamiento de lenguaje natural</span>
-                        </div>
+                    <div class="feature-corporate-content">
+                        <h3 class="feature-corporate-title" data-i18n="features.voiceAI.title">VozAI - Asistente de Voz</h3>
+                        <p class="feature-corporate-description" data-i18n="features.voiceAI.description">Interacción por voz inteligente que entiende y responde a tus clientes de forma natural.</p>
+                        <ul class="feature-corporate-list">
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.voiceAI.benefits.0">Respuestas en tiempo real</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.voiceAI.benefits.1">Procesamiento de lenguaje natural</span></li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-corporate-card">
+                    <div class="feature-corporate-icon">
                         <i class="fab fa-whatsapp"></i>
                     </div>
-                    <h3 class="feature-title">Automatización WhatsApp</h3>
-                    <p class="feature-description">
-                        Envío automático de propiedades, seguimiento de clientes y respuestas 
-                        instantáneas a través de WhatsApp Business API.
-                    </p>
-                    <div class="feature-benefits">
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Envío masivo personalizado</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Respuestas automáticas</span>
-                        </div>
+                    <div class="feature-corporate-content">
+                        <h3 class="feature-corporate-title" data-i18n="features.whatsapp.title">Automatización WhatsApp</h3>
+                        <p class="feature-corporate-description" data-i18n="features.whatsapp.description">Envío automático, seguimiento de clientes y respuestas instantáneas a través de WhatsApp API.</p>
+                        <ul class="feature-corporate-list">
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.whatsapp.benefits.0">Envío masivo personalizado</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.whatsapp.benefits.1">Respuestas automáticas</span></li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-corporate-card">
+                    <div class="feature-corporate-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3 class="feature-title">Análisis y Métricas</h3>
-                    <p class="feature-description">
-                        Monitorea el rendimiento de tus automatizaciones con dashboards 
-                        en tiempo real y reportes detallados.
-                    </p>
-                    <div class="feature-benefits">
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Métricas en tiempo real</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Reportes personalizados</span>
-                        </div>
+                    <div class="feature-corporate-content">
+                        <h3 class="feature-corporate-title" data-i18n="features.analytics.title">Análisis y Métricas</h3>
+                        <p class="feature-corporate-description" data-i18n="features.analytics.description">Monitorea el rendimiento con dashboards en tiempo real y reportes detallados.</p>
+                        <ul class="feature-corporate-list">
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.analytics.benefits.0">Métricas en tiempo real</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.analytics.benefits.1">Reportes personalizados</span></li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-corporate-card">
+                    <div class="feature-corporate-icon">
                         <i class="fas fa-cogs"></i>
                     </div>
-                    <h3 class="feature-title">Automatizaciones a Medida</h3>
-                    <p class="feature-description">
-                        Desarrollamos soluciones personalizadas que se adaptan perfectamente 
-                        a las necesidades específicas de tu negocio.
-                    </p>
-                    <div class="feature-benefits">
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Desarrollo personalizado</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Integración con sistemas existentes</span>
-                        </div>
+                    <div class="feature-corporate-content">
+                        <h3 class="feature-corporate-title" data-i18n="features.custom.title">Automatizaciones a Medida</h3>
+                        <p class="feature-corporate-description" data-i18n="features.custom.description">Soluciones personalizadas que se adaptan perfectamente a las necesidades de tu negocio.</p>
+                        <ul class="feature-corporate-list">
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.custom.benefits.0">Desarrollo personalizado</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.custom.benefits.1">Integración con sistemas existentes</span></li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-corporate-card">
+                    <div class="feature-corporate-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
-                    <h3 class="feature-title">Respuesta Instantánea</h3>
-                    <p class="feature-description">
-                        Responde a tus clientes en menos de 1 minuto con automatizaciones 
-                        inteligentes que trabajan 24/7.
-                    </p>
-                    <div class="feature-benefits">
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Disponibilidad 24/7</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Tiempo de respuesta &lt;1min</span>
-                        </div>
+                    <div class="feature-corporate-content">
+                        <h3 class="feature-corporate-title" data-i18n="features.instant.title">Respuesta Instantánea</h3>
+                        <p class="feature-corporate-description" data-i18n="features.instant.description">Responde a tus clientes en menos de 1 minuto con automatizaciones 24/7.</p>
+                        <ul class="feature-corporate-list">
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.instant.benefits.0">Disponibilidad 24/7</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.instant.benefits.1">Tiempo de respuesta &lt;1min</span></li>
+                        </ul>
                     </div>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-corporate-card">
+                    <div class="feature-corporate-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3 class="feature-title">Seguridad y Privacidad</h3>
-                    <p class="feature-description">
-                        Protección de datos de nivel empresarial con encriptación 
-                        y cumplimiento total de normativas GDPR.
-                    </p>
-                    <div class="feature-benefits">
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Encriptación de datos</span>
-                        </div>
-                        <div class="benefit-item">
-                            <i class="fas fa-check"></i>
-                            <span>Cumple GDPR</span>
-                        </div>
+                    <div class="feature-corporate-content">
+                        <h3 class="feature-corporate-title" data-i18n="features.security.title">Seguridad y Privacidad</h3>
+                        <p class="feature-corporate-description" data-i18n="features.security.description">Protección de datos de nivel empresarial con encriptación y cumplimiento GDPR.</p>
+                        <ul class="feature-corporate-list">
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.security.benefits.0">Encriptación de datos</span></li>
+                            <li><i class="fas fa-check-circle"></i> <span data-i18n="features.security.benefits.1">Cumple GDPR</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -705,8 +660,8 @@
                         Solicitar Consulta Gratuita
                     </button>
                     <button class="btn-secondary-large" id="finalDemoBtn">
-                        <i class="fas fa-play"></i>
-                        Ver Demo
+                        <i class="fas fa-cogs"></i>
+                        Ver Servicios
                     </button>
                 </div>
                 <div class="cta-note">

@@ -2253,7 +2253,171 @@ html {
     outline-offset: 2px;
 }
 
-/* Animation for pricing toggle */
-.amount.hidden {
-    display: none;
+/* Corporate Features Section - Premium Design */
+.features-corporate {
+    padding: 100px 0;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+    position: relative;
+}
+
+.features-corporate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+.features-corporate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+}
+
+.feature-corporate-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-corporate-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feature-corporate-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.15);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.feature-corporate-card:hover::before {
+    opacity: 1;
+}
+
+.feature-corporate-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.feature-corporate-card:hover .feature-corporate-icon {
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 100%);
+    border-color: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+}
+
+.feature-corporate-content {
+    position: relative;
+    z-index: 1;
+}
+
+.feature-corporate-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+}
+
+.feature-corporate-description {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+}
+
+.feature-corporate-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.feature-corporate-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.7);
+}
+
+.feature-corporate-list li i {
+    color: #00ff88;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+/* Mobile Language Selector Fix */
+@media (max-width: 768px) {
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: relative;
+        z-index: 1001;
+    }
+    
+    .lang-selector {
+        position: relative;
+        z-index: 1002;
+    }
+    
+    .lang-dropdown {
+        position: fixed;
+        top: auto;
+        bottom: calc(100% + 0.5rem);
+        right: 0;
+        left: auto;
+        transform: translateY(10px);
+    }
+    
+    .lang-dropdown.active {
+        transform: translateY(0);
+    }
+    
+    .theme-toggle {
+        position: relative;
+        right: auto;
+    }
+    
+    .nav-actions .btn-primary {
+        display: none;
+    }
+    
+    .mobile-menu {
+        top: 72px;
+    }
+    
+    .mobile-menu.active {
+        z-index: 999;
+    }
+    
+    .mobile-menu-toggle {
+        z-index: 1001;
+    }
 }

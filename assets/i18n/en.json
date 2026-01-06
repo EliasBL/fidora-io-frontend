@@ -1,0 +1,166 @@
+{
+    "lang": "en",
+    "dir": "ltr",
+    "translations": {
+        "nav": {
+            "features": "Features",
+            "products": "Products",
+            "testimonials": "Testimonials",
+            "faq": "FAQ"
+        },
+        "cta": {
+            "requestDemo": "Request Demo",
+            "requestConsult": "Request Consultation",
+            "viewServices": "View Services",
+            "viewDemo": "View Demo",
+            "moreInfo": "More Info",
+            "contact": "Contact",
+            "scheduleConsult": "Request Free Consultation"
+        },
+        "hero": {
+            "title": "Stop losing customers by not responding on <span class='gradient-text'>time.</span>",
+            "description": "Real-time responses, automatic follow-up, and tailored solutions. We develop intelligent automations that transform how you communicate with your customers.",
+            "trustText": "Automation solutions for innovative companies.",
+            "security": "Enterprise-Grade Security",
+            "gdpr": "GDPR Compliant",
+            "rating": "Rating 4.9/5"
+        },
+        "features": {
+            "badge": "Powerful Features",
+            "title": "Intelligent Automation for Your Business",
+            "description": "FIDORA Labs offers AI-powered automation solutions that transform customer communication. From VoiceAI to WhatsApp and custom automations.",
+            "voiceAI": {
+                "title": "VoiceAI - Voice Assistant",
+                "description": "Intelligent voice interaction that understands and responds to your customers in a natural and conversational way.",
+                "benefits": ["Real-time responses", "Natural language processing"]
+            },
+            "whatsapp": {
+                "title": "WhatsApp Automation",
+                "description": "Automatic property sending, customer follow-up, and instant responses through WhatsApp Business API.",
+                "benefits": ["Personalized mass sending", "Automatic responses"]
+            },
+            "analytics": {
+                "title": "Analytics and Metrics",
+                "description": "Monitor the performance of your automations with real-time dashboards and detailed reports.",
+                "benefits": ["Real-time metrics", "Personalized reports"]
+            },
+            "custom": {
+                "title": "Custom Automations",
+                "description": "We develop personalized solutions that perfectly adapt to the specific needs of your business.",
+                "benefits": ["Custom development", "Integration with existing systems"]
+            },
+            "instant": {
+                "title": "Instant Response",
+                "description": "Respond to your customers in less than 1 minute with intelligent automations that work 24/7.",
+                "benefits": ["24/7 availability", "Response time <1min"]
+            },
+            "security": {
+                "title": "Security and Privacy",
+                "description": "Enterprise-level data protection with encryption and full GDPR compliance.",
+                "benefits": ["Data encryption", "GDPR compliant"]
+            }
+        },
+        "products": {
+            "badge": "Our Products",
+            "title": "Automation Solutions",
+            "description": "FIDORA offers a complete suite of intelligent automation products",
+            "voiceAI": {
+                "name": "VoiceAI",
+                "subtitle": "AI Voice Assistant",
+                "description": "Intelligent and natural voice interaction",
+                "features": ["Natural language processing", "Real-time responses", "System integration", "24/7 availability"]
+            },
+            "whatsapp": {
+                "name": "WhatsApp Automation",
+                "subtitle": "WhatsApp Automation",
+                "description": "Automatic communication with customers",
+                "popular": "Most Popular",
+                "features": ["Personalized mass sending", "Automatic responses", "Property tracking", "WhatsApp Business API", "Metrics and analytics"]
+            },
+            "custom": {
+                "name": "Custom Solutions",
+                "subtitle": "Custom Automations",
+                "description": "Automations designed specifically for you",
+                "features": ["Custom development", "Complete integration", "Dedicated support", "Guaranteed scalability"]
+            }
+        },
+        "testimonials": {
+            "badge": "Success Stories",
+            "title": "What Our Customers Say",
+            "description": "Discover how companies like yours are transforming their sales process with FIDORA."
+        },
+        "faq": {
+            "badge": "Frequently Asked Questions",
+            "title": "We Answer Your Questions",
+            "description": "Find answers to the most common questions about our automation solutions.",
+            "q1": "What is VoiceAI and how does it work?",
+            "a1": "VoiceAI is our intelligent voice assistant that uses natural language processing to interact with your customers in a conversational and natural way. It can understand complex queries and provide contextually relevant responses, significantly improving the customer experience.",
+            "q2": "How does WhatsApp Automation integrate?",
+            "a2": "We use the official WhatsApp Business API to automate messages, send properties, and manage conversations intelligently and personalized. The integration is seamless with your existing systems and allows complete control over automated conversations.",
+            "q3": "What are the prices?",
+            "a3": "We offer personalized plans based on your specific needs. Our prices vary depending on the volume of conversations, features required, and level of customization. Contact us for a free consultation and quotes tailored to your business.",
+            "q4": "How long does implementation take?",
+            "a4": "Implementation varies depending on project complexity. VoiceAI can be ready in 1-2 weeks, while custom solutions may take 4-8 weeks. We work with you to establish a realistic timeline and keep you informed throughout the process.",
+            "q5": "Is my data secure?",
+            "a5": "Absolutely. We use bank-level encryption and comply with all GDPR and European data protection regulations. Your information is stored on secure servers and we never share data with third parties without your explicit consent.",
+            "q6": "What type of support do you offer?",
+            "a6": "We offer 24/7 support, complete documentation, personalized training, and a dedicated account manager to ensure your success. Our expert team is available to resolve any questions and continuously optimize your automations.",
+            "q7": "Can it be customized for my business?",
+            "a7": "Yes, all our solutions are highly customizable. We develop automations specifically designed for your industry, work processes, and business objectives. Each implementation perfectly adapts to your unique needs.",
+            "q8": "Does it work with my current systems?",
+            "a8": "Our solutions integrate with most common business systems like CRM, ERP, and management tools. We perform a technical assessment beforehand to ensure seamless integration with your existing infrastructure."
+        },
+        "cta": {
+            "title": "Ready to Automate Your Business?",
+            "description": "Discover how FIDORA Labs can transform your customer communication through intelligent automation.",
+            "note": "No commitment consultation • Personalized solutions • Dedicated support"
+        },
+        "footer": {
+            "products": "Products",
+            "company": "Company",
+            "support": "Support",
+            "legal": "Legal",
+            "privacy": "Privacy Policy",
+            "terms": "Terms of Service",
+            "cookies": "Cookie Policy",
+            "about": "About Us",
+            "cases": "Success Stories",
+            "contact": "Contact",
+            "help": "Help Center",
+            "docs": "Documentation",
+            "copyright": "© 2025 FIDORA Labs. All rights reserved."
+        },
+        "modal": {
+            "loginTitle": "Welcome Back",
+            "demoTitle": "FIDORA CRM Demo",
+            "demoVideoTitle": "See FIDORA in Action",
+            "demoVideoDesc": "Watch how our AI-powered CRM transforms sales processes",
+            "trialTitle": "Request Free Consultation",
+            "trialBenefits": ["No commitment consultation", "Personalized solutions", "Response within 24 hours"],
+            "form": {
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "email": "Work Email",
+                "company": "Company Name",
+                "consent": "I accept the privacy policy, I am over 18 years old and I authorize being contacted by AI",
+                "submit": "Request Consultation",
+                "privacyLink": "privacy policy"
+            },
+            "trialNote": "Your data is safe and protected. We never share your information."
+        },
+        "dashboard": {
+            "title": "User Panel",
+            "sidebar": ["Panel", "Leads", "Calls", "WhatsApp"],
+            "kpis": ["Calls", "Messages"],
+            "trends": ["+32%", "+45%"],
+            "floating": {
+                "callLaunched": "Call Initiated",
+                "callLaunchedDesc": "AI contacting lead in real-time",
+                "callDeclined": "Call Declined",
+                "callDeclinedDesc": "Activating automatic WhatsApp",
+                "whatsappSent": "WhatsApp Sent",
+                "whatsappSentDesc": "Properties sent to customer via WhatsApp"
+            }
+        }
+    }
+}

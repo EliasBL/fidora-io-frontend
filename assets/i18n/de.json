@@ -1,0 +1,166 @@
+{
+    "lang": "de",
+    "dir": "ltr",
+    "translations": {
+        "nav": {
+            "features": "Funktionen",
+            "products": "Produkte",
+            "testimonials": "Testimonials",
+            "faq": "FAQ"
+        },
+        "cta": {
+            "requestDemo": "Demo anfragen",
+            "requestConsult": "Beratung anfragen",
+            "viewServices": "Dienste ansehen",
+            "viewDemo": "Demo ansehen",
+            "moreInfo": "Mehr Infos",
+            "contact": "Kontakt",
+            "scheduleConsult": "Kostenlose Beratung anfragen"
+        },
+        "hero": {
+            "title": "Hören Sie auf, Kunden zu verlieren, weil Sie nicht rechtzeitig <span class='gradient-text'>antworten.</span>",
+            "description": "Echtzeit-Antworten, automatische Nachverfolgung und maßgeschneiderte Lösungen. Wir entwickeln intelligente Automatisierungen, die Ihre Kommunikation mit Kunden transformieren.",
+            "trustText": "Automatisierungslösungen für innovative Unternehmen.",
+            "security": "Sicherheit auf Unternehmensniveau",
+            "gdpr": "DSGVO-konform",
+            "rating": "Bewertung 4.9/5"
+        },
+        "features": {
+            "badge": "Leistungsstarke Funktionen",
+            "title": "Intelligente Automatisierung für Ihr Unternehmen",
+            "description": "FIDORA Labs bietet KI-gesteuerte Automatisierungslösungen, die die Kundenkommunikation transformieren. Von VoiceAI über WhatsApp bis hin zu maßgeschneiderten Automatisierungen.",
+            "voiceAI": {
+                "title": "VoiceAI - Sprachassistent",
+                "description": "Intelligente Sprachinteraktion, die Ihre Kunden auf natürliche und konversationelle Weise versteht und antwortet.",
+                "benefits": ["Echtzeit-Antworten", "Verarbeitung natürlicher Sprache"]
+            },
+            "whatsapp": {
+                "title": "WhatsApp-Automatisierung",
+                "description": "Automatischer Versand von Objekten, Kundenverfolgung und sofortige Antworten über die WhatsApp Business API.",
+                "benefits": ["Personalisierter Massenversand", "Automatische Antworten"]
+            },
+            "analytics": {
+                "title": "Analysen und Metriken",
+                "description": "Überwachen Sie die Leistung Ihrer Automatisierungen mit Echtzeit-Dashboards und detaillierten Berichten.",
+                "benefits": ["Echtzeit-Metriken", "Personalisierte Berichte"]
+            },
+            "custom": {
+                "title": "Maßgeschneiderte Automatisierungen",
+                "description": "Wir entwickeln personalisierte Lösungen, die perfekt an die spezifischen Bedürfnisse Ihres Unternehmens angepasst sind.",
+                "benefits": ["Maßgeschneiderte Entwicklung", "Integration mit bestehenden Systemen"]
+            },
+            "instant": {
+                "title": "Sofortige Antwort",
+                "description": "Antworten Sie Ihren Kunden in weniger als 1 Minute mit intelligenten Automatisierungen, die 24/7 arbeiten.",
+                "benefits": ["24/7 Verfügbarkeit", "Antwortzeit <1min"]
+            },
+            "security": {
+                "title": "Sicherheit und Datenschutz",
+                "description": "Datenschutz auf Unternehmensniveau mit Verschlüsselung und vollständiger DSGVO-Konformität.",
+                "benefits": ["Datenverschlüsselung", "DSGVO-konform"]
+            }
+        },
+        "products": {
+            "badge": "Unsere Produkte",
+            "title": "Automatisierungslösungen",
+            "description": "FIDORA bietet eine vollständige Suite intelligenter Automatisierungsprodukte",
+            "voiceAI": {
+                "name": "VoiceAI",
+                "subtitle": "KI-Sprachassistent",
+                "description": "Intelligente und natürliche Sprachinteraktion",
+                "features": ["Verarbeitung natürlicher Sprache", "Echtzeit-Antworten", "Systemintegration", "24/7 Verfügbarkeit"]
+            },
+            "whatsapp": {
+                "name": "WhatsApp-Automatisierung",
+                "subtitle": "WhatsApp-Automatisierung",
+                "description": "Automatische Kommunikation mit Kunden",
+                "popular": "Am beliebtesten",
+                "features": ["Personalisierter Massenversand", "Automatische Antworten", "Objektverfolgung", "WhatsApp Business API", "Metriken und Analysen"]
+            },
+            "custom": {
+                "name": "Maßgeschneiderte Lösungen",
+                "subtitle": "Maßgeschneiderte Automatisierungen",
+                "description": "Speziell für Sie entwickelte Automatisierungen",
+                "features": ["Maßgeschneiderte Entwicklung", "Vollständige Integration", "Dedizierter Support", "Garantiert skalierbar"]
+            }
+        },
+        "testimonials": {
+            "badge": "Erfolgsgeschichten",
+            "title": "Was unsere Kunden sagen",
+            "description": "Entdecken Sie, wie Unternehmen wie Ihres ihren Verkaufsprozess mit FIDORA transformieren."
+        },
+        "faq": {
+            "badge": "Häufig gestellte Fragen",
+            "title": "Wir beantworten Ihre Fragen",
+            "description": "Finden Sie Antworten auf die häufigsten Fragen zu unseren Automatisierungslösungen.",
+            "q1": "Was ist VoiceAI und wie funktioniert es?",
+            "a1": "VoiceAI ist unser intelligenter Sprachassistent, der die Verarbeitung natürlicher Sprache verwendet, um auf natürliche und konversationelle Weise mit Ihren Kunden zu interagieren. Er kann komplexe Anfragen verstehen und kontextuell relevante Antworten geben, was die Kundenerfahrung erheblich verbessert.",
+            "q2": "Wie integriert sich WhatsApp-Automatisierung?",
+            "a2": "Wir verwenden die offizielle WhatsApp Business API, um Nachrichten zu automatisieren, Objekte zu senden und Gespräche intelligent und personalisiert zu verwalten. Die Integration ist nahtlos mit Ihren bestehenden Systemen und ermöglicht die vollständige Kontrolle über automatisierte Gespräche.",
+            "q3": "Was sind die Preise?",
+            "a3": "Wir bieten personalisierte Tarife basierend auf Ihren spezifischen Bedürfnissen. Unsere Preise variieren je nach Gesprächsvolumen, erforderlichen Funktionen und Anpassungsgrad. Kontaktieren Sie uns für eine kostenlose Beratung und Angebote, die auf Ihr Unternehmen zugeschnitten sind.",
+            "q4": "Wie lange dauert die Implementierung?",
+            "a4": "Die Implementierung variiert je nach Projektkomplexität. VoiceAI kann in 1-2 Wochen einsatzbereit sein, während maßgeschneiderte Lösungen 4-8 Wochen dauern können. Wir arbeiten mit Ihnen zusammen, um einen realistischen Zeitplan zu erstellen und Sie während des gesamten Prozesses auf dem Laufenden zu halten.",
+            "q5": "Sind meine Daten sicher?",
+            "a5": "Absolut. Wir verwenden Bankenverschlüsselung und erfüllen alle DSGVO- und europäischen Datenschutzbestimmungen. Ihre Informationen werden auf sicheren Servern gespeichert und wir geben niemals Daten an Dritte weiter ohne Ihre ausdrückliche Zustimmung.",
+            "q6": "Welche Art von Support bieten Sie an?",
+            "a6": "Wir bieten 24/7-Support, vollständige Dokumentation, personalisiertes Training und einen dedizierten Account Manager, um Ihren Erfolg zu gewährleisten. Unser Expertenteam steht Ihnen zur Verfügung, um Fragen zu beantworten und Ihre Automatisierungen kontinuierlich zu optimieren.",
+            "q7": "Kann es für mein Unternehmen angepasst werden?",
+            "a7": "Ja, alle unsere Lösungen sind hochgradig anpassbar. Wir entwickeln Automatisierungen, die speziell für Ihre Branche, Arbeitsprozesse und Geschäftsziele konzipiert sind. Jede Implementierung passt sich perfekt an Ihre individuellen Bedürfnisse an.",
+            "q8": "Funktioniert es mit meinen aktuellen Systemen?",
+            "a8": "Unsere Lösungen integrieren sich mit den meisten gängigen Geschäftssystemen wie CRM, ERP und Management-Tools. Wir führen vorab eine technische Bewertung durch, um eine nahtlose Integration mit Ihrer bestehenden Infrastruktur zu gewährleisten."
+        },
+        "cta": {
+            "title": "Bereit, Ihr Unternehmen zu automatisieren?",
+            "description": "Entdecken Sie, wie FIDORA Labs Ihre Kundenkommunikation durch intelligente Automatisierung transformieren kann.",
+            "note": "Unverbindliche Beratung • Personalisierte Lösungen • Dedizierter Support"
+        },
+        "footer": {
+            "products": "Produkte",
+            "company": "Unternehmen",
+            "support": "Support",
+            "legal": "Rechtliches",
+            "privacy": "Datenschutzrichtlinie",
+            "terms": "Nutzungsbedingungen",
+            "cookies": "Cookie-Richtlinie",
+            "about": "Über uns",
+            "cases": "Erfolgsgeschichten",
+            "contact": "Kontakt",
+            "help": "Hilfe-Center",
+            "docs": "Dokumentation",
+            "copyright": "© 2025 FIDORA Labs. Alle Rechte vorbehalten."
+        },
+        "modal": {
+            "loginTitle": "Willkommen zurück",
+            "demoTitle": "FIDORA CRM Demo",
+            "demoVideoTitle": "FIDORA in Aktion sehen",
+            "demoVideoDesc": "Sehen Sie, wie unser KI-gestütztes CRM Verkaufsprozesse transformiert",
+            "trialTitle": "Kostenlose Beratung anfragen",
+            "trialBenefits": ["Unverbindliche Beratung", "Personalisierte Lösungen", "Antwort innerhalb von 24 Stunden"],
+            "form": {
+                "firstName": "Vorname",
+                "lastName": "Nachname",
+                "email": "Arbeits-E-Mail",
+                "company": "Firmenname",
+                "consent": "Ich akzeptiere die Datenschutzrichtlinie, ich bin über 18 Jahre alt und autorisiere den Kontakt durch KI",
+                "submit": "Beratung anfragen",
+                "privacyLink": "Datenschutzrichtlinie"
+            },
+            "trialNote": "Ihre Daten sind sicher und geschützt. Wir geben Ihre Informationen niemals weiter."
+        },
+        "dashboard": {
+            "title": "Benutzerpanel",
+            "sidebar": ["Panel", "Leads", "Anrufe", "WhatsApp"],
+            "kpis": ["Anrufe", "Nachrichten"],
+            "trends": ["+32%", "+45%"],
+            "floating": {
+                "callLaunched": "Anruf gestartet",
+                "callLaunchedDesc": "KI kontaktiert Lead in Echtzeit",
+                "callDeclined": "Anruf abgelehnt",
+                "callDeclinedDesc": "Automatische WhatsApp-Aktivierung",
+                "whatsappSent": "WhatsApp gesendet",
+                "whatsappSentDesc": "Objekte per WhatsApp an Kunden gesendet"
+            }
+        }
+    }
+}
