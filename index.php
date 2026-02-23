@@ -783,12 +783,12 @@ function t($key, $default = '') {
                     
                     <div class="form-group">
                         <label for="trialEmail"><?php echo t('modal.form.email', 'Email de Trabajo'); ?></label>
-                        <input type="email" id="trialEmail" name="email" required placeholder="juan@empresa.com">
+                        <input type="email" id="trialEmail" name="email" placeholder="juan@empresa.com">
                     </div>
                     
                     <div class="form-group">
-                        <label for="company"><?php echo t('modal.form.company', 'Nombre de la Empresa'); ?></label>
-                        <input type="text" id="company" name="company" required placeholder="Tu Empresa">
+                        <label for="phone"><?php echo t('modal.form.phone', 'Teléfono'); ?></label>
+                        <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="+34 612 345 678">
                     </div>
                     
                     <div class="form-group">

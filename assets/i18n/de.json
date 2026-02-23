@@ -139,6 +139,7 @@
                 "firstName": "Vorname",
                 "lastName": "Nachname",
                 "email": "Arbeits-E-Mail",
+                "phone": "Telefon",
                 "company": "Firmenname",
                 "consent": "Ich akzeptiere die Datenschutzrichtlinie, ich bin über 18 Jahre alt und autorisiere den Kontakt durch KI",
                 "submit": "Beratung anfragen",

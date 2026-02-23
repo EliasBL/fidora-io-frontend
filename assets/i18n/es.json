@@ -139,6 +139,7 @@
                 "firstName": "Nombre",
                 "lastName": "Apellidos",
                 "email": "Email de Trabajo",
+                "phone": "Teléfono",
                 "company": "Nombre de la Empresa",
                 "consent": "Acepto la política de privacidad, soy mayor de 18 años y autorizo ser contactado mediante IA",
                 "submit": "Solicitar Consulta",

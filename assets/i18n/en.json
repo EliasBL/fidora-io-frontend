@@ -139,6 +139,7 @@
                 "firstName": "First Name",
                 "lastName": "Last Name",
                 "email": "Work Email",
+                "phone": "Phone",
                 "company": "Company Name",
                 "consent": "I accept the privacy policy, I am over 18 years old and I authorize being contacted by AI",
                 "submit": "Request Consultation",
