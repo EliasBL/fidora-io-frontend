@@ -1894,6 +1894,130 @@ body {
     flex-shrink: 0;
 }
 
+/* Modal Success Content */
+.modal-success-content {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.modal-success-content .success-icon-large {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.05));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: scaleIn 0.5s ease-out;
+}
+
+.modal-success-content .success-icon-large i {
+    font-size: 40px;
+    color: var(--accent-success);
+}
+
+.modal-success-content .success-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-success-content .success-message {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+}
+
+.modal-success-content .success-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    background: var(--bg-glass);
+    border-radius: 12px;
+}
+
+.modal-success-content .success-details p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.modal-success-content .success-details i {
+    color: var(--accent-info);
+}
+
+/* Modal Error Content */
+.modal-error-content {
+    text-align: center;
+    padding: var(--spacing-xl) 0;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.modal-error-content .error-icon-large {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-lg);
+    background: linear-gradient(135deg, rgba(255, 68, 68, 0.2), rgba(255, 68, 68, 0.05));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-error-content .error-icon-large i {
+    font-size: 40px;
+    color: var(--accent-danger);
+}
+
+.modal-error-content .error-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-error-content .error-message {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.modal-error-content .btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: var(--glass-border);
+    border-radius: 8px;
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.modal-error-content .btn-secondary:hover {
+    background: var(--bg-glass-hover);
+    transform: translateY(-1px);
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 /* Video Modal */
 .video-container {
     position: relative;

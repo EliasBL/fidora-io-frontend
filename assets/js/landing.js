@@ -293,7 +293,7 @@ if (langBtn && langDropdown) {
         const firstName = formData.get('firstName');
         const lastName = formData.get('lastName');
         const email = formData.get('email');
-        const company = formData.get('company');
+        const phone = formData.get('phone');
         
         // Show loading state
         const submitBtn = trialForm.querySelector('button[type="submit"]');
@@ -310,26 +310,96 @@ if (langBtn && langDropdown) {
                 firstName,
                 lastName,
                 email,
-                company,
+                phone,
                 timestamp: new Date().toISOString(),
                 source: 'landing_page'
             })
         })
         .then(response => response.json())
         .then(data => {
-            closeModal(modals.trial);
-            trialForm.reset();
-            showSuccessMessage(`¡Gracias ${firstName}!`, 'Hemos recibido tu solicitud. Te contactaremos pronto.');
+            // Show success message inside the modal
+            showSuccessInModal(firstName);
         })
         .catch(error => {
             console.error('Error:', error);
-            showSuccessMessage('Error', 'Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo.', 'error');
+            // Show error inside the modal
+            showErrorInModal();
         })
         .finally(() => {
             // Reset button
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
         });
+    }
+    
+    // Show success message inside the modal
+    function showSuccessInModal(firstName) {
+        const modalContent = document.querySelector('#trialModal .modal-content');
+        if (!modalContent) return;
+        
+        // Hide form
+        const form = document.getElementById('trialForm');
+        if (form) form.style.display = 'none';
+        
+        // Hide benefits
+        const benefits = document.querySelector('#trialModal .trial-benefits');
+        if (benefits) benefits.style.display = 'none';
+        
+        // Create success content
+        const successContent = document.createElement('div');
+        successContent.className = 'modal-success-content';
+        successContent.innerHTML = `
+            <div class="success-icon-large">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="success-title">¡Gracias ${firstName}!</h3>
+            <p class="success-message">Hemos recibido tu solicitud. Te contactaremos pronto.</p>
+            <div class="success-details">
+                <p><i class="fas fa-clock"></i> Respuesta en menos de 24 horas</p>
+            </div>
+        `;
+        
+        modalContent.appendChild(successContent);
+        
+        // Auto close modal after 4 seconds
+        setTimeout(() => {
+            closeModal(modals.trial);
+            // Reset form for next time
+            setTimeout(() => {
+                if (form) {
+                    form.style.display = 'block';
+                    form.reset();
+                }
+                if (benefits) benefits.style.display = 'flex';
+                if (successContent) successContent.remove();
+            }, 300);
+        }, 4000);
+    }
+    
+    // Show error message inside the modal
+    function showErrorInModal() {
+        const modalContent = document.querySelector('#trialModal .modal-content');
+        if (!modalContent) return;
+        
+        // Hide form temporarily
+        const form = document.getElementById('trialForm');
+        if (form) form.style.display = 'none';
+        
+        // Create error content
+        const errorContent = document.createElement('div');
+        errorContent.className = 'modal-error-content';
+        errorContent.innerHTML = `
+            <div class="error-icon-large">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h3 class="error-title">Error</h3>
+            <p class="error-message">Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo.</p>
+            <button class="btn-secondary" onclick="this.parentElement.remove(); document.getElementById('trialForm').style.display = 'block';">
+                Volver a intentar
+            </button>
+        `;
+        
+        modalContent.appendChild(errorContent);
     }
     
     // Success message function
