@@ -930,40 +930,110 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
        The "Book a call" CTA in the nav is redundant (the hero already
        has a primary CTA and there's a contact section), so we hide it. */
     .nav__actions .btn[data-cta] { display: none; }
-    .hero { padding-top: 120px; padding-bottom: 80px; }
-    .hero__stats { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+    /* HERO — fit everything within a single mobile viewport.
+       Tighten vertical padding, scale down headline + lede, and stack
+       the CTAs full-width so both buttons remain visible without scroll. */
+    .hero {
+        padding-top: 96px;
+        padding-bottom: 56px;
+        min-height: 100svh; /* respect mobile browser chrome */
+    }
+    .hero__eyebrow { margin-bottom: 20px; font-size: 10px; }
+    .hero__title {
+        /* Smaller, tighter headline so 2 lines comfortably fit */
+        font-size: clamp(2rem, 8.5vw, 2.8rem);
+        line-height: 0.98;
+        margin: 0 0 20px;
+        max-width: 18ch;
+    }
+    .hero__lede {
+        font-size: 15px;
+        line-height: 1.45;
+        margin: 0 0 24px;
+        max-width: 100%;
+    }
+    .hero__cta {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        width: 100%;
+    }
+    .hero__cta .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 18px;
+        font-size: 14px;
+    }
+    .hero__stats {
+        margin-top: 28px;
+        padding-top: 16px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px 16px;
+    }
+    .hero__stats dt { font-size: 9px; }
+    .hero__stats dd { font-size: 15px; }
     .hero__scroll { display: none; }
 
+
     /* Stack section — keep the 3D feel but make sure NOTHING bleeds out
-       of the viewport. Smaller cards, tighter perspective, narrower layers. */
-    .stack { padding: 80px 0 60px; }
+       of the viewport. Smaller cards, tighter perspective, narrower layers,
+       and most importantly: enough room inside each card for the headline
+       so it never overflows on small screens. */
+    .stack { padding: 64px 0 48px; }
     .stack__pin { height: 320vh; }
     .stack__scene {
-        perspective: 1200px;
-        padding: 0 16px;
+        perspective: 1000px;
+        padding: 0 14px;
         overflow: hidden; /* hard clip so cards can never exceed viewport */
     }
     .stack__layers {
-        width: calc(100vw - 32px);
-        max-width: 380px;
-        height: 320px;
-        transform: rotateX(22deg) rotateZ(-8deg);
-    }
-    .stack__layer { padding: 22px 22px; border-radius: 8px; }
-    .stack__layer::after { left: 8px; right: 8px; top: 8px; bottom: 8px; }
-    .stack__layer h3 { font-size: 1.1rem; margin-top: 10px; max-width: 24ch; }
-    .stack__layer .mono { font-size: 10px; }
-    .stack__layer .mono::before { width: 14px; }
-    /* Tighter z-depth so the front card doesn't visually pop outside */
-    .stack__layer[data-layer="0"] { transform: translate3d(0, 0, 80px); }
-    .stack__layer[data-layer="1"] { transform: translate3d(0, 0, 30px); }
-    .stack__layer[data-layer="2"] { transform: translate3d(0, 0, -30px); }
-    .stack__layer[data-layer="3"] { transform: translate3d(0, 0, -80px); }
-    .stack__scene.is-active .stack__layers {
+        width: calc(100vw - 28px);
+        max-width: 360px;
+        /* Auto height so the layer can grow with the text; rely on max-width
+           and tighter rotation so it still feels like a 3D stack. */
+        height: clamp(260px, 46vh, 360px);
         transform: rotateX(18deg) rotateZ(-6deg);
     }
+    .stack__layer {
+        padding: 18px 18px;
+        border-radius: 8px;
+        /* Make sure the card content can never push out of the card itself */
+        justify-content: flex-start;
+        gap: 10px;
+    }
+    .stack__layer::after { left: 6px; right: 6px; top: 6px; bottom: 6px; }
+    .stack__layer h3 {
+        margin-top: 8px;
+        font-size: clamp(0.95rem, 4vw, 1.15rem);
+        line-height: 1.25;
+        max-width: 100%;
+        /* Allow long words/phrases to wrap inside the card */
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        hyphens: auto;
+    }
+    .stack__layer .mono {
+        font-size: 9px;
+        letter-spacing: .14em;
+        gap: 8px;
+    }
+    .stack__layer .mono::before { width: 12px; }
+    /* Tighter z-depth so the front card doesn't visually pop outside */
+    .stack__layer[data-layer="0"] { transform: translate3d(0, 0, 60px); }
+    .stack__layer[data-layer="1"] { transform: translate3d(0, 0, 22px); }
+    .stack__layer[data-layer="2"] { transform: translate3d(0, 0, -22px); }
+    .stack__layer[data-layer="3"] { transform: translate3d(0, 0, -60px); }
+    .stack__scene.is-active .stack__layers {
+        transform: rotateX(14deg) rotateZ(-4deg);
+    }
+    /* Section head tightened on mobile so the section reads in one breath */
+    .stack .section__head { margin-bottom: 32px; padding: 0 20px; }
+    .stack .section__title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+    .stack .section__lede { font-size: 15px; }
     /* On phone, hide the chapter rail (cards already show the same mono label) */
     .stack__progress { display: none; }
+
 
     .metrics__grid { grid-template-columns: 1fr 1fr; }
     .foot__cols { grid-template-columns: 1fr 1fr; }
