@@ -932,25 +932,67 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     .nav__actions .btn[data-cta] { display: none; }
 
     /* HERO — fit everything within a single mobile viewport.
-       Tighten vertical padding, scale down headline + lede, and stack
-       the CTAs full-width so both buttons remain visible without scroll. */
+       Layout (top → bottom, no overlap):
+         1. Eyebrow `FIDORA LABS · ...` pinned just under the nav.
+         2. Free vertical space in the middle for the hero image (the face).
+         3. Headline + lede + CTAs anchored to the bottom of the hero.
+       Stats row dropped on mobile. */
     .hero {
-        padding-top: 96px;
-        padding-bottom: 56px;
-        min-height: 100svh; /* respect mobile browser chrome */
+        padding-top: 72px;   /* under the nav */
+        padding-bottom: 32px;
+        min-height: 100svh;  /* respect mobile browser chrome */
+        /* Two rows: row 1 = eyebrow (auto height, top), row 2 = inner
+           content (1fr, end-aligned). This guarantees no overlap. */
+        display: grid;
+        grid-template-rows: auto 1fr;
+        align-items: stretch;
+        row-gap: 0;
     }
-    .hero__eyebrow { margin-bottom: 20px; font-size: 10px; }
+    /* Take the eyebrow out of .hero__inner and into the hero grid as row 1
+       so the headline below can never overlap it. */
+    .hero__eyebrow {
+        position: static;
+        margin: 0;
+        padding: 0;
+        font-size: 10px;
+        grid-row: 1;
+        align-self: start;
+        justify-self: start;
+        max-width: 100%;
+        overflow: hidden;
+    }
+    .hero__eyebrow .mono {
+        font-size: 9px;
+        letter-spacing: .12em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        max-width: calc(100vw - var(--pad-x) * 2 - 18px);
+    }
+
+    /* The inner content sits in row 2 and is pushed to the bottom of the
+       hero with margin-top:auto so the middle area stays clear. */
+    .hero__inner {
+        grid-row: 2;
+        align-self: end;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: 100%;
+    }
+
     .hero__title {
         /* Smaller, tighter headline so 2 lines comfortably fit */
         font-size: clamp(2rem, 8.5vw, 2.8rem);
         line-height: 0.98;
-        margin: 0 0 20px;
+        margin: 0 0 16px;
         max-width: 18ch;
     }
     .hero__lede {
         font-size: 15px;
         line-height: 1.45;
-        margin: 0 0 24px;
+        margin: 0 0 20px;
         max-width: 100%;
     }
     .hero__cta {
@@ -965,15 +1007,12 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
         padding: 14px 18px;
         font-size: 14px;
     }
-    .hero__stats {
-        margin-top: 28px;
-        padding-top: 16px;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px 16px;
-    }
-    .hero__stats dt { font-size: 9px; }
-    .hero__stats dd { font-size: 15px; }
+    /* Hide the stats row on mobile — let the hero image (the face) breathe
+       between the eyebrow and the headline. */
+    .hero__stats { display: none; }
     .hero__scroll { display: none; }
+
+
 
 
     /* Stack section — keep the 3D feel but make sure NOTHING bleeds out

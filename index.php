@@ -287,7 +287,7 @@ $c = $copy[$lang];
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="assets/css/app.css" />
+    <link rel="stylesheet" href="assets/css/app.css?v=2" />
 </head>
 <body>
 
@@ -346,12 +346,12 @@ $c = $copy[$lang];
             <div class="hero__scan"></div>
         </div>
 
-        <div class="hero__inner">
-            <div class="hero__eyebrow">
-                <span class="dot"></span>
-                <span class="mono"><?php echo $c['eyebrow']; ?></span>
-            </div>
+        <div class="hero__eyebrow">
+            <span class="dot"></span>
+            <span class="mono"><?php echo $c['eyebrow']; ?></span>
+        </div>
 
+        <div class="hero__inner">
             <h1 class="hero__title">
                 <span class="line"><span data-split><?php echo $c['hero_line_1']; ?></span></span>
                 <span class="line"><span data-split><?php echo $c['hero_line_2']; ?></span></span>
