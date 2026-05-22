@@ -1031,7 +1031,7 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
         max-width: 360px;
         /* Auto height so the layer can grow with the text; rely on max-width
            and tighter rotation so it still feels like a 3D stack. */
-        height: clamp(260px, 46vh, 360px);
+        height: clamp(320px, 56vh, 440px);
         transform: rotateX(18deg) rotateZ(-6deg);
     }
     .stack__layer {
@@ -1070,9 +1070,8 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     .stack .section__head { margin-bottom: 32px; padding: 0 20px; }
     .stack .section__title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
     .stack .section__lede { font-size: 15px; }
-    /* On phone, hide the chapter rail (cards already show the same mono label) */
-    .stack__progress { display: none; }
-
+    /* On phone, show the chapter rail so users can track their position */
+    .stack__progress { display: flex; }
 
     .metrics__grid { grid-template-columns: 1fr 1fr; }
     .foot__cols { grid-template-columns: 1fr 1fr; }
