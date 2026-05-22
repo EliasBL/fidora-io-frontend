@@ -347,7 +347,6 @@ $c = $copy[$lang];
         </div>
 
         <div class="hero__eyebrow">
-            <span class="dot"></span>
             <span class="mono"><?php echo $c['eyebrow']; ?></span>
         </div>
 

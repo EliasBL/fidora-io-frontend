@@ -326,15 +326,6 @@ html[data-theme="light"] .hero__veil {
     margin-bottom: 36px;
     color: var(--fg-mute);
 }
-.hero__eyebrow .dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: #00ff88;
-    box-shadow: 0 0 12px rgba(0,255,136,.7);
-    animation: pulse 2.4s infinite;
-}
-html[data-theme="light"] .hero__eyebrow .dot { background: #008a3e; box-shadow: 0 0 8px rgba(0,138,62,.5); }
-@keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:.4 } }
-
 .hero__title {
     font-size: var(--fs-hero);
     line-height: 0.92;
