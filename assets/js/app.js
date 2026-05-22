@@ -1,0 +1,334 @@
+/* =================================================================
+   FIDORA Labs — v2 / 2026
+   Interactions: theme, lang, scroll effects, parallax,
+   3D stack, manifesto pinning, counters, form submit.
+   ================================================================= */
+(() => {
+    'use strict';
+
+    const $  = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+    const html = document.documentElement;
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---------- Theme -------------------------------------------- */
+    const themeKey = 'fidora_theme';
+    const stored = localStorage.getItem(themeKey);
+    if (stored === 'light' || stored === 'dark') html.dataset.theme = stored;
+
+    const themeBtn = $('#themeToggle');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            const next = html.dataset.theme === 'light' ? 'dark' : 'light';
+            html.dataset.theme = next;
+            localStorage.setItem(themeKey, next);
+            document.querySelector('meta[name="theme-color"]')
+                ?.setAttribute('content', next === 'light' ? '#ffffff' : '#000000');
+        });
+    }
+
+    /* ---------- Lang dropdown ----------------------------------- */
+    const lang = $('[data-lang]');
+    if (lang) {
+        const btn = $('.lang__btn', lang);
+        btn?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            lang.classList.toggle('is-open');
+            btn.setAttribute('aria-expanded', lang.classList.contains('is-open'));
+        });
+        document.addEventListener('click', (e) => {
+            if (!lang.contains(e.target)) {
+                lang.classList.remove('is-open');
+                btn?.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    /* ---------- Nav scroll state -------------------------------- */
+    const nav = $('#nav');
+    const onScrollNav = () => {
+        if (!nav) return;
+        nav.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
+    onScrollNav();
+    window.addEventListener('scroll', onScrollNav, { passive: true });
+
+    /* ---------- Reveal on scroll -------------------------------- */
+    const toReveal = $$(
+        '.section__head, .product, .metric, .contact__form, .contact__copy, .stack__scene, .foot__top'
+    );
+    toReveal.forEach(el => el.setAttribute('data-reveal', ''));
+    const revealIO = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+            if (en.isIntersecting) {
+                en.target.classList.add('is-in');
+                revealIO.unobserve(en.target);
+            }
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    toReveal.forEach(el => revealIO.observe(el));
+
+    /* ---------- Hero parallax (subtle, scroll-linked) ----------- */
+    const heroImg = $('.hero__media img');
+    if (heroImg && !prefersReduced) {
+        let ticking = false;
+        const update = () => {
+            const y = Math.min(window.scrollY, 800);
+            const scale = 1.05 + (y / 800) * 0.06;
+            heroImg.style.transform = `translateY(${y * 0.18}px) scale(${scale})`;
+            ticking = false;
+        };
+        window.addEventListener('scroll', () => {
+            if (!ticking) { requestAnimationFrame(update); ticking = true; }
+        }, { passive: true });
+    }
+
+    /* ---------- 3D stack: pinned scroll-driven reveal -----------
+       The .stack__pin element is a tall track; .stack__scene is
+       sticky inside it (CSS). We compute progress 0..1 across the
+       pin's scroll distance and animate each layer accordingly.
+       Layers initially sit stacked on the topmost card. As the user
+       scrolls, the top card peels off (translateY up + tilt + fade),
+       revealing the next card, then the next, and the next.
+       --------------------------------------------------------- */
+    const pin = $('.stack__pin');
+    const scene = $('.stack__scene');
+    if (pin && scene && !prefersReduced) {
+        const stackLayers = $$('.stack__layer', scene);
+        const N = stackLayers.length;
+        // The progress rail is now <ol><li>…</li></ol>, not <span>s.
+        const dots = $$('.stack__progress li', scene);
+
+        const sceneIO = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) scene.classList.add('is-active');
+            });
+        }, { threshold: 0.05 });
+        sceneIO.observe(scene);
+
+        // Base depths (must match CSS so initial paint matches)
+        const BASE_Z = [180, 60, -60, -180];
+
+        let raf = null;
+        const update = () => {
+            raf = null;
+            const rect = pin.getBoundingClientRect();
+            const vh = window.innerHeight;
+            // Progress over the pin track: 0 when scene first sticks,
+            // 1 when the pin has fully scrolled past (scene un-sticks).
+            const trackLength = pin.offsetHeight - vh;
+            const scrolled = -rect.top;
+            const progress = Math.max(0, Math.min(1, scrolled / trackLength));
+
+            // Reserve a tiny tail (5%) so the last card has a moment to be seen
+            // before the section ends.
+            const usable = Math.min(progress / 0.95, 1);
+
+            // Each of the first (N-1) layers peels off across an equal slice.
+            // The Nth (deepest) layer never peels — it stays as the final reveal.
+            const peels = N - 1;
+            const slice = 1 / peels;
+
+            stackLayers.forEach((layer, i) => {
+                const baseZ = BASE_Z[i] !== undefined ? BASE_Z[i] : 0;
+
+                if (i === N - 1) {
+                    // last layer: just gently rise to centre as user scrolls
+                    const rise = usable;
+                    const ty = (1 - rise) * 0;
+                    layer.style.transform = `translate3d(0, ${ty}px, ${baseZ + rise * 120}px)`;
+                    layer.style.opacity = '1';
+                    return;
+                }
+
+                // local progress for this layer's peel
+                const start = i * slice;
+                const local = Math.max(0, Math.min(1, (usable - start) / slice));
+                // ease-out cubic
+                const eased = 1 - Math.pow(1 - local, 3);
+
+                // movement
+                const translateY = -eased * 220;            // peel upward
+                const rotateX    = -eased * 22;             // tilt forward as it peels
+                const translateZ = baseZ + eased * 240;     // pop toward camera then off
+                const opacity    = 1 - eased;               // fade to 0
+
+                layer.style.transform =
+                    `translate3d(0, ${translateY}px, ${translateZ}px) rotateX(${rotateX}deg)`;
+                layer.style.opacity = String(opacity);
+            });
+
+            // Active chapter = the layer currently in front (not yet fully peeled).
+            // While layer i is peeling (local 0..1), it's still the "current" chapter,
+            // and the next one only becomes active once i has fully peeled away.
+            const activeIdx = Math.min(N - 1, Math.floor(usable * peels));
+            dots.forEach((d, i) => d.classList.toggle('is-active', i === activeIdx));
+        };
+
+        const onScroll = () => {
+            if (!raf) raf = requestAnimationFrame(update);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        update();
+    }
+
+    /* ---------- Manifesto pinned reveal ------------------------- */
+    const manifestoLines = $$('[data-manifesto-line]');
+    if (manifestoLines.length) {
+        const lineIO = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                if (en.isIntersecting) en.target.classList.add('is-active');
+            });
+        }, { threshold: 0.7 });
+
+        // Scroll-driven: activate based on the sticky parent's progress.
+        const wrapper = $('.manifesto__sticky');
+        const updateManifesto = () => {
+            if (!wrapper) return;
+            const rect = wrapper.getBoundingClientRect();
+            const total = wrapper.offsetHeight - window.innerHeight;
+            const progress = Math.max(0, Math.min(1, -rect.top / total));
+            const idx = Math.floor(progress * manifestoLines.length);
+            manifestoLines.forEach((line, i) => {
+                line.classList.toggle('is-active', i <= idx);
+            });
+        };
+        window.addEventListener('scroll', updateManifesto, { passive: true });
+        updateManifesto();
+    }
+
+    /* ---------- Animated counters ------------------------------- */
+    const counters = $$('[data-count]');
+    const fmt = (n, target) => {
+        const isFloat = String(target).includes('.');
+        return isFloat ? n.toFixed(2) : Math.round(n).toLocaleString();
+    };
+    const counterIO = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+            if (!en.isIntersecting) return;
+            const el = en.target;
+            const target = parseFloat(el.dataset.count);
+            const duration = 1400;
+            const t0 = performance.now();
+            const tick = (t) => {
+                const k = Math.min(1, (t - t0) / duration);
+                const eased = 1 - Math.pow(1 - k, 3);
+                el.textContent = fmt(target * eased, target);
+                if (k < 1) requestAnimationFrame(tick);
+                else el.textContent = fmt(target, target);
+            };
+            requestAnimationFrame(tick);
+            counterIO.unobserve(el);
+        });
+    }, { threshold: 0.5 });
+    counters.forEach(el => counterIO.observe(el));
+
+    /* ---------- Smooth scroll for in-page anchors --------------- */
+    $$('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            const href = a.getAttribute('href');
+            if (!href || href === '#' || href.length < 2) return;
+            const target = document.querySelector(href);
+            if (!target) return;
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+    });
+
+    /* ---------- Form submit (webhook) ---------------------------
+       Mirrors the original landing.js behaviour exactly:
+       fetch -> .then(response.json()) -> .then(success) / .catch(error)
+       same webhook, same payload shape, same source='landing_page'.
+       --------------------------------------------------------- */
+    const form = $('#briefingForm');
+    if (form) {
+        const status = $('[data-form-status]', form);
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!form.checkValidity()) {
+                if (status) {
+                    status.textContent = form.dataset.msgInvalid || 'Please fill the required fields.';
+                    status.className = 'contact__note mono is-err';
+                }
+                return;
+            }
+
+            const fd = new FormData(form);
+            // Map v2 fields -> same payload shape the original webhook expects.
+            // Original sends: firstName, lastName, email, phone, timestamp, source
+            // v2 has: name, company, email, message (we keep extras; n8n handles them).
+            const fullName = (fd.get('name') || '').toString().trim();
+            const [firstName, ...rest] = fullName.split(/\s+/);
+            const lastName = rest.join(' ');
+
+            const payload = {
+                firstName: firstName || fullName,
+                lastName: lastName || '',
+                email: fd.get('email') || '',
+                phone: fd.get('phone') || '',
+                company: fd.get('company') || '',
+                message: fd.get('message') || '',
+                timestamp: new Date().toISOString(),
+                source: 'landing_page',
+            };
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const original = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            const sendingMsg = form.dataset.msgSending || 'Sending…';
+            submitBtn.innerHTML = `<span>${sendingMsg}</span>`;
+
+            fetch('https://n.fidora.es/webhook/Fidora-demo', {
+                method: 'POST',
+                body: JSON.stringify(payload),
+            })
+            .then(response => response.json())
+            .then(() => {
+                if (status) {
+                    status.textContent = form.dataset.msgOk || 'Received.';
+                    status.className = 'contact__note mono is-ok';
+                }
+                form.reset();
+            })
+            .catch((err) => {
+                console.error('Error:', err);
+                if (status) {
+                    status.textContent = form.dataset.msgErr || 'Something failed.';
+                    status.className = 'contact__note mono is-err';
+                }
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = original;
+            });
+        });
+    }
+
+    /* ---------- Mobile menu (burger) ---------------------------- */
+    const burger = $('#burger');
+    const navLinks = $('.nav__links');
+    if (burger && navLinks) {
+        burger.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('is-open');
+            navLinks.style.display = isOpen ? 'flex' : '';
+            navLinks.style.position = 'fixed';
+            navLinks.style.inset = '64px 0 0 0';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.alignItems = 'center';
+            navLinks.style.justifyContent = 'center';
+            navLinks.style.background = 'var(--bg)';
+            navLinks.style.zIndex = '40';
+            navLinks.style.fontSize = '20px';
+            if (!isOpen) {
+                navLinks.removeAttribute('style');
+            }
+        });
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                navLinks.classList.remove('is-open');
+                navLinks.removeAttribute('style');
+            }
+        });
+    }
+})();

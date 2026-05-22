@@ -26,6 +26,9 @@ Temporary Items
 .vscode/
 .idea/
 
+# Custom
+INTEGRACIONES/
+
 # Logs
 logs
 *.log
@@ -38,3 +41,7 @@ npm-debug.log*
 
 # Zip
 v1.zip
+
+# Archived versions
+archive/
+v1/

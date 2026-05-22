@@ -1,820 +1,565 @@
 <?php
-// Language detection and loading
-$lang = isset($_GET['lang']) ? $_GET['lang'] : (isset($_COOKIE['fidora_lang']) ? $_COOKIE['fidora_lang'] : 'es');
+// ---------------------------------------------------------------
+// FIDORA Labs — v2 (2026 redesign draft)
+// Default locale: ES. Narrative: "complex systems that feel simple."
+// ---------------------------------------------------------------
 
-// Validate language
+$lang = isset($_GET['lang'])
+    ? $_GET['lang']
+    : (isset($_COOKIE['fidora_lang']) ? $_COOKIE['fidora_lang'] : 'es');
 $validLangs = ['es', 'en', 'de'];
-if (!in_array($lang, $validLangs)) {
-    $lang = 'es';
-}
-
-// Set cookie
+if (!in_array($lang, $validLangs)) { $lang = 'es'; }
+$isES = $lang === 'es';
+$isDE = $lang === 'de';
+$isEN = $lang === 'en';
 setcookie('fidora_lang', $lang, time() + (30 * 24 * 60 * 60), '/');
 
-// Load translations
-$translationsFile = __DIR__ . '/assets/i18n/' . $lang . '.json';
-$translations = ['translations' => []];
-if (file_exists($translationsFile)) {
-    $jsonData = json_decode(file_get_contents($translationsFile), true);
-    if (isset($jsonData['translations'])) {
-        $translations = $jsonData['translations'];
-    }
-}
+// -- inline copy (kept here for easy editing — feed me final ES later)
+$copy = [
+    'es' => [
+        'meta_title'       => 'FIDORA Labs — Sistemas complejos que se sienten simples',
+        'meta_desc'        => 'Construimos infraestructura conversacional propia: Voz y WhatsApp con IA. Lo complejo, escondido. Lo simple, lo que tú usas.',
+        'nav'              => ['Cómo funciona', 'Productos', 'Filosofía', 'Hablemos'],
+        'nav_cta'          => 'Reservar llamada',
+        'eyebrow'          => 'FIDORA LABS · INFRAESTRUCTURA PROPIA · 2026',
+        'hero_line_1'      => 'Lo complicado lo hacemos nosotros.',
+        'hero_line_2'      => 'Tú solo lo <em>usas</em>.',
+        'hero_lede'        => 'Construimos los sistemas de IA que atienden a tus clientes —Voz, WhatsApp, seguimiento— sobre <span class="u">nuestra propia infraestructura</span>. Tú no lidias con APIs, modelos ni proveedores. Solo recibes resultados.',
+        'cta_primary'      => 'Quiero ver cómo funciona',
+        'cta_secondary'    => 'Ver lo que hay debajo',
+        'stat_1_label'     => 'Tiempo en montarlo',
+        'stat_1_value'     => '&lt; 72 horas',
+        'stat_2_label'     => 'Lo que tú aprendes',
+        'stat_2_value'     => 'Nada técnico',
+        'stat_3_label'     => 'Dónde viven tus datos',
+        'stat_3_value'     => 'UE · nuestra',
+        'scroll'           => 'BAJA',
+        'band'             => ['INFRAESTRUCTURA PROPIA', 'DATOS EN LA UE', 'VOZ · WHATSAPP · SEGUIMIENTO', 'LO COMPLEJO, ESCONDIDO'],
+        'sec1_index'       => '01 — CÓMO FUNCIONA',
+        'sec1_title_a'     => 'Por dentro es complejo. ',
+        'sec1_title_em'    => 'Por fuera, una conversación.',
+        'sec1_lede'        => 'Modelos de voz, motores de inferencia, telefonía, bases de datos, colas… todo eso lo operamos nosotros. Tú no lo ves. Solo ves que el teléfono se contesta y los clientes reciben respuesta.',
+        'stack' => [
+            ['mono' => 'LO QUE TÚ VES',         'h' => 'Una llamada contestada. Un WhatsApp respondido. Una cita en tu calendario.'],
+            ['mono' => 'LO QUE OCURRE DEBAJO',  'h' => 'Agentes orquestados con contexto, memoria y reglas de negocio.'],
+            ['mono' => 'EL MOTOR',              'h' => 'Modelos de voz y lenguaje autoalojados — reconocimiento, síntesis, razonamiento.'],
+            ['mono' => 'EL METAL',              'h' => 'GPUs, operadores SIP y datacenters europeos que contratamos directamente.'],
+        ],
+        'sec2_index'       => '02 — PRODUCTOS',
+        'sec2_title_a'     => 'Dos canales. ',
+        'sec2_title_em'    => 'Un mismo cerebro.',
+        'sec2_lede'        => 'No vendemos "tecnología". Vendemos que tu teléfono se conteste y tu WhatsApp responda — sin que tú tengas que aprender nada.',
+        'prod_1_tag'       => 'VOZ',
+        'prod_1_name'      => 'VozAI',
+        'prod_1_desc'      => 'Una voz que contesta el teléfono por ti. Califica, hace seguimiento, agenda. En tiempo real, indistinguible de un humano entrenado.',
+        'prod_1_list'      => ['Llamadas entrantes y salientes', 'Voz personalizada para tu marca', 'Se conecta a tu CRM y agenda', 'Grabaciones y datos en la UE'],
+        'prod_2_tag'       => 'MENSAJERÍA',
+        'prod_2_pill'      => 'Más desplegado',
+        'prod_2_name'      => 'WhatsApp Engine',
+        'prod_2_desc'      => 'Tu WhatsApp se convierte en un canal que recuerda, responde y vende — con un humano detrás solo cuando importa.',
+        'prod_2_list'      => ['WhatsApp Business API oficial', 'Conversaciones largas con contexto', 'Catálogos, pagos, multimedia', 'Pase a humano cuando hace falta'],
+        'prod_3_tag'       => 'A MEDIDA',
+        'prod_3_name'      => 'Labs',
+        'prod_3_desc'      => 'Cuando tu problema no cabe en una plantilla. Nos sentamos contigo, lo entendemos, lo construimos. En nuestra infraestructura o en la tuya.',
+        'prod_3_list'      => ['Discovery y arquitectura', 'Modelos y pipelines a medida', 'On-prem o aislado disponible', 'Un equipo de ingeniería dedicado'],
+        'prod_cta'         => 'Quiero esto',
+        'sec3_index'       => '03 — FILOSOFÍA',
+        'manifesto'        => [
+            'La IA no se alquila. Se construye.',
+            'Y lo que se construye, se entiende.',
+            'Por eso operamos cada pieza —voz, modelos, datos, infraestructura— nosotros mismos. En Europa.',
+            'No revendemos APIs. No alquilamos cerebros ajenos.',
+            'Tú no tienes que saber cómo funciona. Solo <em>verlo funcionar</em>.',
+        ],
+        'sec4_index'       => '04 — HABLEMOS',
+        'contact_title_a'  => 'Una llamada honesta. ',
+        'contact_title_em' => 'Sin discurso comercial.',
+        'contact_lede'     => 'Cuéntanos qué intentas resolver. Si tiene sentido, hablas directamente con quien lo va a construir.',
+        'contact_meta'     => [
+            ['EMAIL', 'hola@fidora.io', true],
+            ['SEDE',  'Madrid · Berlín', false],
+            ['RESPUESTA', '&lt; 24h laborables', false],
+        ],
+        'form'             => [
+            'name'    => 'Nombre',
+            'company' => 'Empresa',
+            'email'   => 'Email de trabajo',
+            'message' => '¿Qué intentas resolver?',
+            'consent' => 'Soy mayor de 18 años y acepto la política de privacidad.',
+            'submit'  => 'Enviar',
+            'ok'      => 'Recibido. Te contestamos en menos de 24h.',
+            'err'     => 'Algo ha fallado. Escríbenos a hola@fidora.io',
+            'invalid' => 'Rellena los campos obligatorios.',
+        ],
+        'foot_tag'         => 'Sistemas complejos que se sienten simples. Construidos en Europa.',
+        'foot_cols'        => [
+            ['Productos', ['VozAI', 'WhatsApp Engine', 'Labs']],
+            ['Empresa',   ['Filosofía', 'Cómo funciona', 'Contacto']],
+            ['Legal',     ['Privacidad', 'Términos', 'DPA']],
+        ],
+        'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS', 'CONSTRUIDO Y ALOJADO EN LA UE', 'v2.0 — EDICIÓN 2026'],
+    ],
 
-// Helper function to get translation
-function t($key, $default = '') {
-    global $translations;
-    $keys = explode('.', $key);
-    $value = $translations;
-    foreach ($keys as $k) {
-        if (isset($value[$k])) {
-            $value = $value[$k];
-        } else {
-            return $default;
-        }
-    }
-    return $value;
-}
+    'en' => [
+        'meta_title'       => 'FIDORA Labs — Complex systems that feel simple',
+        'meta_desc'        => 'We build and operate our own conversational AI infrastructure: voice and WhatsApp. The complex stays hidden. You only see results.',
+        'nav'              => ['How it works', 'Products', 'Philosophy', 'Let’s talk'],
+        'nav_cta'          => 'Book a call',
+        'eyebrow'          => 'FIDORA LABS · OWNED INFRASTRUCTURE · 2026',
+        'hero_line_1'      => 'The complicated part is on us.',
+        'hero_line_2'      => 'You just <em>use</em> it.',
+        'hero_lede'        => 'We build the AI systems that take care of your customers — voice, WhatsApp, follow-up — on <span class="u">our own infrastructure</span>. You don’t deal with APIs, models or vendors. You just get results.',
+        'cta_primary'      => 'Show me how it works',
+        'cta_secondary'    => 'See what’s underneath',
+        'stat_1_label'     => 'Time to live',
+        'stat_1_value'     => '&lt; 14 days',
+        'stat_2_label'     => 'What you learn',
+        'stat_2_value'     => 'Nothing technical',
+        'stat_3_label'     => 'Where data lives',
+        'stat_3_value'     => 'EU · ours',
+        'scroll'           => 'SCROLL',
+        'band'             => ['OWNED INFRASTRUCTURE', 'EU DATA RESIDENCY', 'VOICE · WHATSAPP · FOLLOW-UP', 'COMPLEX, HIDDEN'],
+        'sec1_index'       => '01 — HOW IT WORKS',
+        'sec1_title_a'     => 'Complex inside. ',
+        'sec1_title_em'    => 'A conversation outside.',
+        'sec1_lede'        => 'Models, inference, telephony, databases, queues — we operate all of it. You never see it. You just see that the phone gets answered and customers get a reply.',
+        'stack' => [
+            ['mono' => 'WHAT YOU SEE',          'h' => 'A call answered. A WhatsApp replied. A booking on your calendar.'],
+            ['mono' => 'WHAT’S HAPPENING',      'h' => 'Orchestrated agents with context, memory and business rules.'],
+            ['mono' => 'THE ENGINE',            'h' => 'Self-hosted voice and language models — recognition, synthesis, reasoning.'],
+            ['mono' => 'THE METAL',             'h' => 'GPUs, SIP carriers and EU datacenters we contract directly.'],
+        ],
+        'sec2_index'       => '02 — PRODUCTS',
+        'sec2_title_a'     => 'Two channels. ',
+        'sec2_title_em'    => 'One brain.',
+        'sec2_lede'        => 'We don’t sell "technology". We sell that your phone gets answered and your WhatsApp replies — without you having to learn anything.',
+        'prod_1_tag'       => 'VOICE',
+        'prod_1_name'      => 'VozAI',
+        'prod_1_desc'      => 'A voice that picks up the phone for you. Qualifies, follows up, books. In real time, indistinguishable from a trained human.',
+        'prod_1_list'      => ['Inbound &amp; outbound calls', 'Custom voice for your brand', 'Connects to your CRM and calendar', 'Recordings &amp; data in the EU'],
+        'prod_2_tag'       => 'MESSAGING',
+        'prod_2_pill'      => 'Most deployed',
+        'prod_2_name'      => 'WhatsApp Engine',
+        'prod_2_desc'      => 'Your WhatsApp becomes a channel that remembers, replies and sells — with a human behind only when it matters.',
+        'prod_2_list'      => ['Official WhatsApp Business API', 'Stateful long conversations', 'Catalogs, payments, media', 'Human handoff when needed'],
+        'prod_3_tag'       => 'BESPOKE',
+        'prod_3_name'      => 'Labs',
+        'prod_3_desc'      => 'When your problem doesn’t fit a template. We sit with you, understand it, build it. On our infra or yours.',
+        'prod_3_list'      => ['Discovery &amp; architecture', 'Custom models &amp; pipelines', 'On-prem &amp; air-gapped options', 'A dedicated engineering pod'],
+        'prod_cta'         => 'I want this',
+        'sec3_index'       => '03 — PHILOSOPHY',
+        'manifesto'        => [
+            'AI isn’t rented. It’s built.',
+            'And what you build, you understand.',
+            'That’s why we operate every piece — voice, models, data, infrastructure — ourselves. In Europe.',
+            'We don’t resell APIs. We don’t lease anyone else’s brain.',
+            'You don’t need to know how it works. You just need to <em>see it work</em>.',
+        ],
+        'sec4_index'       => '04 — LET’S TALK',
+        'contact_title_a'  => 'An honest call. ',
+        'contact_title_em' => 'No sales theater.',
+        'contact_lede'     => 'Tell us what you’re trying to solve. If it’s a fit, you’ll talk directly to whoever will build it.',
+        'contact_meta'     => [
+            ['EMAIL', 'hello@fidora.io', true],
+            ['HQ',    'Madrid · Berlin', false],
+            ['RESPONSE', '&lt; 24h business', false],
+        ],
+        'form'             => [
+            'name'    => 'Name',
+            'company' => 'Company',
+            'email'   => 'Work email',
+            'message' => 'What are you trying to solve?',
+            'consent' => 'I’m 18+ and accept the privacy policy.',
+            'submit'  => 'Send',
+            'ok'      => 'Received. We reply within 24h.',
+            'err'     => 'Something failed. Email us at hello@fidora.io',
+            'invalid' => 'Please fill the required fields.',
+        ],
+        'foot_tag'         => 'Complex systems that feel simple. Built in Europe.',
+        'foot_cols'        => [
+            ['Products', ['VozAI', 'WhatsApp Engine', 'Labs']],
+            ['Company',  ['Philosophy', 'How it works', 'Contact']],
+            ['Legal',    ['Privacy', 'Terms', 'DPA']],
+        ],
+        'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS S.L.', 'BUILT &amp; HOSTED IN THE EU', 'v2.0 — 2026 EDITION'],
+    ],
+
+    'de' => [
+        'meta_title'       => 'FIDORA Labs — Komplexe Systeme, die sich einfach anfühlen',
+        'meta_desc'        => 'Wir bauen und betreiben eigene konversationelle KI-Infrastruktur: Sprache und WhatsApp. Das Komplizierte bleibt verborgen. Sie sehen nur Ergebnisse.',
+        'nav'              => ['Wie es funktioniert', 'Produkte', 'Philosophie', 'Sprechen'],
+        'nav_cta'          => 'Termin buchen',
+        'eyebrow'          => 'FIDORA LABS · EIGENE INFRASTRUKTUR · 2026',
+        'hero_line_1'      => 'Das Komplizierte machen wir.',
+        'hero_line_2'      => 'Sie <em>benutzen</em> es einfach.',
+        'hero_lede'        => 'Wir bauen die KI-Systeme, die Ihre Kunden betreuen — Sprache, WhatsApp, Follow-up — auf <span class="u">unserer eigenen Infrastruktur</span>. Keine APIs, keine Modelle, keine Anbieter. Nur Ergebnisse.',
+        'cta_primary'      => 'Zeigen Sie mir, wie es geht',
+        'cta_secondary'    => 'Was steckt dahinter',
+        'stat_1_label'     => 'Bis zum Live-Gang',
+        'stat_1_value'     => '&lt; 14 Tage',
+        'stat_2_label'     => 'Was Sie lernen',
+        'stat_2_value'     => 'Nichts Technisches',
+        'stat_3_label'     => 'Wo Ihre Daten liegen',
+        'stat_3_value'     => 'EU · unsere',
+        'scroll'           => 'SCROLLEN',
+        'band'             => ['EIGENE INFRASTRUKTUR', 'EU-DATENRESIDENZ', 'SPRACHE · WHATSAPP · FOLLOW-UP', 'KOMPLEX, VERBORGEN'],
+        'sec1_index'       => '01 — WIE ES FUNKTIONIERT',
+        'sec1_title_a'     => 'Innen komplex. ',
+        'sec1_title_em'    => 'Außen ein Gespräch.',
+        'sec1_lede'        => 'Modelle, Inferenz, Telefonie, Datenbanken, Queues — alles betreiben wir. Sie sehen es nie. Sie sehen nur: das Telefon klingelt, der Kunde bekommt Antwort.',
+        'stack' => [
+            ['mono' => 'WAS SIE SEHEN',         'h' => 'Ein angenommener Anruf. Eine beantwortete WhatsApp-Nachricht. Ein Termin im Kalender.'],
+            ['mono' => 'WAS PASSIERT',          'h' => 'Orchestrierte Agenten mit Kontext, Gedächtnis und Geschäftsregeln.'],
+            ['mono' => 'DER MOTOR',             'h' => 'Selbstgehostete Sprach- und Sprachmodelle — Erkennung, Synthese, Reasoning.'],
+            ['mono' => 'DAS METALL',            'h' => 'GPUs, SIP-Carrier und EU-Rechenzentren, die wir direkt unter Vertrag haben.'],
+        ],
+        'sec2_index'       => '02 — PRODUKTE',
+        'sec2_title_a'     => 'Zwei Kanäle. ',
+        'sec2_title_em'    => 'Ein Gehirn.',
+        'sec2_lede'        => 'Wir verkaufen keine "Technologie". Wir verkaufen, dass Ihr Telefon angenommen wird und WhatsApp antwortet — ohne dass Sie etwas lernen müssen.',
+        'prod_1_tag'       => 'SPRACHE',
+        'prod_1_name'      => 'VozAI',
+        'prod_1_desc'      => 'Eine Stimme, die für Sie ans Telefon geht. Qualifiziert, verfolgt nach, bucht. In Echtzeit, kaum unterscheidbar von einem trainierten Menschen.',
+        'prod_1_list'      => ['Eingehend &amp; ausgehend', 'Individuelle Markenstimme', 'CRM &amp; Kalender-Anbindung', 'Aufnahmen &amp; Daten in der EU'],
+        'prod_2_tag'       => 'MESSAGING',
+        'prod_2_pill'      => 'Am meisten genutzt',
+        'prod_2_name'      => 'WhatsApp Engine',
+        'prod_2_desc'      => 'Ihr WhatsApp wird zum Kanal, der sich erinnert, antwortet und verkauft — mit einem Menschen nur, wenn es zählt.',
+        'prod_2_list'      => ['Offizielle WhatsApp Business API', 'Lange Gespräche mit Kontext', 'Kataloge, Zahlungen, Medien', 'Übergabe an Menschen'],
+        'prod_3_tag'       => 'MASSGESCHNEIDERT',
+        'prod_3_name'      => 'Labs',
+        'prod_3_desc'      => 'Wenn Ihr Problem nicht in eine Vorlage passt. Wir setzen uns mit Ihnen zusammen, verstehen es, bauen es. Auf unserer oder Ihrer Infrastruktur.',
+        'prod_3_list'      => ['Discovery &amp; Architektur', 'Eigene Modelle &amp; Pipelines', 'On-prem &amp; air-gapped möglich', 'Dediziertes Engineering-Team'],
+        'prod_cta'         => 'Das will ich',
+        'sec3_index'       => '03 — PHILOSOPHIE',
+        'manifesto'        => [
+            'KI mietet man nicht. Man baut sie.',
+            'Und was man baut, versteht man.',
+            'Deshalb betreiben wir jedes Stück — Sprache, Modelle, Daten, Infrastruktur — selbst. In Europa.',
+            'Keine wiederverkauften APIs. Kein fremdes Gehirn.',
+            'Sie müssen nicht wissen, wie es funktioniert. Sie müssen nur <em>sehen, dass es funktioniert</em>.',
+        ],
+        'sec4_index'       => '04 — SPRECHEN',
+        'contact_title_a'  => 'Ein ehrliches Gespräch. ',
+        'contact_title_em' => 'Kein Vertriebstheater.',
+        'contact_lede'     => 'Sagen Sie uns, was Sie lösen wollen. Wenn es passt, sprechen Sie direkt mit dem, der es baut.',
+        'contact_meta'     => [
+            ['E-MAIL', 'hello@fidora.io', true],
+            ['SITZ',   'Madrid · Berlin', false],
+            ['ANTWORT', '&lt; 24h werktags', false],
+        ],
+        'form'             => [
+            'name'    => 'Name',
+            'company' => 'Unternehmen',
+            'email'   => 'Geschäftliche E-Mail',
+            'message' => 'Was wollen Sie lösen?',
+            'consent' => 'Ich bin 18+ und akzeptiere die Datenschutzerklärung.',
+            'submit'  => 'Senden',
+            'ok'      => 'Erhalten. Wir antworten innerhalb von 24h.',
+            'err'     => 'Etwas ist schiefgelaufen. Schreiben Sie an hello@fidora.io',
+            'invalid' => 'Bitte Pflichtfelder ausfüllen.',
+        ],
+        'foot_tag'         => 'Komplexe Systeme, die sich einfach anfühlen. Gebaut in Europa.',
+        'foot_cols'        => [
+            ['Produkte', ['VozAI', 'WhatsApp Engine', 'Labs']],
+            ['Firma',    ['Philosophie', 'Wie es funktioniert', 'Kontakt']],
+            ['Recht',    ['Datenschutz', 'AGB', 'DPA']],
+        ],
+        'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS S.L.', 'GEBAUT &amp; GEHOSTET IN DER EU', 'v2.0 — AUSGABE 2026'],
+    ],
+];
+
+$c = $copy[$lang];
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang; ?>">
+<html lang="<?php echo $lang; ?>" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo t('hero.title', 'FIDORA Labs - Automatización Inteligente para tu Negocio'); ?></title>
-    <meta name="description" content="<?php echo t('hero.description', 'FIDORA Labs - VozAI y automatización de WhatsApp. Respuestas en tiempo real, seguimiento automático y soluciones a medida para tu negocio.'); ?>">
-    <meta name="keywords" content="FIDORA Labs, VozAI, automatización WhatsApp, respuestas automáticas, automatización a medida, IA conversacional">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fidora.io/">
-    <meta property="og:title" content="<?php echo t('hero.title', 'FIDORA Labs - Automatización Inteligente para tu Negocio'); ?>">
-    <meta property="og:description" content="<?php echo t('hero.description', 'FIDORA Labs - VozAI y automatización de WhatsApp. Respuestas en tiempo real, seguimiento automático y soluciones a medida para tu negocio.'); ?>">
-    <meta property="og:image" content="https://fidora.com/og-image.jpg">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://fidora.io/">
-    <meta property="twitter:title" content="<?php echo t('hero.title', 'FIDORA Labs - Automatización Inteligente para tu Negocio'); ?>">
-    <meta property="twitter:description" content="<?php echo t('hero.description', 'FIDORA Labs - VozAI y automatización de WhatsApp. Respuestas en tiempo real, seguimiento automático y soluciones a medida para tu negocio.'); ?>">
-    <meta property="twitter:image" content="https://fidora.com/og-image.jpg">
+    <title><?php echo $c['meta_title']; ?></title>
+    <meta name="description" content="<?php echo $c['meta_desc']; ?>" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/light-theme.css">
-    
-    <!-- Schema.org markup -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "FIDORA Labs",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "description": "FIDORA Labs - Automatización inteligente con IA conversacional e IA por WhatsApp. Respuestas en tiempo real y soluciones a medida para tu negocio.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "EUR",
-        "description": "Consulta disponible"
-      }
-    }
-    </script>
+    <link rel="icon" type="image/png" href="assets/images/fidora_whitebg.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/css/app.css" />
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="landing-nav">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <div class="logo">
-                    <i class="fas fa-chart-network logo-icon"></i>
-                    <div class="logo-text">
-                        <div class="logo-name">FIDORA</div>
-                        <div class="logo-tagline">AI LABS</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="nav-links">
-                <a href="#features" class="nav-link"><?php echo t('nav.features', 'Características'); ?></a>
-                <a href="#productos" class="nav-link"><?php echo t('nav.products', 'Productos'); ?></a>
-                <a href="#testimonials" class="nav-link"><?php echo t('nav.testimonials', 'Testimonios'); ?></a>
-                <a href="#faq" class="nav-link"><?php echo t('nav.faq', 'FAQ'); ?></a>
-            </div>
-            
-            <div class="nav-actions">
-                <div class="lang-selector">
-                    <button class="lang-btn" id="langBtn" aria-label="Cambiar idioma">
-                        <i class="fas fa-globe"></i>
-                        <span class="lang-current"><?php echo strtoupper($lang); ?></span>
-                    </button>
-                    <div class="lang-dropdown" id="langDropdown">
-                        <a href="?lang=es" class="lang-option <?php echo $lang === 'es' ? 'active' : ''; ?>" data-lang="es">
-                            <span class="lang-flag">🇪🇸</span>
-                            <span>Español</span>
-                        </a>
-                        <a href="?lang=en" class="lang-option <?php echo $lang === 'en' ? 'active' : ''; ?>" data-lang="en">
-                            <span class="lang-flag">🇬🇧</span>
-                            <span>English</span>
-                        </a>
-                        <a href="?lang=de" class="lang-option <?php echo $lang === 'de' ? 'active' : ''; ?>" data-lang="de">
-                            <span class="lang-flag">🇩🇪</span>
-                            <span>Deutsch</span>
-                        </a>
-                    </div>
-                </div>
-                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-                    <i class="fas fa-sun"></i>
+
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-noise" aria-hidden="true"></div>
+
+    <!-- NAV -->
+    <header class="nav" id="nav">
+        <a href="#" class="nav__brand" aria-label="Fidora Labs">
+            <img src="assets/images/fidora_whitebg.png" alt="" class="nav__logo nav__logo--dark" />
+            <img src="assets/images/fidora_blackbg.png" alt="" class="nav__logo nav__logo--light" />
+            <span class="nav__wordmark">FIDORA<span class="nav__wordmark-dot">.</span></span>
+        </a>
+
+        <nav class="nav__links" aria-label="Primary">
+            <a href="#how" data-link><?php echo $c['nav'][0]; ?></a>
+            <a href="#products" data-link><?php echo $c['nav'][1]; ?></a>
+            <a href="#manifesto" data-link><?php echo $c['nav'][2]; ?></a>
+            <a href="#contact" data-link><?php echo $c['nav'][3]; ?></a>
+        </nav>
+
+        <div class="nav__actions">
+            <div class="lang" data-lang>
+                <button class="lang__btn" type="button" aria-haspopup="true" aria-expanded="false">
+                    <span><?php echo strtoupper($lang); ?></span>
+                    <svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
                 </button>
-                <button class="btn-primary" id="ctaBtn"><?php echo t('cta.requestDemo', 'Solicitar Demo'); ?></button>
+                <ul class="lang__menu" role="menu">
+                    <li><a href="?lang=es" role="menuitem" <?php echo $isES?'aria-current="true"':'';?>>ES — Español</a></li>
+                    <li><a href="?lang=en" role="menuitem" <?php echo $isEN?'aria-current="true"':'';?>>EN — English</a></li>
+                    <li><a href="?lang=de" role="menuitem" <?php echo $isDE?'aria-current="true"':'';?>>DE — Deutsch</a></li>
+                </ul>
             </div>
-            
-            <button class="mobile-menu-toggle" id="mobileMenuToggle">
-                <i class="fas fa-bars"></i>
+
+            <button class="theme" id="themeToggle" type="button" aria-label="Toggle theme">
+                <svg class="theme__sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><g stroke="currentColor" stroke-width="1.6"><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/></g></svg>
+                <svg class="theme__moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg>
+            </button>
+
+            <a href="#contact" class="btn btn--primary btn--sm" data-cta>
+                <span><?php echo $c['nav_cta']; ?></span>
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </a>
+
+            <button class="nav__burger" id="burger" aria-label="Menu">
+                <span></span><span></span>
             </button>
         </div>
-    </nav>
+    </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-content">
-            <a href="#features" class="mobile-nav-link"><?php echo t('nav.features', 'Características'); ?></a>
-            <a href="#productos" class="mobile-nav-link"><?php echo t('nav.products', 'Productos'); ?></a>
-            <a href="#testimonials" class="mobile-nav-link"><?php echo t('nav.testimonials', 'Testimonios'); ?></a>
-            <a href="#faq" class="mobile-nav-link"><?php echo t('nav.faq', 'FAQ'); ?></a>
-            
-            <!-- Mobile Language Selector -->
-            <div class="mobile-lang-selector">
-                <span class="mobile-lang-label">Idioma / Language / Sprache</span>
-                <div class="mobile-lang-options">
-                    <a href="?lang=es" class="mobile-lang-option <?php echo $lang === 'es' ? 'active' : ''; ?>">🇪🇸 ES</a>
-                    <a href="?lang=en" class="mobile-lang-option <?php echo $lang === 'en' ? 'active' : ''; ?>">🇬🇧 EN</a>
-                    <a href="?lang=de" class="mobile-lang-option <?php echo $lang === 'de' ? 'active' : ''; ?>">🇩🇪 DE</a>
-                </div>
-            </div>
-            
-            <div class="mobile-menu-actions">
-                <button class="btn-primary mobile-btn" id="mobileCtaBtn"><?php echo t('cta.requestDemo', 'Solicitar Demo'); ?></button>
-            </div>
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="hero__media" aria-hidden="true">
+            <img src="assets/images/hero.jpg" alt="" />
+            <div class="hero__veil"></div>
+            <div class="hero__scan"></div>
         </div>
-    </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title" style="font-size: clamp(2rem, 4vw, 3rem);">
-                    <?php echo t('hero.title', 'Deja de perder clientes por no responder a <span class="gradient-text">tiempo.</span>'); ?>
-                </h1>
-                
-                <p class="hero-description">
-                    <?php echo t('hero.description', 'Respuestas en tiempo real, seguimiento automático y soluciones a medida. Desarrollamos automatizaciones inteligentes que transforman tu forma de comunicarte con tus clientes.'); ?>
-                </p>
-                
-                <div class="hero-cta">
-                    <button class="btn-primary-large" id="heroCtaBtn">
-                        <i class="fas fa-calendar"></i>
-                        <?php echo t('cta.requestConsult', 'Solicitar Consulta'); ?>
-                    </button>
-                    <a href="#productos" class="btn-secondary-large" id="heroDemoBtn">
-                        <i class="fas fa-cogs"></i>
-                        <?php echo t('cta.viewServices', 'Ver Servicios'); ?>
-                    </a>
-                </div>
-                
-                <div class="hero-trust">
-                    <span class="trust-text"><?php echo t('hero.trustText', 'Soluciones de automatización para empresas innovadoras.'); ?></span>
-                    <div class="trust-badges">
-                        <div class="trust-badge">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" style="margin-right: 6px;">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                            </svg>
-                            <i class="fas fa-shield-check" style="color: #dc3545;"></i>
-                            <span><?php echo t('hero.security', 'Seguridad de grado Empresarial'); ?></span>
-                        </div>
-                        <div class="trust-badge">
-                            <i class="fas fa-lock"></i>
-                            <span><?php echo t('hero.gdpr', 'Cumple GDPR'); ?></span>
-                        </div>
-                        <div class="trust-badge">
-                            <i class="fas fa-star"></i>
-                            <span><?php echo t('hero.rating', 'Valoración 4.9/5'); ?></span>
-                        </div>
-                    </div>
-                </div>
+        <div class="hero__inner">
+            <div class="hero__eyebrow">
+                <span class="dot"></span>
+                <span class="mono"><?php echo $c['eyebrow']; ?></span>
             </div>
-            
-            <div class="hero-visual">
-                <div class="dashboard-preview">
-                    <div class="preview-header">
-                        <div class="preview-controls">
-                            <div class="control-dot red"></div>
-                            <div class="control-dot yellow"></div>
-                            <div class="control-dot green"></div>
-                        </div>
-                        <div class="preview-title"><?php echo t('dashboard.title', 'Panel de Usuario'); ?></div>
+
+            <h1 class="hero__title">
+                <span class="line"><span data-split><?php echo $c['hero_line_1']; ?></span></span>
+                <span class="line"><span data-split><?php echo $c['hero_line_2']; ?></span></span>
+            </h1>
+
+            <p class="hero__lede"><?php echo $c['hero_lede']; ?></p>
+
+            <div class="hero__cta">
+                <a href="#contact" class="btn btn--primary">
+                    <span><?php echo $c['cta_primary']; ?></span>
+                    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                </a>
+                <a href="#how" class="btn btn--ghost">
+                    <span><?php echo $c['cta_secondary']; ?></span>
+                </a>
+            </div>
+
+            <dl class="hero__stats mono">
+                <div><dt><?php echo $c['stat_1_label']; ?></dt><dd><?php echo $c['stat_1_value']; ?></dd></div>
+                <div><dt><?php echo $c['stat_2_label']; ?></dt><dd><?php echo $c['stat_2_value']; ?></dd></div>
+                <div><dt><?php echo $c['stat_3_label']; ?></dt><dd><?php echo $c['stat_3_value']; ?></dd></div>
+            </dl>
+        </div>
+
+        <a href="#how" class="hero__scroll" aria-label="Scroll">
+            <span class="mono"><?php echo $c['scroll']; ?></span>
+            <span class="hero__scroll-line"></span>
+        </a>
+    </section>
+
+    <!-- MARQUEE -->
+    <section class="band" aria-hidden="true">
+        <div class="band__track">
+            <?php for ($i = 0; $i < 2; $i++): foreach ($c['band'] as $k => $b): ?>
+                <span><?php echo $b; ?></span><span class="band__sep">✦</span>
+            <?php endforeach; endfor; ?>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS (was: infrastructure) -->
+    <section class="stack" id="how">
+        <header class="section__head">
+            <span class="section__index mono"><?php echo $c['sec1_index']; ?></span>
+            <h2 class="section__title">
+                <?php echo $c['sec1_title_a']; ?><br />
+                <em><?php echo $c['sec1_title_em']; ?></em>
+            </h2>
+            <p class="section__lede"><?php echo $c['sec1_lede']; ?></p>
+        </header>
+
+        <div class="stack__pin">
+            <div class="stack__scene" data-tilt>
+                <div class="stack__layers">
+                    <?php foreach ($c['stack'] as $i => $layer): ?>
+                    <div class="stack__layer" data-layer="<?php echo $i; ?>">
+                        <span class="mono"><?php echo $layer['mono']; ?></span>
+                        <h3><?php echo $layer['h']; ?></h3>
                     </div>
-                    <div class="preview-content">
-                        <div class="preview-sidebar">
-                            <div class="sidebar-item active">
-                                <i class="fas fa-chart-line"></i>
-                                <span><?php echo t('dashboard.sidebar.0', 'Panel'); ?></span>
-                            </div>
-                            <div class="sidebar-item">
-                                <i class="fas fa-users"></i>
-                                <span><?php echo t('dashboard.sidebar.1', 'Leads'); ?></span>
-                            </div>
-                            <div class="sidebar-item">
-                                <i class="fas fa-phone"></i>
-                                <span><?php echo t('dashboard.sidebar.2', 'Llamadas'); ?></span>
-                            </div>
-                            <div class="sidebar-item">
-                                <i class="fab fa-whatsapp"></i>
-                                <span><?php echo t('dashboard.sidebar.3', 'WhatsApp'); ?></span>
-                            </div>
-                        </div>
-                        <div class="preview-main">
-                            <div class="preview-kpis">
-                                <div class="preview-kpi">
-                                    <div class="kpi-value">1,247</div>
-                                    <div class="kpi-label"><?php echo t('dashboard.kpis.0', 'Llamadas'); ?></div>
-                                    <div class="kpi-trend positive"><?php echo t('dashboard.trends.0', '+32%'); ?></div>
-                                </div>
-                                <div class="preview-kpi">
-                                    <div class="kpi-value">3,891</div>
-                                    <div class="kpi-label"><?php echo t('dashboard.kpis.1', 'Mensajes'); ?></div>
-                                    <div class="kpi-trend positive"><?php echo t('dashboard.trends.1', '+45%'); ?></div>
-                                </div>
-                            </div>
-                            <div class="preview-chart">
-                                <div class="chart-bars">
-                                    <div class="chart-bar" style="height: 60%"></div>
-                                    <div class="chart-bar" style="height: 80%"></div>
-                                    <div class="chart-bar" style="height: 45%"></div>
-                                    <div class="chart-bar" style="height: 90%"></div>
-                                    <div class="chart-bar" style="height: 70%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-                
-                <div class="floating-cards">
-                    <div class="floating-card call-launched">
-                        <div class="card-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-title"><?php echo t('dashboard.floating.callLaunched', 'Llamada Iniciada'); ?></div>
-                            <div class="card-text"><?php echo t('dashboard.floating.callLaunchedDesc', 'IA contactando al lead en tiempo real'); ?></div>
-                        </div>
-                    </div>
-                    
-                    <div class="floating-card call-declined">
-                        <div class="card-icon">
-                            <i class="fas fa-phone-slash"></i>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-title"><?php echo t('dashboard.floating.callDeclined', 'Llamada Rechazada'); ?></div>
-                            <div class="card-text"><?php echo t('dashboard.floating.callDeclinedDesc', 'Activando WhatsApp automático'); ?></div>
-                        </div>
-                    </div>
-                    
-                    <div class="floating-card whatsapp-sent">
-                        <div class="card-icon">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-title"><?php echo t('dashboard.floating.whatsappSent', 'WhatsApp Enviado'); ?></div>
-                            <div class="card-text"><?php echo t('dashboard.floating.whatsappSentDesc', 'Propiedades mandadas al cliente por WhatsApp'); ?></div>
-                        </div>
-                    </div>
-                </div>
+                <ol class="stack__progress" aria-hidden="true">
+                    <?php foreach ($c['stack'] as $i => $layer): ?>
+                        <li data-step="<?php echo $i; ?>">
+                            <span class="stack__progress-num mono"><?php echo str_pad($i + 1, 2, '0', STR_PAD_LEFT); ?></span>
+                            <span class="stack__progress-label mono"><?php echo $layer['mono']; ?></span>
+                        </li>
+                    <?php endforeach; ?>
+                </ol>
             </div>
         </div>
     </section>
 
-    <!-- Features Section - Corporate Grade -->
-    <section class="features-corporate" id="features">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="section-badge">
-                    <i class="fas fa-rocket"></i>
-                    <span><?php echo t('features.badge', 'Características Potentes'); ?></span>
-                </div>
-                <h2 class="section-title"><?php echo t('features.title', 'Automatización Inteligente para tu Negocio'); ?></h2>
-                <p class="section-description"><?php echo t('features.description', 'FIDORA Labs ofrece soluciones de automatización con IA que transforman la comunicación con tus clientes.'); ?></p>
-            </div>
-            
-            <div class="features-corporate-grid">
-                <!-- Feature 1: Análisis y Métricas -->
-                <div class="feature-corporate-card">
-                    <div class="feature-corporate-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="feature-corporate-content">
-                        <h3 class="feature-corporate-title"><?php echo t('features.analytics.title', 'Análisis y Métricas'); ?></h3>
-                        <p class="feature-corporate-description"><?php echo t('features.analytics.description', 'Monitorea el rendimiento con dashboards en tiempo real y reportes detallados.'); ?></p>
-                        <ul class="feature-corporate-list">
-                            <li><i class="fas fa-check-circle"></i> <?php echo t('features.analytics.benefits.0', 'Métricas en tiempo real'); ?></li>
-                            <li><i class="fas fa-check-circle"></i> <?php echo t('features.analytics.benefits.1', 'Reportes personalizados'); ?></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Feature 2: Respuesta Instantánea -->
-                <div class="feature-corporate-card">
-                    <div class="feature-corporate-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="feature-corporate-content">
-                        <h3 class="feature-corporate-title"><?php echo t('features.instant.title', 'Respuesta Instantánea'); ?></h3>
-                        <p class="feature-corporate-description"><?php echo t('features.instant.description', 'Responde a tus clientes en menos de 1 minuto con automatizaciones 24/7.'); ?></p>
-                        <ul class="feature-corporate-list">
-                            <li><i class="fas fa-check-circle"></i> <?php echo t('features.instant.benefits.0', 'Disponibilidad 24/7'); ?></li>
-                            <li><i class="fas fa-check-circle"></i> <?php echo t('features.instant.benefits.1', 'Tiempo de respuesta <1min'); ?></li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Feature 3: Seguridad y Privacidad -->
-                <div class="feature-corporate-card">
-                    <div class="feature-corporate-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="feature-corporate-content">
-                        <h3 class="feature-corporate-title"><?php echo t('features.security.title', 'Seguridad y Privacidad'); ?></h3>
-                        <p class="feature-corporate-description"><?php echo t('features.security.description', 'Protección de datos de nivel empresarial con encriptación y cumplimiento GDPR.'); ?></p>
-                        <ul class="feature-corporate-list">
-                            <li><i class="fas fa-check-circle"></i> <?php echo t('features.security.benefits.0', 'Encriptación de datos'); ?></li>
-                            <li><i class="fas fa-check-circle"></i> <?php echo t('features.security.benefits.1', 'Cumple GDPR'); ?></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+    <!-- PRODUCTS -->
+    <section class="products" id="products">
+        <header class="section__head">
+            <span class="section__index mono"><?php echo $c['sec2_index']; ?></span>
+            <h2 class="section__title"><?php echo $c['sec2_title_a']; ?><em><?php echo $c['sec2_title_em']; ?></em></h2>
+            <p class="section__lede"><?php echo $c['sec2_lede']; ?></p>
+        </header>
+
+        <div class="products__grid">
+            <article class="product" data-product>
+                <header class="product__head">
+                    <span class="product__tag mono"><?php echo $c['prod_1_tag']; ?></span>
+                    <h3 class="product__name"><?php echo $c['prod_1_name']; ?></h3>
+                </header>
+                <p class="product__desc"><?php echo $c['prod_1_desc']; ?></p>
+                <ul class="product__list">
+                    <?php foreach ($c['prod_1_list'] as $li): ?><li><?php echo $li; ?></li><?php endforeach; ?>
+                </ul>
+                <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
+            </article>
+
+            <article class="product product--featured" data-product>
+                <header class="product__head">
+                    <span class="product__tag mono"><?php echo $c['prod_2_tag']; ?></span>
+                    <span class="product__pill"><?php echo $c['prod_2_pill']; ?></span>
+                    <h3 class="product__name"><?php echo $c['prod_2_name']; ?></h3>
+                </header>
+                <p class="product__desc"><?php echo $c['prod_2_desc']; ?></p>
+                <ul class="product__list">
+                    <?php foreach ($c['prod_2_list'] as $li): ?><li><?php echo $li; ?></li><?php endforeach; ?>
+                </ul>
+                <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
+            </article>
+
+            <article class="product" data-product>
+                <header class="product__head">
+                    <span class="product__tag mono"><?php echo $c['prod_3_tag']; ?></span>
+                    <h3 class="product__name"><?php echo $c['prod_3_name']; ?></h3>
+                </header>
+                <p class="product__desc"><?php echo $c['prod_3_desc']; ?></p>
+                <ul class="product__list">
+                    <?php foreach ($c['prod_3_list'] as $li): ?><li><?php echo $li; ?></li><?php endforeach; ?>
+                </ul>
+                <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
+            </article>
         </div>
     </section>
 
-    <!-- Products Section -->
-    <section class="social-proof" id="productos">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="section-badge">
-                    <i class="fas fa-box"></i>
-                    <span><?php echo t('products.badge', 'Nuestros Productos'); ?></span>
-                </div>
-                <h2 class="section-title"><?php echo t('products.title', 'Soluciones de Automatización'); ?></h2>
-                <p class="section-description"><?php echo t('products.description', 'FIDORA ofrece una suite completa de productos de automatización inteligente'); ?></p>
-            </div>
-            <div class="pricing-grid">
-                <!-- Product 1: VozAI -->
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3 class="plan-name"><?php echo t('products.voiceAI.name', 'VozAI'); ?></h3>
-                        <div class="plan-price">
-                            <div style="font-size: 1.75rem; font-weight: 600; margin: 0.5rem 0;"><?php echo t('products.voiceAI.subtitle', 'Asistente de Voz IA'); ?></div>
-                        </div>
-                        <p class="plan-description"><?php echo t('products.voiceAI.description', 'Interacción por voz inteligente y natural'); ?></p>
-                    </div>
-                    <div class="pricing-features">
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.voiceAI.features.0', 'Procesamiento de lenguaje natural'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.voiceAI.features.1', 'Respuestas en tiempo real'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.voiceAI.features.2', 'Integración con sistemas'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.voiceAI.features.3', 'Disponibilidad 24/7'); ?></span>
-                        </div>
-                    </div>
-                    <button class="btn-secondary-full"><?php echo t('cta.moreInfo', 'Más Información'); ?></button>
-                </div>
-                
-                <!-- Product 2: WhatsApp Automation -->
-                <div class="pricing-card popular">
-                    <div class="popular-badge"><?php echo t('products.whatsapp.popular', 'Más Popular'); ?></div>
-                    <div class="pricing-header">
-                        <h3 class="plan-name"><?php echo t('products.whatsapp.name', 'WhatsApp Automation'); ?></h3>
-                        <div class="plan-price">
-                            <div style="font-size: 1.75rem; font-weight: 600; margin: 0.5rem 0;"><?php echo t('products.whatsapp.subtitle', 'Automatización WhatsApp'); ?></div>
-                        </div>
-                        <p class="plan-description"><?php echo t('products.whatsapp.description', 'Comunicación automática con clientes'); ?></p>
-                    </div>
-                    <div class="pricing-features">
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.whatsapp.features.0', 'Envío masivo personalizado'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.whatsapp.features.1', 'Respuestas automáticas'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.whatsapp.features.2', 'Seguimiento de propiedades'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.whatsapp.features.3', 'WhatsApp Business API'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.whatsapp.features.4', 'Métricas y análisis'); ?></span>
-                        </div>
-                    </div>
-                    <button class="btn-primary-full"><?php echo t('cta.requestDemo', 'Solicitar Demo'); ?></button>
-                </div>
-                
-                <!-- Product 3: Custom Solutions -->
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3 class="plan-name"><?php echo t('products.custom.name', 'Soluciones a Medida'); ?></h3>
-                        <div class="plan-price">
-                            <div style="font-size: 1.75rem; font-weight: 600; margin: 0.5rem 0;"><?php echo t('products.custom.subtitle', 'Automatizaciones a Medida'); ?></div>
-                        </div>
-                        <p class="plan-description"><?php echo t('products.custom.description', 'Automatizaciones diseñadas específicamente para ti'); ?></p>
-                    </div>
-                    <div class="pricing-features">
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.custom.features.0', 'Desarrollo personalizado'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.custom.features.1', 'Integración completa'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.custom.features.2', 'Soporte dedicado'); ?></span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="fas fa-check"></i>
-                            <span><?php echo t('products.custom.features.3', 'Escalabilidad garantizada'); ?></span>
-                        </div>
-                    </div>
-                    <button class="btn-secondary-full"><?php echo t('cta.contact', 'Contactar'); ?></button>
-                </div>
-            </div>
+    <!-- MANIFESTO / Philosophy -->
+    <section class="manifesto" id="manifesto">
+        <div class="manifesto__sticky">
+            <span class="section__index mono"><?php echo $c['sec3_index']; ?></span>
+            <h2 class="manifesto__title">
+                <?php foreach ($c['manifesto'] as $line): ?>
+                    <span data-manifesto-line><?php echo $line; ?></span>
+                <?php endforeach; ?>
+            </h2>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="section-badge">
-                    <i class="fas fa-quote-left"></i>
-                    <span><?php echo t('testimonials.badge', 'Historias de éxito'); ?></span>
-                </div>
-                <h2 class="section-title"><?php echo t('testimonials.title', 'Lo que Dicen Nuestros Clientes'); ?></h2>
-                <p class="section-description"><?php echo t('testimonials.description', 'Descubre cómo empresas como la tuya están transformando su proceso de ventas con FIDORA.'); ?></p>
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+        <div class="contact__inner">
+            <div class="contact__copy">
+                <span class="section__index mono"><?php echo $c['sec4_index']; ?></span>
+                <h2 class="section__title"><?php echo $c['contact_title_a']; ?><br /><em><?php echo $c['contact_title_em']; ?></em></h2>
+                <p class="section__lede"><?php echo $c['contact_lede']; ?></p>
+                <ul class="contact__meta mono">
+                    <?php foreach ($c['contact_meta'] as $row): ?>
+                        <li>
+                            <span><?php echo $row[0]; ?></span>
+                            <?php if ($row[2]): ?><a href="mailto:<?php echo $row[1]; ?>"><?php echo $row[1]; ?></a>
+                            <?php else: ?><span><?php echo $row[1]; ?></span><?php endif; ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
             </div>
-            
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <blockquote class="testimonial-text">
-                        "La automatización de WhatsApp de FIDORA Labs transformó nuestra comunicación con clientes. Ahora respondemos en tiempo real y nuestros clientes están más satisfechos que nunca."
-                    </blockquote>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt="Carlos Martínez">
-                        </div>
-                        <div class="author-info">
-                            <div class="author-name">Carlos Martínez</div>
-                            <div class="author-title">Director Comercial, PropTech Solutions</div>
-                        </div>
-                    </div>
+
+            <form class="contact__form" id="briefingForm" novalidate
+                  data-msg-ok="<?php echo htmlspecialchars($c['form']['ok'], ENT_QUOTES); ?>"
+                  data-msg-err="<?php echo htmlspecialchars($c['form']['err'], ENT_QUOTES); ?>"
+                  data-msg-invalid="<?php echo htmlspecialchars($c['form']['invalid'], ENT_QUOTES); ?>"
+                  data-msg-sending="<?php echo $isES?'Enviando…':($isDE?'Senden…':'Sending…'); ?>">
+                <div class="field">
+                    <label for="cname"><?php echo $c['form']['name']; ?></label>
+                    <input id="cname" name="name" type="text" required autocomplete="name" />
                 </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <blockquote class="testimonial-text">
-                        "VozAI nos permite atender a nuestros clientes 24/7 sin aumentar costos. La calidad de las interacciones es sorprendente y nuestros clientes ni siquiera notan que es IA."
-                    </blockquote>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="Miguel Ángel Torres">
-                        </div>
-                        <div class="author-info">
-                            <div class="author-name">Miguel Ángel Torres</div>
-                            <div class="author-title">CEO, InmobiliariaPlus</div>
-                        </div>
-                    </div>
+                <div class="field">
+                    <label for="ccompany"><?php echo $c['form']['company']; ?></label>
+                    <input id="ccompany" name="company" type="text" autocomplete="organization" />
                 </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <blockquote class="testimonial-text">
-                        "Las automatizaciones a medida que desarrolló FIDORA Labs se integraron perfectamente con nuestros sistemas. El ROI fue inmediato y el soporte es excepcional."
-                    </blockquote>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">
-                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=60&h=60&fit=crop&crop=face" alt="Laura Fernández">
-                        </div>
-                        <div class="author-info">
-                            <div class="author-name">Laura Fernández</div>
-                            <div class="author-title">Directora de Operaciones, TechVentures</div>
-                        </div>
-                    </div>
+                <div class="field">
+                    <label for="cemail"><?php echo $c['form']['email']; ?></label>
+                    <input id="cemail" name="email" type="email" required autocomplete="email" />
                 </div>
-            </div>
+                <div class="field">
+                    <label for="cmessage"><?php echo $c['form']['message']; ?></label>
+                    <textarea id="cmessage" name="message" rows="4" required></textarea>
+                </div>
+                <label class="field field--check">
+                    <input type="checkbox" required />
+                    <span><?php echo $c['form']['consent']; ?></span>
+                </label>
+                <button type="submit" class="btn btn--primary btn--block">
+                    <span><?php echo $c['form']['submit']; ?></span>
+                    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+                </button>
+                <p class="contact__note mono" data-form-status></p>
+            </form>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section class="faq-section" id="faq">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="section-badge">
-                    <i class="fas fa-question-circle"></i>
-                    <span><?php echo t('faq.badge', 'Preguntas Frecuentes'); ?></span>
-                </div>
-                <h2 class="section-title"><?php echo t('faq.title', 'Resolvemos tus Dudas'); ?></h2>
-                <p class="section-description"><?php echo t('faq.description', 'Encuentra respuestas a las preguntas más comunes sobre nuestras soluciones de automatización.'); ?></p>
+    <!-- FOOTER -->
+    <footer class="foot">
+        <div class="foot__top">
+            <div class="foot__brand">
+                <img src="assets/images/fidora_whitebg.png" alt="Fidora Labs" class="nav__logo--dark" />
+                <img src="assets/images/fidora_blackbg.png" alt="Fidora Labs" class="nav__logo--light" />
+                <p><?php echo $c['foot_tag']; ?></p>
             </div>
-            
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3><?php echo t('faq.q1', '¿Qué es VozAI y cómo funciona?'); ?></h3>
-                        <i class="fas fa-chevron-down"></i>
+            <nav class="foot__cols" aria-label="Footer">
+                <?php foreach ($c['foot_cols'] as $col): ?>
+                    <div>
+                        <h4><?php echo $col[0]; ?></h4>
+                        <?php foreach ($col[1] as $link): ?>
+                            <a href="#"><?php echo $link; ?></a>
+                        <?php endforeach; ?>
                     </div>
-                    <div class="faq-answer">
-                        <p><?php echo t('faq.a1', 'VozAI es nuestro asistente de voz inteligente que utiliza procesamiento de lenguaje natural para interactuar con tus clientes de forma conversacional y natural. Puede entender consultas complejas y proporcionar respuestas contextualmente relevantes, mejorando significativamente la experiencia del cliente.'); ?></p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3><?php echo t('faq.q2', '¿Cómo se integra WhatsApp Automation?'); ?></h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p><?php echo t('faq.a2', 'Utilizamos la API oficial de WhatsApp Business para automatizar mensajes, enviar propiedades y gestionar conversaciones de forma inteligente y personalizada. La integración es seamless con tus sistemas existentes y permite un control total sobre las conversaciones automatizadas.'); ?></p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3><?php echo t('faq.q3', '¿Cuáles son los precios?'); ?></h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p><?php echo t('faq.a3', 'Ofrecemos planes personalizados según tus necesidades específicas. Nuestros precios varían según el volumen de conversaciones, características requeridas y nivel de personalización. Contáctanos para una consulta gratuita y cotizaciones adaptadas a tu negocio.'); ?></p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3><?php echo t('faq.q4', '¿Cuánto tiempo tarda la implementación?'); ?></h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p><?php echo t('faq.a4', 'La implementación varía según la complejidad del proyecto. VozAI puede estar listo en 1-2 semanas, mientras que las soluciones a medida pueden tomar 4-8 semanas. Trabajamos contigo para establecer un cronograma realista y mantenerte informado durante todo el proceso.'); ?></p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3><?php echo t('faq.q5', '¿Mis datos están seguros?'); ?></h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p><?php echo t('faq.a5', 'Absolutamente. Utilizamos encriptación de nivel bancario y cumplimos con todas las normativas GDPR y de protección de datos europeas. Tu información está almacenada en servidores seguros y nunca compartimos datos con terceros sin tu consentimiento explícito.'); ?></p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3><?php echo t('faq.q6', '¿Qué tipo de soporte ofrecen?'); ?></h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p><?php echo t('faq.a6', 'Ofrecemos soporte 24/7, documentación completa, training personalizado y un gestor de cuenta dedicado para asegurar tu éxito. Nuestro equipo de expertos está disponible para resolver cualquier duda y optimizar continuamente tus automatizaciones.'); ?></p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3><?php echo t('faq.q7', '¿Se puede personalizar según mi negocio?'); ?></h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p><?php echo t('faq.a7', 'Sí, todas nuestras soluciones son altamente personalizables. Desarrollamos automatizaciones específicamente diseñadas para tu industria, procesos de trabajo y objetivos de negocio. Cada implementación se adapta perfectamente a tus necesidades únicas.'); ?></p>
-                    </div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3><?php echo t('faq.q8', '¿Funciona con mis sistemas actuales?'); ?></h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p><?php echo t('faq.a8', 'Nuestras soluciones se integran con la mayoría de los sistemas empresariales comunes como CRM, ERP y herramientas de gestión. Realizamos una evaluación técnica previa para garantizar una integración seamless con tu infraestructura existente.'); ?></p>
-                    </div>
-                </div>
-            </div>
+                <?php endforeach; ?>
+            </nav>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="section-container">
-            <div class="cta-content">
-                <h2 class="cta-title"><?php echo t('cta.title', '¿Listo para Automatizar tu Negocio?'); ?></h2>
-                <p class="cta-description"><?php echo t('cta.description', 'Descubre cómo FIDORA Labs puede transformar tu comunicación con clientes mediante automatización inteligente.'); ?></p>
-                <div class="cta-buttons">
-                    <button class="btn-primary-large" id="finalCtaBtn">
-                        <i class="fas fa-calendar"></i>
-                        <?php echo t('cta.scheduleConsult', 'Solicitar Consulta Gratuita'); ?>
-                    </button>
-                    <a href="#productos" class="btn-secondary-large" id="finalDemoBtn">
-                        <i class="fas fa-cogs"></i>
-                        <?php echo t('cta.viewServices', 'Ver Servicios'); ?>
-                    </a>
-                </div>
-                <div class="cta-note">
-                    <i class="fas fa-info-circle"></i>
-                    <span><?php echo t('cta.note', 'Consulta sin compromiso • Soluciones personalizadas • Soporte dedicado'); ?></span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <div class="logo">
-                            <i class="fas fa-chart-network logo-icon"></i>
-                            <div class="logo-text">
-                                <div class="logo-name">FIDORA</div>
-                                <div class="logo-tagline">LABS</div>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="footer-description">
-                        Automatización inteligente para transformar tu negocio. <br>VozAI, WhatsApp y soluciones de IA a medida.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title"><?php echo t('footer.products', 'Productos'); ?></h4>
-                    <ul class="footer-links">
-                        <li><a href="#">VozAI</a></li>
-                        <li><a href="#">WhatsApp Automation</a></li>
-                        <li><a href="#"><?php echo t('products.custom.subtitle', 'Automatizaciones a medida'); ?></a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title"><?php echo t('footer.company', 'Empresa'); ?></h4>
-                    <ul class="footer-links">
-                        <li><a href="#"><?php echo t('footer.about', 'Sobre Nosotros'); ?></a></li>
-                        <li><a href="#"><?php echo t('footer.cases', 'Casos de Éxito'); ?></a></li>
-                        <li><a href="#contact"><?php echo t('footer.contact', 'Contacto'); ?></a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title"><?php echo t('footer.support', 'Soporte'); ?></h4>
-                    <ul class="footer-links">
-                        <li><a href="#"><?php echo t('footer.help', 'Centro de Ayuda'); ?></a></li>
-                        <li><a href="#"><?php echo t('footer.docs', 'Documentación'); ?></a></li>
-                        <li><a href="#faq"><?php echo t('nav.faq', 'FAQ'); ?></a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title"><?php echo t('footer.legal', 'Legal'); ?></h4>
-                    <ul class="footer-links">
-                        <li><a href="privacy.html"><?php echo t('footer.privacy', 'Política de Privacidad'); ?></a></li>
-                        <li><a href="#"><?php echo t('footer.terms', 'Términos de Servicio'); ?></a></li>
-                        <li><a href="#"><?php echo t('footer.cookies', 'Política de Cookies'); ?></a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <div class="footer-bottom-content">
-                    <p class="copyright"><?php echo t('footer.copyright', '© 2025 FIDORA Labs. Todos los derechos reservados.'); ?></p>
-                    <div class="footer-bottom-links">
-                    </div>
-                </div>
-            </div>
+        <div class="foot__bottom mono">
+            <?php foreach ($c['foot_bottom'] as $b): ?><span><?php echo $b; ?></span><?php endforeach; ?>
         </div>
     </footer>
 
-    <!-- Trial Signup Modal -->
-    <div class="modal-overlay" id="trialModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3 class="modal-title"><?php echo t('modal.trialTitle', 'Solicitar Consulta Gratuita'); ?></h3>
-                <button class="modal-close" id="closeTrialModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="modal-content">
-                <div class="trial-benefits">
-                    <div class="benefit-item">
-                        <i class="fas fa-check"></i>
-                        <span><?php echo t('modal.trialBenefits.0', 'Consulta sin compromiso'); ?></span>
-                    </div>
-                    <div class="benefit-item">
-                        <i class="fas fa-check"></i>
-                        <span><?php echo t('modal.trialBenefits.1', 'Soluciones personalizadas'); ?></span>
-                    </div>
-                    <div class="benefit-item">
-                        <i class="fas fa-check"></i>
-                        <span><?php echo t('modal.trialBenefits.2', 'Respuesta en 24 horas'); ?></span>
-                    </div>
-                </div>
-                
-                <form class="trial-form" id="trialForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName"><?php echo t('modal.form.firstName', 'Nombre'); ?></label>
-                            <input type="text" id="firstName" name="firstName" required placeholder="Juan">
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName"><?php echo t('modal.form.lastName', 'Apellidos'); ?></label>
-                            <input type="text" id="lastName" name="lastName" required placeholder="García">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="trialEmail"><?php echo t('modal.form.email', 'Email de Trabajo'); ?></label>
-                        <input type="email" id="trialEmail" name="email" placeholder="juan@empresa.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone"><?php echo t('modal.form.phone', 'Teléfono'); ?></label>
-                        <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="+34 612 345 678">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="checkbox-label consent-checkbox checkbox-inline" style="display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;">
-                            <input type="checkbox" id="consent" name="consent" required style="margin: 0; margin-top: 2px;">
-                            <span class="checkmark"></span>
-                            <span class="consent-text" style="flex: 1; text-align: left; line-height: 1.4;"><?php echo t('modal.form.consent', 'Acepto la política de privacidad, soy mayor de 18 años y autorizo ser contactado mediante IA'); ?></span>
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="btn-primary-full">
-                        <i class="fas fa-calendar"></i>
-                        <?php echo t('modal.form.submit', 'Solicitar Consulta'); ?>
-                    </button>
-                </form>
-                
-                <div class="trial-footer">
-                    <p class="trial-note">
-                        <i class="fas fa-shield-check"></i>
-                        <?php echo t('modal.trialNote', 'Tus datos están seguros y protegidos. Nunca compartimos tu información.'); ?>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="assets/js/landing.js"></script>
+    <script src="assets/js/app.js"></script>
 </body>
 </html>
