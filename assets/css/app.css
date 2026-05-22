@@ -1059,13 +1059,15 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     }
     .stack__layer .mono::before { width: 12px; }
     /* Tighter z-depth so the front card doesn't visually pop outside */
-    .stack__layer[data-layer="0"] { transform: translate3d(0, 0, 60px); }
-    .stack__layer[data-layer="1"] { transform: translate3d(0, 0, 22px); }
-    .stack__layer[data-layer="2"] { transform: translate3d(0, 0, -22px); }
-    .stack__layer[data-layer="3"] { transform: translate3d(0, 0, -60px); }
+    .stack__layer[data-layer="0"] { transform: translate3d(0, 0, 30px); }
+    .stack__layer[data-layer="1"] { transform: translate3d(0, 0, 10px); }
+    .stack__layer[data-layer="2"] { transform: translate3d(0, 0, -10px); }
+    .stack__layer[data-layer="3"] { transform: translate3d(0, 0, -30px); }
     .stack__scene.is-active .stack__layers {
         transform: rotateX(14deg) rotateZ(-4deg);
     }
+    /* Tighter active depth on mobile too */
+    .stack__scene.is-active .stack__layer[data-layer="0"] { transform: translate3d(0, 0, 16px); }
     /* Section head tightened on mobile so the section reads in one breath */
     .stack .section__head { margin-bottom: 32px; padding: 0 20px; }
     .stack .section__title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
