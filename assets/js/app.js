@@ -138,11 +138,20 @@
             stackLayers.forEach((layer, i) => {
                 const baseZ = BASE_Z[i] !== undefined ? BASE_Z[i] : 0;
 
+                // Stacking order: the card currently "in front" must visually
+                // sit above the others. Without this, the deepest card (e.g.
+                // "EL METAL") could bleed through cards 2/3 because its
+                // translateZ + perspective made it pop forward in 3D space.
+                // We give each layer a zIndex that decreases as we go deeper,
+                // so the natural stack reads 1 → 2 → 3 → 4 from the front.
+                layer.style.zIndex = String(N - i);
+
                 if (i === N - 1) {
-                    // last layer: just gently rise to centre as user scrolls
-                    const rise = usable;
-                    const ty = (1 - rise) * 0;
-                    layer.style.transform = `translate3d(0, ${ty}px, ${baseZ + rise * 120}px)`;
+                    // Last layer: stays in place as the final card.
+                    // Don't pop it forward on Z — that was causing it to
+                    // bleed in front of layers 2 and 3 on mobile while they
+                    // were still being read.
+                    layer.style.transform = `translate3d(0, 0, ${baseZ}px)`;
                     layer.style.opacity = '1';
                     return;
                 }
