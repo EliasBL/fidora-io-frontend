@@ -106,8 +106,14 @@
         }, { threshold: 0.05 });
         sceneIO.observe(scene);
 
-        // Base depths (must match CSS so initial paint matches)
-        const BASE_Z = [180, 60, -60, -180];
+        // Base depths (must match CSS so initial paint matches).
+        // We use a *uniform, gentle* depth so all cards read at the same
+        // visual size — the depth illusion comes from the layered shadows
+        // and the slight rotation, not from popping the front card forward.
+        const isMobile = window.matchMedia('(max-width: 640px)').matches;
+        const BASE_Z = isMobile
+            ? [0, -8, -16, -24]
+            : [0, -20, -40, -60];
 
         let raf = null;
         const update = () => {
@@ -158,10 +164,19 @@
                 layer.style.opacity = String(opacity);
             });
 
-            // Active chapter = the layer currently in front (not yet fully peeled).
-            // While layer i is peeling (local 0..1), it's still the "current" chapter,
-            // and the next one only becomes active once i has fully peeled away.
-            const activeIdx = Math.min(N - 1, Math.floor(usable * peels));
+            // Active chapter = the card currently visible *at the front of the stack*.
+            // Each layer i peels across the slice [i/peels, (i+1)/peels]. As soon as
+            // peeling for layer i begins, layer i is fading/translating away and the
+            // next card (i+1) is what the user is actually reading. So the active
+            // index is the count of layers that have *started* peeling — clamped to
+            // the last card. At progress 0, that's card 0 (nothing has peeled yet).
+            let activeIdx = 0;
+            for (let i = 0; i < peels; i++) {
+                const start = i * slice;
+                const local = (usable - start) / slice;
+                if (local > 0.5) activeIdx = i + 1; // once layer i is past midway, the next card is in front
+            }
+            activeIdx = Math.min(N - 1, activeIdx);
             dots.forEach((d, i) => d.classList.toggle('is-active', i === activeIdx));
         };
 
