@@ -82,6 +82,7 @@ $copy = [
         ],
         'form'             => [
             'name'    => 'Nombre',
+            'phone'   => 'Teléfono',
             'company' => 'Empresa',
             'email'   => 'Email de trabajo',
             'message' => '¿Qué intentas resolver?',
@@ -166,6 +167,7 @@ $copy = [
         ],
         'form'             => [
             'name'    => 'Name',
+            'phone'   => 'Phone',
             'company' => 'Company',
             'email'   => 'Work email',
             'message' => 'What are you trying to solve?',
@@ -250,6 +252,7 @@ $copy = [
         ],
         'form'             => [
             'name'    => 'Name',
+            'phone'   => 'Telefon',
             'company' => 'Unternehmen',
             'email'   => 'Geschäftliche E-Mail',
             'message' => 'Was wollen Sie lösen?',
@@ -517,6 +520,10 @@ $c = $copy[$lang];
                 <div class="field">
                     <label for="cemail"><?php echo $c['form']['email']; ?></label>
                     <input id="cemail" name="email" type="email" required autocomplete="email" />
+                </div>
+                <div class="field">
+                    <label for="cphone"><?php echo $c['form']['phone']; ?></label>
+                    <input id="cphone" name="phone" type="tel" autocomplete="tel" />
                 </div>
                 <div class="field">
                     <label for="cmessage"><?php echo $c['form']['message']; ?></label>
