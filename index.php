@@ -458,8 +458,8 @@ $c = $copy[$lang];
                     <span class="product__tag mono"><?php echo $c['prod_1_tag']; ?></span>
                     <h3 class="product__name"><?php echo $c['prod_1_name']; ?></h3>
                     <div class="product__price">
-                        <span class="product__price-label"><?php echo $c['prod_1_price_label']; ?></span>
-                        <span class="product__price-amount"><?php echo $c['prod_1_price']; ?></span>
+                        <span class="mono"><?php echo $c['prod_1_price_label']; ?></span>
+                        <strong><?php echo $c['prod_1_price']; ?></strong>
                     </div>
                 </header>
                 <p class="product__desc"><?php echo $c['prod_1_desc']; ?></p>
@@ -475,8 +475,8 @@ $c = $copy[$lang];
                     <span class="product__pill"><?php echo $c['prod_2_pill']; ?></span>
                     <h3 class="product__name"><?php echo $c['prod_2_name']; ?></h3>
                     <div class="product__price">
-                        <span class="product__price-label"><?php echo $c['prod_2_price_label']; ?></span>
-                        <span class="product__price-amount"><?php echo $c['prod_2_price']; ?></span>
+                        <span class="mono"><?php echo $c['prod_2_price_label']; ?></span>
+                        <strong><?php echo $c['prod_2_price']; ?></strong>
                     </div>
                 </header>
                 <p class="product__desc"><?php echo $c['prod_2_desc']; ?></p>
@@ -491,8 +491,8 @@ $c = $copy[$lang];
                     <span class="product__tag mono"><?php echo $c['prod_3_tag']; ?></span>
                     <h3 class="product__name"><?php echo $c['prod_3_name']; ?></h3>
                     <div class="product__price">
-                        <span class="product__price-label"><?php echo $c['prod_3_price_label']; ?></span>
-                        <span class="product__price-amount"><?php echo $c['prod_3_price']; ?></span>
+                        <span class="mono"><?php echo $c['prod_3_price_label']; ?></span>
+                        <strong><?php echo $c['prod_3_price']; ?></strong>
                     </div>
                 </header>
                 <p class="product__desc"><?php echo $c['prod_3_desc']; ?></p>
