@@ -646,6 +646,26 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     margin: 0;
     line-height: 1.05;
 }
+.product__price {
+    margin-top: 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+.product__price-label {
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+}
+.product__price-amount {
+    font-size: clamp(2rem, 1.4rem + 1.2vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--fg);
+    line-height: 1;
+}
 .product__desc {
     color: var(--fg-mute);
     margin: 0 0 24px;

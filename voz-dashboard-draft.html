@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Fidora · Voz — Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =================================================================
+   FIDORA · VOZ — Dashboard draft
+   Mirrors fidora.io v2 tokens, no extras.
+   ================================================================= */
+
+/* ---- tokens ---- */
+:root{
+  --bg:#000; --bg-elev:#0a0a0a; --bg-elev-2:#131313;
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.18);
+  --fg:#fff; --fg-mute:#9a9a9a; --fg-soft:#6a6a6a;
+  --accent:#fff; --accent-ink:#000;
+  --ok:#3ad58a; --err:#ff5577; --warn:#e0a23a;
+
+  --ff-sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --ff-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --fs-mono:11px; --fs-body:15px; --fs-lede:17px;
+
+  --ease:cubic-bezier(.22,1,.36,1);
+  --pad-x:clamp(20px,2.4vw,40px);
+  --shell-side:264px;
+  --topbar-h:60px;
+}
+html[data-theme="light"]{
+  --bg:#fff; --bg-elev:#f6f6f6; --bg-elev-2:#ececec;
+  --line:rgba(0,0,0,.10); --line-2:rgba(0,0,0,.20);
+  --fg:#000; --fg-mute:#555; --fg-soft:#888;
+  --accent:#000; --accent-ink:#fff;
+  --ok:#0a8a4a; --err:#c5263e; --warn:#a36a05;
+}
+
+/* ---- reset ---- */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+img,svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+ul{margin:0;padding:0;list-style:none}
+body{
+  font-family:var(--ff-sans);
+  font-size:var(--fs-body);
+  color:var(--fg);
+  background:var(--bg);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  transition:background-color .35s var(--ease),color .35s var(--ease);
+}
+.mono{
+  font-family:var(--ff-mono);
+  font-size:var(--fs-mono);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.tabular{font-variant-numeric:tabular-nums}
+
+/* ---- shell skeleton ---- */
+.shell{
+  display:grid;
+  grid-template-columns:var(--shell-side) 1fr;
+  min-height:100vh;
+}
+
+/* ---------- SIDEBAR ---------------------------------------------- */
+.side{
+  position:sticky; top:0;
+  height:100vh;
+  border-right:1px solid var(--line);
+  background:var(--bg);
+  display:flex; flex-direction:column;
+  padding:24px 20px 20px;
+  z-index:5;
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:36px;
+}
+.brand__mark{
+  width:22px;height:22px;border:1px solid var(--fg);
+  display:grid;place-items:center;
+  font-family:var(--ff-mono);font-size:11px;font-weight:600;
+  letter-spacing:.04em;
+}
+.brand__word{
+  font-weight:800; letter-spacing:.02em; font-size:14px;
+}
+.brand__word i{font-style:normal;color:var(--fg-soft);margin:0 6px}
+.brand__sub{font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;color:var(--fg-soft);text-transform:uppercase}
+
+.side__group{margin-bottom:28px}
+.side__group-label{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.2em;
+  color:var(--fg-soft);text-transform:uppercase;
+  padding:0 8px;margin-bottom:10px;
+}
+.side__nav{display:flex;flex-direction:column;gap:1px}
+.side__item{
+  display:flex; align-items:center; gap:12px;
+  padding:10px 10px;
+  font-size:14px;
+  color:var(--fg-mute);
+  border-left:1px solid transparent;
+  transition:color .2s var(--ease),border-color .2s var(--ease),background-color .2s var(--ease);
+}
+.side__item:hover{color:var(--fg)}
+.side__item svg{width:16px;height:16px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.6}
+.side__item.is-active{
+  color:var(--fg);
+  border-left-color:var(--fg);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--fg) 6%,transparent),transparent 60%);
+}
+
+.side__foot{margin-top:auto;padding-top:20px;border-top:1px solid var(--line)}
+.side__user{
+  display:flex; align-items:center; gap:12px;
+  padding:8px 6px;
+}
+.side__user .avatar{
+  width:34px;height:34px;border:1px solid var(--line-2);border-radius:50%;
+  display:grid;place-items:center;
+  font-family:var(--ff-mono);font-size:11px;letter-spacing:.05em;color:var(--fg);
+}
+.side__user-name{font-size:13px;color:var(--fg);line-height:1.2}
+.side__user-email{font-size:11px;color:var(--fg-soft);line-height:1.2}
+.side__logout{
+  margin-top:8px; width:100%;
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--fg-soft);
+  padding:10px 8px; border:1px solid var(--line);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  transition:color .2s,border-color .2s;
+}
+.side__logout:hover{color:var(--fg);border-color:var(--fg-mute)}
+
+/* ---------- TOPBAR ------------------------------------------------ */
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{
+  position:sticky; top:0; z-index:4;
+  height:var(--topbar-h);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 var(--pad-x);
+  border-bottom:1px solid var(--line);
+  background:color-mix(in srgb,var(--bg) 80%,transparent);
+  backdrop-filter:blur(14px) saturate(140%);
+}
+.crumbs{display:flex;align-items:center;gap:10px;color:var(--fg-soft)}
+.crumbs a{color:var(--fg-soft)}
+.crumbs a:hover{color:var(--fg)}
+.crumbs .sep{opacity:.6}
+.crumbs .here{color:var(--fg)}
+
+.tools{display:flex;align-items:center;gap:10px}
+.icon-btn{
+  width:34px;height:34px; border:1px solid var(--line); border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--fg-mute); transition:color .2s,border-color .2s;
+}
+.icon-btn:hover{color:var(--fg);border-color:var(--line-2)}
+.icon-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.6}
+.lang-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 12px; border:1px solid var(--line); border-radius:999px;
+  font-family:var(--ff-mono); font-size:11px; letter-spacing:.12em; color:var(--fg-mute);
+}
+.lang-pill:hover{color:var(--fg);border-color:var(--line-2)}
+
+/* ---------- VIEW ------------------------------------------------- */
+.view{padding:48px var(--pad-x) 80px;max-width:1200px}
+.view__head{margin-bottom:36px}
+.view__index{
+  display:inline-block; margin-bottom:18px;
+  color:var(--fg-soft);
+  font-family:var(--ff-mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+}
+.view__title{
+  font-size:clamp(1.7rem,1.2rem+1.6vw,2.6rem);
+  font-weight:700; letter-spacing:-0.028em; line-height:1.02;
+  margin:0 0 12px;
+}
+.view__title em{font-style:italic;font-weight:300;color:var(--fg-mute)}
+.view__lede{color:var(--fg-mute);font-size:var(--fs-lede);max-width:62ch;margin:0;line-height:1.5}
+
+/* ---------- METRICS row ----------------------------------------- */
+.metrics{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:0;
+  border:1px solid var(--line);
+  background:var(--line);
+  margin-bottom:36px;
+}
+.metric{
+  background:var(--bg);
+  padding:28px 28px 24px;
+  display:flex;flex-direction:column;gap:8px;
+}
+.metric__label{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;
+  color:var(--fg-soft);text-transform:uppercase;
+}
+.metric__value{
+  font-size:clamp(2rem,1.6rem+1.6vw,3rem);
+  font-weight:700;letter-spacing:-0.035em;line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.metric__value i{font-style:normal;font-size:.4em;color:var(--fg-mute);font-weight:500;margin-left:4px}
+.metric__hint{font-size:12px;color:var(--fg-soft)}
+.metric__hint .up{color:var(--ok)} .metric__hint .down{color:var(--err)}
+
+/* ---------- PANEL (replaces .content-card) ---------------------- */
+.panel{
+  background:var(--bg-elev);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:28px;
+  margin-bottom:24px;
+}
+.panel__head{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:16px; margin-bottom:20px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:16px;
+}
+.panel__title{font-size:15px;font-weight:600;letter-spacing:-0.005em;margin:0}
+.panel__hint{font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;color:var(--fg-soft);text-transform:uppercase}
+.panel__tools{display:flex;gap:8px}
+
+/* status snapshot row (number + plan + minutes bar) ------------- */
+.snap{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:36px;
+}
+.snap__cell{
+  background:var(--bg-elev);
+  padding:24px 24px 22px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.snap__label{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.18em;
+  color:var(--fg-soft);text-transform:uppercase;
+}
+.snap__value{font-size:22px;font-weight:600;letter-spacing:-0.01em}
+.snap__value.mono-num{font-family:var(--ff-mono);font-variant-numeric:tabular-nums}
+
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 8px; border:1px solid var(--line-2); border-radius:999px;
+  font-family:var(--ff-mono); font-size:10px; letter-spacing:.14em; color:var(--fg);
+  text-transform:uppercase; align-self:flex-start;
+}
+.tag.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 35%,transparent)}
+.tag.warn{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 35%,transparent)}
+.tag.err{color:var(--err);border-color:color-mix(in srgb,var(--err) 35%,transparent)}
+.tag .dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* minutes bar */
+.bar{height:6px;background:var(--bg-elev-2);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--fg);width:62%}
+.bar.warn > i{background:var(--warn)}
+.bar.err > i{background:var(--err)}
+.bar-meta{
+  display:flex;justify-content:space-between;
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;color:var(--fg-soft);text-transform:uppercase;
+  margin-top:8px;
+}
+
+/* ---------- TABLE / activity rows ------------------------------- */
+.table{width:100%;border-collapse:separate;border-spacing:0}
+.table thead th{
+  text-align:left;
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.16em;
+  color:var(--fg-soft);text-transform:uppercase;font-weight:500;
+  padding:0 0 12px;
+  border-bottom:1px solid var(--line);
+}
+.table td{
+  padding:16px 0; border-bottom:1px dashed var(--line);
+  font-size:14px;color:var(--fg);
+}
+.table tr:last-child td{border-bottom:0}
+.table .num{font-family:var(--ff-mono);font-variant-numeric:tabular-nums;color:var(--fg)}
+.table .muted{color:var(--fg-mute)}
+
+/* call row (activity log) -------------------------------------- */
+.call{
+  display:grid;
+  grid-template-columns:auto 1fr auto auto;
+  gap:18px;
+  align-items:center;
+  padding:18px 4px;
+  border-bottom:1px dashed var(--line);
+}
+.call:last-child{border-bottom:0}
+.call__dir{
+  width:32px;height:32px;border:1px solid var(--line-2);border-radius:50%;
+  display:grid;place-items:center;color:var(--fg-mute);
+}
+.call__dir svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6}
+.call__num{font-weight:600;letter-spacing:-0.005em}
+.call__meta{display:flex;gap:14px;font-family:var(--ff-mono);font-size:10px;letter-spacing:.14em;color:var(--fg-soft);text-transform:uppercase;margin-top:4px}
+.call__dur{font-family:var(--ff-mono);font-variant-numeric:tabular-nums;color:var(--fg);font-size:13px}
+.call__keywords{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.call__kw{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:.12em;
+  color:var(--fg-mute);text-transform:uppercase;
+  padding:3px 8px;border:1px solid var(--line);border-radius:999px;
+}
+.call__kw:hover{color:var(--fg);border-color:var(--line-2)}
+
+/* ---------- BUTTONS --------------------------------------------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:11px 18px;
+  font-size:13px;font-weight:500;
+  border-radius:999px;
+  border:1px solid transparent;
+  transition:transform .3s var(--ease),color .2s,border-color .2s,background-color .2s;
+  white-space:nowrap;
+}
+.btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translateX(3px)}
+.btn--primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn--primary:hover{transform:translateY(-1px)}
+.btn--ghost{color:var(--fg);border-color:var(--line-2)}
+.btn--ghost:hover{border-color:var(--fg)}
+.btn--mono{font-family:var(--ff-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:9px 14px}
+
+/* ---------- FILTER bar ----------------------------------------- */
+.filters{
+  display:flex;gap:0;
+  border-bottom:1px solid var(--line);
+  margin-bottom:18px;
+}
+.filters button{
+  padding:12px 16px;
+  font-family:var(--ff-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fg-soft);
+  border-bottom:1px solid transparent;
+  margin-bottom:-1px;
+  transition:color .2s,border-color .2s;
+}
+.filters button:hover{color:var(--fg)}
+.filters button.is-active{color:var(--fg);border-bottom-color:var(--fg)}
+
+/* ---------- AGENT live strip (bottom of resumen) -------------- */
+.agent-strip{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  padding:18px 22px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--bg-elev);
+  font-family:var(--ff-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--fg-mute);
+}
+.agent-strip .live{display:inline-flex;align-items:center;gap:10px;color:var(--fg)}
+.agent-strip .live::before{
+  content:""; width:7px;height:7px;border-radius:50%;background:var(--ok);
+  animation:livepulse 2s var(--ease) infinite;
+}
+@keyframes livepulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ---------- responsive ----------------------------------------- */
+@media (max-width:960px){
+  :root{--shell-side:0}
+  .shell{grid-template-columns:1fr}
+  .side{display:none}
+  .metrics{grid-template-columns:repeat(2,1fr)}
+  .snap{grid-template-columns:1fr}
+}
+
+/* ---------- focus -------------------------------------------- */
+:focus-visible{outline:1px solid var(--fg);outline-offset:2px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="side">
+    <div class="brand">
+      <div class="brand__mark">F</div>
+      <div>
+        <div class="brand__word">FIDORA<i>·</i>VOZ</div>
+        <div class="brand__sub">Panel</div>
+      </div>
+    </div>
+
+    <div class="side__group">
+      <div class="side__group-label">Workspace</div>
+      <nav class="side__nav">
+        <a class="side__item is-active" href="#">
+          <svg viewBox="0 0 24 24"><path d="M3 12 12 4l9 8"/><path d="M5 10v10h14V10"/></svg>
+          Resumen
+        </a>
+        <a class="side__item" href="#">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.07 2h3a2 2 0 0 1 2 1.72c.12.96.34 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.84.54 2.8.66A2 2 0 0 1 22 16.92Z"/></svg>
+          Llamadas
+        </a>
+        <a class="side__item" href="#">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 21v-1a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1"/><circle cx="17" cy="9" r="2.5"/><path d="M22 21v-.5a3.5 3.5 0 0 0-3.5-3.5"/></svg>
+          Contactos
+        </a>
+        <a class="side__item" href="#">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.07 2h3a2 2 0 0 1 2 1.72c.12.96.34 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.84.54 2.8.66A2 2 0 0 1 22 16.92Z"/><path d="M16 2l6 6M22 2v6h-6"/></svg>
+          Campañas
+        </a>
+      </nav>
+    </div>
+
+    <div class="side__group">
+      <div class="side__group-label">Configuración</div>
+      <nav class="side__nav">
+        <a class="side__item" href="#">
+          <svg viewBox="0 0 24 24"><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>
+          Asistente
+        </a>
+        <a class="side__item" href="#">
+          <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Integraciones
+        </a>
+        <a class="side__item" href="#">
+          <svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+          API
+        </a>
+      </nav>
+    </div>
+
+    <div class="side__group">
+      <div class="side__group-label">Cuenta</div>
+      <nav class="side__nav">
+        <a class="side__item" href="#">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          Facturación
+        </a>
+        <a class="side__item" href="#">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+          Perfil
+        </a>
+        <a class="side__item" href="#">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v.01M12 8a2.5 2.5 0 0 1 2.5 2.5c0 1.5-2.5 2-2.5 4"/></svg>
+          Soporte
+        </a>
+      </nav>
+    </div>
+
+    <div class="side__foot">
+      <div class="side__user">
+        <div class="avatar">EB</div>
+        <div>
+          <div class="side__user-name">Elías Bonilla</div>
+          <div class="side__user-email">elias@fidora.io</div>
+        </div>
+      </div>
+      <button class="side__logout">
+        <span>Cerrar sesión</span>
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5M15 12H3"/></svg>
+      </button>
+    </div>
+  </aside>
+
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+
+    <!-- topbar -->
+    <header class="topbar">
+      <nav class="crumbs mono">
+        <a href="#">Workspace</a>
+        <span class="sep">/</span>
+        <span class="here">Resumen</span>
+      </nav>
+
+      <div class="tools">
+        <button class="lang-pill" type="button">ES <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg></button>
+        <button class="icon-btn" id="themeToggle" title="Tema" aria-label="Cambiar tema">
+          <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+        </button>
+        <button class="icon-btn" title="Notificaciones" aria-label="Notificaciones">
+          <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- view -->
+    <main class="view">
+
+      <header class="view__head">
+        <span class="view__index">01 — Resumen</span>
+        <h1 class="view__title">Tu panel. <em>Una mirada.</em></h1>
+        <p class="view__lede">Lo que está pasando ahora mismo en tu número. Sin gráficos por gusto: solo lo que necesitas para decidir.</p>
+      </header>
+
+      <!-- metrics row -->
+      <section class="metrics" aria-label="Métricas">
+        <div class="metric">
+          <span class="metric__label">Minutos restantes</span>
+          <span class="metric__value tabular">1.247<i> / 2.000</i></span>
+          <span class="metric__hint"><span class="up">62%</span> del plan disponible</span>
+        </div>
+        <div class="metric">
+          <span class="metric__label">Llamadas hoy</span>
+          <span class="metric__value tabular">38</span>
+          <span class="metric__hint"><span class="up">+12</span> vs ayer</span>
+        </div>
+        <div class="metric">
+          <span class="metric__label">Tasa de éxito</span>
+          <span class="metric__value tabular">94<i>%</i></span>
+          <span class="metric__hint">últimas 24h</span>
+        </div>
+        <div class="metric">
+          <span class="metric__label">Próxima factura</span>
+          <span class="metric__value">12 Jul</span>
+          <span class="metric__hint">€89,00 — Plan Pro</span>
+        </div>
+      </section>
+
+      <!-- snapshot strip: phone + plan + bar -->
+      <section class="snap" aria-label="Estado del servicio">
+        <div class="snap__cell">
+          <span class="snap__label">Número asignado</span>
+          <span class="snap__value mono-num">+34 911 23 45 67</span>
+          <span class="tag ok"><span class="dot"></span> Activo</span>
+        </div>
+        <div class="snap__cell">
+          <span class="snap__label">Plan</span>
+          <span class="snap__value">Pro</span>
+          <span class="mono" style="color:var(--fg-soft)">2.000 min · llamadas salientes incluidas</span>
+        </div>
+        <div class="snap__cell">
+          <span class="snap__label">Consumo del mes</span>
+          <span class="snap__value tabular">753 <span style="color:var(--fg-mute);font-size:14px">de 2.000 min</span></span>
+          <div class="bar"><i style="width:37.6%"></i></div>
+          <div class="bar-meta"><span>37,6 % usado</span><span>Renueva 12 Jul</span></div>
+        </div>
+      </section>
+
+      <!-- activity panel -->
+      <section class="panel" aria-label="Actividad reciente">
+        <div class="panel__head">
+          <div>
+            <h2 class="panel__title">Actividad reciente</h2>
+            <span class="panel__hint">Últimas 5 llamadas</span>
+          </div>
+          <div class="panel__tools">
+            <button class="btn btn--mono btn--ghost">Ver todas
+              <svg viewBox="0 0 16 16"><path d="M1 8h13M9 3l5 5-5 5"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="filters" role="tablist" aria-label="Filtro de llamadas">
+          <button class="is-active">Todas</button>
+          <button>Entrantes</button>
+          <button>Salientes</button>
+          <button>Sin escuchar</button>
+        </div>
+
+        <!-- one call row -->
+        <div class="call">
+          <div class="call__dir" title="Entrante">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.07 2h3a2 2 0 0 1 2 1.72c.12.96.34 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.84.54 2.8.66A2 2 0 0 1 22 16.92Z"/><path d="M16 2v6h6"/></svg>
+          </div>
+          <div>
+            <div class="call__num">+34 612 98 76 54</div>
+            <div class="call__meta"><span>Hoy · 11:42</span><span>Entrante</span></div>
+            <div class="call__keywords">
+              <span class="call__kw">Reserva</span>
+              <span class="call__kw">Madrid</span>
+              <span class="call__kw">Vuelo</span>
+            </div>
+          </div>
+          <div class="call__dur">02:13</div>
+          <span class="tag ok"><span class="dot"></span> Éxito</span>
+        </div>
+
+        <div class="call">
+          <div class="call__dir" title="Saliente">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.07 2h3a2 2 0 0 1 2 1.72c.12.96.34 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.84.54 2.8.66A2 2 0 0 1 22 16.92Z"/><path d="M22 8h-6V2"/></svg>
+          </div>
+          <div>
+            <div class="call__num">+34 600 11 22 33</div>
+            <div class="call__meta"><span>Hoy · 10:18</span><span>Saliente</span><span>Campaña: Reactivación</span></div>
+            <div class="call__keywords">
+              <span class="call__kw">Cita</span>
+              <span class="call__kw">Confirmada</span>
+              <span class="call__kw">Lunes</span>
+            </div>
+          </div>
+          <div class="call__dur">01:47</div>
+          <span class="tag ok"><span class="dot"></span> Éxito</span>
+        </div>
+
+        <div class="call">
+          <div class="call__dir"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.07 2h3a2 2 0 0 1 2 1.72c.12.96.34 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.84.54 2.8.66A2 2 0 0 1 22 16.92Z"/><path d="M16 2v6h6"/></svg></div>
+          <div>
+            <div class="call__num">+34 670 55 44 33</div>
+            <div class="call__meta"><span>Hoy · 09:05</span><span>Entrante</span></div>
+            <div class="call__keywords">
+              <span class="call__kw">Horario</span>
+              <span class="call__kw">Tienda</span>
+              <span class="call__kw">Sábado</span>
+            </div>
+          </div>
+          <div class="call__dur">00:54</div>
+          <span class="tag ok"><span class="dot"></span> Éxito</span>
+        </div>
+
+        <div class="call">
+          <div class="call__dir"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.07 2h3a2 2 0 0 1 2 1.72c.12.96.34 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.84.54 2.8.66A2 2 0 0 1 22 16.92Z"/><path d="M16 2v6h6"/></svg></div>
+          <div>
+            <div class="call__num">Número oculto</div>
+            <div class="call__meta"><span>Ayer · 22:11</span><span>Entrante</span></div>
+            <div class="call__keywords">
+              <span class="call__kw">Sin respuesta</span>
+            </div>
+          </div>
+          <div class="call__dur">00:08</div>
+          <span class="tag err"><span class="dot"></span> Colgada</span>
+        </div>
+
+        <div class="call">
+          <div class="call__dir"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.07 2h3a2 2 0 0 1 2 1.72c.12.96.34 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.32 1.84.54 2.8.66A2 2 0 0 1 22 16.92Z"/><path d="M22 8h-6V2"/></svg></div>
+          <div>
+            <div class="call__num">+34 615 02 19 88</div>
+            <div class="call__meta"><span>Ayer · 18:34</span><span>Saliente</span><span>Campaña: Reactivación</span></div>
+            <div class="call__keywords">
+              <span class="call__kw">Llamar mañana</span>
+              <span class="call__kw">Interesado</span>
+            </div>
+          </div>
+          <div class="call__dur">03:22</div>
+          <span class="tag warn"><span class="dot"></span> Reintentar</span>
+        </div>
+
+      </section>
+
+      <!-- agent live strip -->
+      <div class="agent-strip">
+        <span class="live">Asistente · en línea</span>
+        <span>Modelo: Fidora Voice 2 · ES</span>
+        <span>Última actualización · 11:43</span>
+        <a href="#" style="color:var(--fg);border-bottom:1px solid var(--line-2);padding-bottom:1px">Configurar</a>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  // theme toggle (same key fidora.io uses)
+  const KEY = 'fidora-theme';
+  const root = document.documentElement;
+  const stored = localStorage.getItem(KEY);
+  if(stored){ root.setAttribute('data-theme', stored); }
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    localStorage.setItem(KEY, next);
+  });
+
+  // active nav demo
+  document.querySelectorAll('.side__item').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelectorAll('.side__item').forEach(x => x.classList.remove('is-active'));
+      a.classList.add('is-active');
+    });
+  });
+</script>
+
+</body>
+</html>
+
