@@ -293,8 +293,11 @@
                 phone: fd.get('phone') || '',
                 company: fd.get('company') || '',
                 message: fd.get('message') || '',
+                website: fd.get('website') || '',
+                country: fd.get('country') || '',
+                partnership_type: fd.get('partnership_type') || '',
                 timestamp: new Date().toISOString(),
-                source: 'landing_page',
+                source: form.dataset.source || 'landing_page',
             };
 
             const submitBtn = form.querySelector('button[type="submit"]');
@@ -330,6 +333,95 @@
     }
 
     /* ---------- Mobile menu (burger) ---------------------------- */
+    const burger = $('#burger');
+    const navLinks = $('.nav__links');
+    if (burger && navLinks) {
+        burger.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('is-open');
+            navLinks.style.display = isOpen ? 'flex' : '';
+            navLinks.style.position = 'fixed';
+            navLinks.style.inset = '64px 0 0 0';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.alignItems = 'center';
+            navLinks.style.justifyContent = 'center';
+            navLinks.style.background = 'var(--bg)';
+            navLinks.style.zIndex = '40';
+            navLinks.style.fontSize = '20px';
+            if (!isOpen) {
+                navLinks.removeAttribute('style');
+            }
+        });
+        navLinks.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                navLinks.classList.remove('is-open');
+                navLinks.removeAttribute('style');
+            }
+        });
+    }
+
+    /* ---------- Cookies banner ------------------------------------
+       Stores consent in a single cookie 'fidora_consent' as JSON:
+       { essential: true, analytics: bool, marketing: bool, ts: number }
+       Banner shows only if the cookie is missing. Re-open via the
+       footer "Cookie preferences" link. --------------------------- */
+    const CONSENT_KEY = 'fidora_consent';
+    const banner = $('#cookiesBanner');
+    if (banner) {
+        const panel = $('#cookiesPanel', banner);
+        const readConsent = () => {
+            try { return JSON.parse(localStorage.getItem(CONSENT_KEY) || 'null'); }
+            catch { return null; }
+        };
+        const writeConsent = (c) => {
+            try { localStorage.setItem(CONSENT_KEY, JSON.stringify({ ...c, ts: Date.now() })); } catch {}
+            // also drop a non-tracking marker cookie so server-side (if ever)
+            // can see the user has consented to at least essentials
+            document.cookie = CONSENT_KEY + '=1; path=/; max-age=' + (60 * 60 * 24 * 365);
+        };
+
+        const show = () => {
+            banner.hidden = false;
+            requestAnimationFrame(() => banner.classList.add('is-visible'));
+        };
+        const hide = () => {
+            banner.classList.remove('is-visible');
+            setTimeout(() => { banner.hidden = true; }, 600);
+        };
+
+        const existing = readConsent();
+        if (!existing) {
+            // small delay so the banner doesn't pop in before the page settles
+            setTimeout(show, 800);
+        }
+
+        // Re-open the banner from the footer / dedicated trigger.
+        // Triggered by any element with [data-cookie-reopen].
+        $$('[data-cookie-reopen]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                show();
+            });
+        });
+
+        banner.addEventListener('click', (e) => {
+            const action = e.target?.dataset?.cookieAction;
+            if (!action) return;
+            if (action === 'accept') {
+                writeConsent({ essential: true, analytics: true, marketing: true });
+                hide();
+            } else if (action === 'reject') {
+                writeConsent({ essential: true, analytics: false, marketing: false });
+                hide();
+            } else if (action === 'settings') {
+                panel.hidden = !panel.hidden;
+            } else if (action === 'save') {
+                const analytics  = !!$('[data-cookie-pref="analytics"]', banner)?.checked;
+                const marketing  = !!$('[data-cookie-pref="marketing"]', banner)?.checked;
+                writeConsent({ essential: true, analytics, marketing });
+                hide();
+            }
+        });
+    }
     const burger = $('#burger');
     const navLinks = $('.nav__links');
     if (burger && navLinks) {

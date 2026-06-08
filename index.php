@@ -3,16 +3,7 @@
 // FIDORA Labs — v2 (2026 redesign draft)
 // Default locale: ES. Narrative: "complex systems that feel simple."
 // ---------------------------------------------------------------
-
-$lang = isset($_GET['lang'])
-    ? $_GET['lang']
-    : (isset($_COOKIE['fidora_lang']) ? $_COOKIE['fidora_lang'] : 'es');
-$validLangs = ['es', 'en', 'de'];
-if (!in_array($lang, $validLangs)) { $lang = 'es'; }
-$isES = $lang === 'es';
-$isDE = $lang === 'de';
-$isEN = $lang === 'en';
-setcookie('fidora_lang', $lang, time() + (30 * 24 * 60 * 60), '/');
+require_once __DIR__ . '/assets/php/inc.php';
 
 // -- inline copy (kept here for easy editing — feed me final ES later)
 $copy = [
@@ -69,6 +60,7 @@ $copy = [
         'prod_3_desc'      => 'Cuando tu problema no cabe en una plantilla. Nos sentamos contigo, lo entendemos, lo construimos. En nuestra infraestructura o en la tuya.',
         'prod_3_list'      => ['Discovery y arquitectura', 'Modelos y pipelines a medida', 'On-prem o aislado disponible', 'Un equipo de ingeniería dedicado'],
         'prod_cta'         => 'Quiero esto',
+        'prod_view_more'   => 'Ver más',
         'sec3_index'       => '03 — FILOSOFÍA',
         'manifesto'        => [
             'La IA no se alquila. Se construye.',
@@ -83,7 +75,7 @@ $copy = [
         'contact_lede'     => 'Cuéntanos qué intentas resolver. Si tiene sentido, hablas directamente con quien lo va a construir.',
         'contact_meta'     => [
             ['EMAIL', 'hola@fidora.io', true],
-            ['SEDE',  'Madrid · Berlín', false],
+            ['SEDE',  'Europa · US', false],
             ['RESPUESTA', '&lt; 24h laborables', false],
         ],
         'form'             => [
@@ -102,8 +94,9 @@ $copy = [
         'foot_cols'        => [
             ['Productos', ['VozAI', 'WhatsApp Engine', 'Labs']],
             ['Empresa',   ['Filosofía', 'Cómo funciona', 'Contacto']],
-            ['Legal',     ['Privacidad', 'Términos', 'DPA']],
+            ['Legal',     ['/legal/privacidad.php', '/legal/aviso-legal.php', '/legal/cookies.php']],
         ],
+        'foot_legal_labels' => ['Privacidad', 'Aviso legal', 'Cookies'],
         'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS', 'CONSTRUIDO Y ALOJADO EN LA UE', 'v2.0 — EDICIÓN 2026'],
     ],
 
@@ -160,6 +153,7 @@ $copy = [
         'prod_3_desc'      => 'When your problem doesn\'t fit a template. We sit with you, understand it, build it. On our infra or yours.',
         'prod_3_list'      => ['Discovery &amp; architecture', 'Custom models &amp; pipelines', 'On-prem &amp; air-gapped options', 'A dedicated engineering pod'],
         'prod_cta'         => 'I want this',
+        'prod_view_more'   => 'View more',
         'sec3_index'       => '03 — PHILOSOPHY',
         'manifesto'        => [
             'AI isn’t rented. It’s built.',
@@ -174,7 +168,7 @@ $copy = [
         'contact_lede'     => 'Tell us what you’re trying to solve. If it’s a fit, you’ll talk directly to whoever will build it.',
         'contact_meta'     => [
             ['EMAIL', 'hello@fidora.io', true],
-            ['HQ',    'Madrid · Berlin', false],
+            ['HQ',    'Europe · US', false],
             ['RESPONSE', '&lt; 24h business', false],
         ],
         'form'             => [
@@ -193,8 +187,9 @@ $copy = [
         'foot_cols'        => [
             ['Products', ['VozAI', 'WhatsApp Engine', 'Labs']],
             ['Company',  ['Philosophy', 'How it works', 'Contact']],
-            ['Legal',    ['Privacy', 'Terms', 'DPA']],
+            ['Legal',    ['/legal/privacidad.php', '/legal/aviso-legal.php', '/legal/cookies.php']],
         ],
+        'foot_legal_labels' => ['Privacy', 'Legal notice', 'Cookies'],
         'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS S.L.', 'BUILT &amp; HOSTED IN THE EU', 'v2.0 — 2026 EDITION'],
     ],
 
@@ -251,6 +246,7 @@ $copy = [
         'prod_3_desc'      => 'Wenn Ihr Problem nicht in eine Vorlage passt. Wir setzen uns mit Ihnen zusammen, verstehen es, bauen es. Auf unserer oder Ihrer Infrastruktur.',
         'prod_3_list'      => ['Discovery &amp; Architektur', 'Eigene Modelle &amp; Pipelines', 'On-prem &amp; air-gapped möglich', 'Dediziertes Engineering-Team'],
         'prod_cta'         => 'Das will ich',
+        'prod_view_more'   => 'Mehr ansehen',
         'sec3_index'       => '03 — PHILOSOPHIE',
         'manifesto'        => [
             'KI mietet man nicht. Man baut sie.',
@@ -265,7 +261,7 @@ $copy = [
         'contact_lede'     => 'Sagen Sie uns, was Sie lösen wollen. Wenn es passt, sprechen Sie direkt mit dem, der es baut.',
         'contact_meta'     => [
             ['E-MAIL', 'hello@fidora.io', true],
-            ['SITZ',   'Madrid · Berlin', false],
+            ['SITZ',   'Europa · US', false],
             ['ANTWORT', '&lt; 24h werktags', false],
         ],
         'form'             => [
@@ -284,8 +280,9 @@ $copy = [
         'foot_cols'        => [
             ['Produkte', ['VozAI', 'WhatsApp Engine', 'Labs']],
             ['Firma',    ['Philosophie', 'Wie es funktioniert', 'Kontakt']],
-            ['Recht',    ['Datenschutz', 'AGB', 'DPA']],
+            ['Recht',    ['/legal/privacidad.php', '/legal/aviso-legal.php', '/legal/cookies.php']],
         ],
+        'foot_legal_labels' => ['Datenschutz', 'Impressum', 'Cookies'],
         'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS S.L.', 'GEBAUT &amp; GEHOSTET IN DER EU', 'v2.0 — AUSGABE 2026'],
     ],
 ];
@@ -302,13 +299,13 @@ $c = $copy[$lang];
     <title><?php echo $c['meta_title']; ?></title>
     <meta name="description" content="<?php echo $c['meta_desc']; ?>" />
 
-    <link rel="icon" type="image/png" href="assets/images/fidora_whitebg.png" />
+    <link rel="icon" type="image/png" href="/assets/images/fidora_whitebg.png" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="assets/css/app.css?v=6" />
+    <link rel="stylesheet" href="/assets/css/app.css?v=7" />
 </head>
 <body>
 
@@ -316,53 +313,12 @@ $c = $copy[$lang];
     <div class="bg-noise" aria-hidden="true"></div>
 
     <!-- NAV -->
-    <header class="nav" id="nav">
-        <a href="#" class="nav__brand" aria-label="Fidora Labs">
-            <img src="assets/images/fidora_whitebg.png" alt="" class="nav__logo nav__logo--dark" />
-            <img src="assets/images/fidora_blackbg.png" alt="" class="nav__logo nav__logo--light" />
-            <span class="nav__wordmark">FIDORA<span class="nav__wordmark-dot">.</span></span>
-        </a>
-
-        <nav class="nav__links" aria-label="Primary">
-            <a href="#how" data-link><?php echo $c['nav'][0]; ?></a>
-            <a href="#products" data-link><?php echo $c['nav'][1]; ?></a>
-            <a href="#manifesto" data-link><?php echo $c['nav'][2]; ?></a>
-            <a href="#contact" data-link><?php echo $c['nav'][3]; ?></a>
-        </nav>
-
-        <div class="nav__actions">
-            <div class="lang" data-lang>
-                <button class="lang__btn" type="button" aria-haspopup="true" aria-expanded="false">
-                    <span><?php echo strtoupper($lang); ?></span>
-                    <svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
-                </button>
-                <ul class="lang__menu" role="menu">
-                    <li><a href="?lang=es" role="menuitem" <?php echo $isES?'aria-current="true"':'';?>>ES — Español</a></li>
-                    <li><a href="?lang=en" role="menuitem" <?php echo $isEN?'aria-current="true"':'';?>>EN — English</a></li>
-                    <li><a href="?lang=de" role="menuitem" <?php echo $isDE?'aria-current="true"':'';?>>DE — Deutsch</a></li>
-                </ul>
-            </div>
-
-            <button class="theme" id="themeToggle" type="button" aria-label="Toggle theme">
-                <svg class="theme__sun" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><g stroke="currentColor" stroke-width="1.6"><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="4.5" y1="4.5" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.5" y2="19.5"/><line x1="4.5" y1="19.5" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.5" y2="4.5"/></g></svg>
-                <svg class="theme__moon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg>
-            </button>
-
-            <a href="#contact" class="btn btn--primary btn--sm" data-cta>
-                <span><?php echo $c['nav_cta']; ?></span>
-                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
-            </a>
-
-            <button class="nav__burger" id="burger" aria-label="Menu">
-                <span></span><span></span>
-            </button>
-        </div>
-    </header>
+    <?php render_nav(); ?>
 
     <!-- HERO -->
     <section class="hero" id="hero">
         <div class="hero__media" aria-hidden="true">
-            <img src="assets/images/hero.jpg" alt="" />
+            <img src="/assets/images/hero.jpg" alt="" />
             <div class="hero__veil"></div>
             <div class="hero__scan"></div>
         </div>
@@ -466,10 +422,13 @@ $c = $copy[$lang];
                 <ul class="product__list">
                     <?php foreach ($c['prod_1_list'] as $li): ?><li><?php echo $li; ?></li><?php endforeach; ?>
                 </ul>
-                <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
+                <div class="product__ctas">
+                    <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
+                    <a class="product__cta product__cta--more" href="/products/?lang=<?php echo $lang; ?>#vozai"><span><?php echo $c['prod_view_more']; ?></span><i></i></a>
+                </div>
             </article>
 
-            <article class="product product--featured" data-product>
+            <article class="product" data-product>
                 <header class="product__head">
                     <span class="product__tag mono"><?php echo $c['prod_2_tag']; ?></span>
                     <span class="product__pill"><?php echo $c['prod_2_pill']; ?></span>
@@ -483,7 +442,10 @@ $c = $copy[$lang];
                 <ul class="product__list">
                     <?php foreach ($c['prod_2_list'] as $li): ?><li><?php echo $li; ?></li><?php endforeach; ?>
                 </ul>
-                <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
+                <div class="product__ctas">
+                    <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
+                    <a class="product__cta product__cta--more" href="/products/?lang=<?php echo $lang; ?>#whatsapp"><span><?php echo $c['prod_view_more']; ?></span><i></i></a>
+                </div>
             </article>
 
             <article class="product" data-product>
@@ -499,7 +461,10 @@ $c = $copy[$lang];
                 <ul class="product__list">
                     <?php foreach ($c['prod_3_list'] as $li): ?><li><?php echo $li; ?></li><?php endforeach; ?>
                 </ul>
-                <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
+                <div class="product__ctas">
+                    <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
+                    <a class="product__cta product__cta--more" href="/products/?lang=<?php echo $lang; ?>#labs"><span><?php echo $c['prod_view_more']; ?></span><i></i></a>
+                </div>
             </article>
         </div>
     </section>
@@ -573,29 +538,11 @@ $c = $copy[$lang];
     </section>
 
     <!-- FOOTER -->
-    <footer class="foot">
-        <div class="foot__top">
-            <div class="foot__brand">
-                <img src="assets/images/fidora_whitebg.png" alt="Fidora Labs" class="nav__logo--dark" />
-                <img src="assets/images/fidora_blackbg.png" alt="Fidora Labs" class="nav__logo--light" />
-                <p><?php echo $c['foot_tag']; ?></p>
-            </div>
-            <nav class="foot__cols" aria-label="Footer">
-                <?php foreach ($c['foot_cols'] as $col): ?>
-                    <div>
-                        <h4><?php echo $col[0]; ?></h4>
-                        <?php foreach ($col[1] as $link): ?>
-                            <a href="#"><?php echo $link; ?></a>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endforeach; ?>
-            </nav>
-        </div>
-        <div class="foot__bottom mono">
-            <?php foreach ($c['foot_bottom'] as $b): ?><span><?php echo $b; ?></span><?php endforeach; ?>
-        </div>
-    </footer>
+    <?php render_foot(); ?>
 
-    <script src="assets/js/app.js?v=3"></script>
+    <!-- COOKIES -->
+    <?php render_cookies_banner(); ?>
+
+    <script src="/assets/js/app.js?v=4"></script>
 </body>
 </html>
