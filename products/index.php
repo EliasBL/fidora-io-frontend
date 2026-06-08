@@ -6,7 +6,9 @@ $pc = [
         'meta_title' => 'Productos. FIDORA Labs',
         'meta_desc'  => 'VozAI, WhatsApp Engine y Labs. Infraestructura conversacional propia, construida y operada por FIDORA LABS LLC. en Europa.',
         'eyebrow'    => 'PRODUCTOS · 2026',
-        'title'      => 'Tres productos. Un mismo motor.',
+        'title_l1'   => 'Tres productos.',
+        'title_l2'   => 'Un mismo motor.',
+        'title_em'   => true,
         'lede'       => 'La capa por encima de nuestros modelos, voz y WhatsApp. Detrás: la misma infraestructura, los mismos principios.',
         'scroll'     => 'BAJA',
         'view_more'  => 'Quiero esto',
@@ -57,7 +59,9 @@ $pc = [
         'meta_title' => 'Products. FIDORA Labs',
         'meta_desc'  => 'VozAI, WhatsApp Engine, and Labs. Owned conversational infrastructure, built and operated by FIDORA LABS LLC. in Europe.',
         'eyebrow'    => 'PRODUCTS · 2026',
-        'title'      => 'Three products. One engine.',
+        'title_l1'   => 'Three products.',
+        'title_l2'   => 'One engine.',
+        'title_em'   => true,
         'lede'       => 'The layer on top of our models, voice and WhatsApp. Behind it: the same infrastructure, the same principles.',
         'scroll'     => 'SCROLL',
         'view_more'  => 'I want this',
@@ -108,7 +112,9 @@ $pc = [
         'meta_title' => 'Produkte. FIDORA Labs',
         'meta_desc'  => 'VozAI, WhatsApp Engine und Labs. Eigene Konversationsinfrastruktur, gebaut und betrieben von FIDORA LABS LLC. in Europa.',
         'eyebrow'    => 'PRODUKTE · 2026',
-        'title'      => 'Drei Produkte. Eine Engine.',
+        'title_l1'   => 'Drei Produkte.',
+        'title_l2'   => 'Eine Engine.',
+        'title_em'   => true,
         'lede'       => 'Die Schicht über unseren Modellen, Sprache und WhatsApp. Dahinter: dieselbe Infrastruktur, dieselben Prinzipien.',
         'scroll'     => 'SCROLLEN',
         'view_more'  => 'Das will ich',
@@ -183,7 +189,10 @@ $c = $pc[$lang];
         </div>
 
         <div class="hero__inner">
-            <h1 class="hero__title" data-split-title><?php echo $c['title']; ?></h1>
+            <h1 class="hero__title" data-split-title>
+                <span class="line"><span data-split><?php echo $c['title_l1']; ?></span></span>
+                <span class="line"><span data-split><?php echo !empty($c['title_em']) ? '<em>'.$c['title_l2'].'</em>' : $c['title_l2']; ?></span></span>
+            </h1>
             <p class="hero__lede"><?php echo $c['lede']; ?></p>
         </div>
 

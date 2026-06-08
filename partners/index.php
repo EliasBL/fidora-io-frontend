@@ -6,7 +6,9 @@ $pc = [
         'meta_title' => 'Partners — FIDORA Labs',
         'meta_desc'  => '¿Revendes, integras o complementas lo que hacemos? Hablemos. FIDORA LABS LLC. busca partners en Europa y US.',
         'eyebrow'    => 'PARTNERS · 2026',
-        'title'      => 'Hazlo con nosotros.',
+        'title_l1'   => 'Hazlo con',
+        'title_l2'   => 'nosotros.',
+        'title_em'   => true,
         'lede'       => 'Revendes, integras o complementas lo que hacemos. Si tienes clientes que necesitan voz o WhatsApp atendido de verdad, hablemos. Te damos margen, soporte y acceso a la misma infraestructura que usamos nosotros.',
         'scroll'     => 'BAJA',
         'why_title'  => 'Por qué ser partner',
@@ -37,7 +39,9 @@ $pc = [
         'meta_title' => 'Partners — FIDORA Labs',
         'meta_desc'  => 'Resell, integrate, or complement what we do. FIDORA LABS LLC. is looking for partners in Europe and the US.',
         'eyebrow'    => 'PARTNERS · 2026',
-        'title'      => 'Build with us.',
+        'title_l1'   => 'Build with',
+        'title_l2'   => 'us.',
+        'title_em'   => true,
         'lede'       => 'You resell, integrate, or complement what we do. If you have customers who need voice or WhatsApp actually handled, let’s talk. We give you margin, support, and access to the same infrastructure we use.',
         'scroll'     => 'SCROLL',
         'why_title'  => 'Why partner',
@@ -68,7 +72,9 @@ $pc = [
         'meta_title' => 'Partner — FIDORA Labs',
         'meta_desc'  => 'Sie vertreiben, integrieren oder ergänzen, was wir tun. FIDORA LABS LLC. sucht Partner in Europa und den USA.',
         'eyebrow'    => 'PARTNER · 2026',
-        'title'      => 'Mit uns, nicht gegen uns.',
+        'title_l1'   => 'Mit uns, nicht',
+        'title_l2'   => 'gegen uns.',
+        'title_em'   => true,
         'lede'       => 'Sie vertreiben, integrieren oder ergänzen, was wir tun. Wenn Sie Kunden haben, die Sprache oder WhatsApp wirklich brauchen, sprechen Sie uns an. Wir geben Ihnen Marge, Support und Zugang zur gleichen Infrastruktur.',
         'scroll'     => 'SCROLLEN',
         'why_title'  => 'Warum Partner werden',
@@ -126,7 +132,10 @@ $isES = $lang === 'es';
         </div>
 
         <div class="hero__inner">
-            <h1 class="hero__title" data-split-title><?php echo $c['title']; ?></h1>
+            <h1 class="hero__title" data-split-title>
+                <span class="line"><span data-split><?php echo $c['title_l1']; ?></span></span>
+                <span class="line"><span data-split><?php echo !empty($c['title_em']) ? '<em>'.$c['title_l2'].'</em>' : $c['title_l2']; ?></span></span>
+            </h1>
             <p class="hero__lede"><?php echo $c['lede']; ?></p>
         </div>
 

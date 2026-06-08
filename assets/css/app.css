@@ -1140,16 +1140,16 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     }
 
     .hero__title {
-        /* Smaller, tighter headline. Fills the viewport on the index
-           hero. On the sub-page heroes (which have a vertical scroll
-           label on the right) the max-width is narrower so the
-           label has a clean gutter. */
-        font-size: clamp(1.85rem, 8vw, 2.6rem);
+        /* Smaller, tighter headline. Each .line is a block so the
+           title stacks into two lines (line 1 plain, line 2 em).
+           Font is capped to keep the longest line (15 chars) on one
+           visual line on a 375px viewport. */
+        font-size: clamp(1.7rem, 7.2vw, 2.4rem);
         line-height: 0.98;
         margin: 0 0 16px;
-        max-width: 14ch;
+        max-width: 100%;
     }
-    .hero.subhero .hero__title { max-width: 11ch; }
+    .hero.subhero .hero__title { max-width: calc(100% - 56px); }
     .hero__lede {
         font-size: 14px;
         line-height: 1.5;
@@ -1410,18 +1410,9 @@ html[data-theme="light"] .subhero__media img {
     filter: grayscale(0.35) contrast(1.05) brightness(0.55);
 }
 
-/* On sub-pages the hero title is a single line (no <br>), so the
-   per-line rise animation on the index hero is replaced with a
-   single fade-up. */
-.hero__title[data-split-title] {
-    max-width: 18ch;
-    opacity: 0;
-    transform: translateY(28px);
-    animation: subheroRise .9s var(--ease) forwards;
-}
-@keyframes subheroRise {
-    to { opacity: 1; transform: translateY(0); }
-}
+/* The sub-page hero title uses the same .line / [data-split]
+   structure as the index hero, so the per-line rise animation is
+   inherited. No override needed here. */
 
 /* The contact section that follows a subhero needs less top padding
    than the one on the index (where the previous section already
