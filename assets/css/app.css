@@ -1140,29 +1140,30 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     }
 
     .hero__title {
-        /* Smaller, tighter headline. Capped narrower than the viewport
-           so the vertical "SCROLL" label on the right has a clean
-           gutter to live in. 12ch at 8.5vw leaves ~80px on the right. */
+        /* Smaller, tighter headline. Fills the viewport on the index
+           hero. On the sub-page heroes (which have a vertical scroll
+           label on the right) the max-width is narrower so the
+           label has a clean gutter. */
         font-size: clamp(1.85rem, 8vw, 2.6rem);
         line-height: 0.98;
         margin: 0 0 16px;
-        max-width: 12ch;
+        max-width: 14ch;
     }
+    .hero.subhero .hero__title { max-width: 11ch; }
     .hero__lede {
         font-size: 14px;
         line-height: 1.5;
         margin: 0 0 18px;
-        /* Lede is also narrower than viewport so the scroll gutter
-           on the right is preserved. */
-        max-width: calc(100% - 56px);
+        max-width: 100%;
     }
+    .hero.subhero .hero__lede { max-width: calc(100% - 56px); }
     .hero__cta {
-        /* CTAs share the right-side gutter with the lede. */
-        max-width: calc(100% - 56px);
         flex-direction: row;
         flex-wrap: wrap;
         gap: 10px;
+        max-width: 100%;
     }
+    .hero.subhero .hero__cta { max-width: calc(100% - 56px); }
     .hero__cta .btn {
         flex: 1 1 auto;
         justify-content: center;
