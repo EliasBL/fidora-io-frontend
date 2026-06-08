@@ -254,19 +254,9 @@ html[data-theme="light"] .theme__moon { display: none; }
     color: var(--fg-soft);
 }
 
-/* Close affordance in the top-right corner. Pairs with the
-   burger (which has now morphed into an X). ---------------------- */
-.nav__links--mobile::after {
-    content: "ESC";
-    position: absolute;
-    top: 18px;
-    right: var(--pad-x);
-    font-family: var(--ff-mono);
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--fg-soft);
-}
+/* Close affordance: the burger button (top-right) has morphed
+   into an X. We don't paint a redundant 'ESC' hint in the
+   overlay; the X is the only close cue. */
 
 .nav__links--mobile a {
     display: grid;
@@ -303,12 +293,14 @@ html[data-theme="light"] .theme__moon { display: none; }
 .nav__links--mobile a::after { display: none; }
 
 /* Footer band: small mono utility row pinned to the bottom of
-   the overlay (lang + theme reminder + tag line). ---------------- */
+   the overlay (tag line + copyright). Hidden on desktop (where
+   the overlay is hidden anyway) so its text doesn't leak into
+   the desktop nav flex row. --------------------------------------- */
 .nav__mobile-foot {
+    display: none;
     margin-top: auto;
     padding: 24px 0 32px;
     border-top: 1px solid var(--line);
-    display: flex;
     flex-wrap: wrap;
     gap: 12px 24px;
     align-items: center;
@@ -320,6 +312,12 @@ html[data-theme="light"] .theme__moon { display: none; }
     color: var(--fg-soft);
 }
 .nav__mobile-foot span { white-space: nowrap; }
+/* Only shown inside the mobile overlay (≤1024px). */
+@media (max-width: 1024px) {
+    .nav__links.nav__links--mobile .nav__mobile-foot {
+        display: flex;
+    }
+}
 
 /* ---------- Buttons ------------------------------------------------- */
 .btn {
@@ -1142,34 +1140,48 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     }
 
     .hero__title {
-        /* Smaller, tighter headline so 2 lines comfortably fit */
-        font-size: clamp(2rem, 8.5vw, 2.8rem);
+        /* Smaller, tighter headline. Capped narrower than the viewport
+           so the vertical "SCROLL" label on the right has a clean
+           gutter to live in. 12ch at 8.5vw leaves ~80px on the right. */
+        font-size: clamp(1.85rem, 8vw, 2.6rem);
         line-height: 0.98;
         margin: 0 0 16px;
-        max-width: 18ch;
+        max-width: 12ch;
     }
     .hero__lede {
-        font-size: 15px;
-        line-height: 1.45;
-        margin: 0 0 20px;
-        max-width: 100%;
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0 0 18px;
+        /* Lede is also narrower than viewport so the scroll gutter
+           on the right is preserved. */
+        max-width: calc(100% - 56px);
     }
     .hero__cta {
-        flex-direction: column;
-        align-items: stretch;
+        /* CTAs share the right-side gutter with the lede. */
+        max-width: calc(100% - 56px);
+        flex-direction: row;
+        flex-wrap: wrap;
         gap: 10px;
-        width: 100%;
     }
     .hero__cta .btn {
-        width: 100%;
+        flex: 1 1 auto;
         justify-content: center;
-        padding: 14px 18px;
-        font-size: 14px;
+        padding: 13px 18px;
+        font-size: 13px;
     }
     /* Hide the stats row on mobile — let the hero image (the face) breathe
        between the eyebrow and the headline. */
     .hero__stats { display: none; }
-    .hero__scroll { display: none; }
+    /* On mobile the scroll label keeps its vertical treatment
+       (writing-mode: vertical-rl) so it matches desktop. It lives
+       in the right gutter the title/lede/CTAs leave clear. */
+    .hero__scroll {
+        right: var(--pad-x);
+        bottom: 40px;
+        gap: 10px;
+        font-size: 9px;
+    }
+    .hero__scroll-line { height: 44px; }
 
 
 
