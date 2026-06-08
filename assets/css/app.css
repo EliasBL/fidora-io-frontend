@@ -1172,16 +1172,19 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     /* Hide the stats row on mobile — let the hero image (the face) breathe
        between the eyebrow and the headline. */
     .hero__stats { display: none; }
-    /* On mobile the scroll label keeps its vertical treatment
-       (writing-mode: vertical-rl) so it matches desktop. It lives
-       in the right gutter the title/lede/CTAs leave clear. */
-    .hero__scroll {
+    /* On the INDEX hero the scroll hint is hidden on mobile — the
+       title/CTAs already fill the viewport cleanly there. The
+       sub-page heroes (products, partners) keep the vertical
+       "BAJA / SCROLL" label since their inner content is narrower
+       and leaves a clean right gutter. */
+    .hero:not(.subhero) .hero__scroll { display: none; }
+    .hero.subhero .hero__scroll {
         right: var(--pad-x);
         bottom: 40px;
         gap: 10px;
         font-size: 9px;
     }
-    .hero__scroll-line { height: 44px; }
+    .hero.subhero .hero__scroll-line { height: 44px; }
 
 
 
