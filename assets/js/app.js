@@ -336,29 +336,43 @@
         });
     }
 
-    /* ---------- Mobile menu (burger) ---------------------------- */
+    /* ---------- Mobile menu (burger) ----------------------------
+       Burger toggles a full-screen overlay menu. The overlay is
+       styled entirely in CSS (see .nav__links--mobile). The .nav
+       container gets .is-mobile-open so the burger can morph to
+       an X (also pure CSS). Body scroll is locked while open. */
     const burger = $('#burger');
     const navLinks = $('.nav__links');
-    if (burger && navLinks) {
+    if (burger && navLinks && nav) {
+        // Tag the links with the mobile modifier on small screens.
+        // The modifier carries the overlay styling. The element
+        // also gets display:none on desktop (existing media query)
+        // so it does not affect the desktop nav layout.
+        const isSmall = () => window.matchMedia('(max-width: 1024px)').matches;
+        const tagLinks = () => {
+            navLinks.classList.toggle('nav__links--mobile', isSmall());
+        };
+        tagLinks();
+        window.addEventListener('resize', tagLinks, { passive: true });
+
+        const setOpen = (open) => {
+            nav.classList.toggle('is-mobile-open', open);
+            burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+            document.body.style.overflow = open ? 'hidden' : '';
+        };
+
         burger.addEventListener('click', () => {
-            const isOpen = navLinks.classList.toggle('is-open');
-            navLinks.style.display = isOpen ? 'flex' : '';
-            navLinks.style.position = 'fixed';
-            navLinks.style.inset = '64px 0 0 0';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.alignItems = 'center';
-            navLinks.style.justifyContent = 'center';
-            navLinks.style.background = 'var(--bg)';
-            navLinks.style.zIndex = '40';
-            navLinks.style.fontSize = '20px';
-            if (!isOpen) {
-                navLinks.removeAttribute('style');
-            }
+            setOpen(!nav.classList.contains('is-mobile-open'));
         });
+
         navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                navLinks.classList.remove('is-open');
-                navLinks.removeAttribute('style');
+            if (e.target.tagName === 'A') setOpen(false);
+        });
+
+        // Close on escape.
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && nav.classList.contains('is-mobile-open')) {
+                setOpen(false);
             }
         });
     }

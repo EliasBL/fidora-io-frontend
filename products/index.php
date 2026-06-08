@@ -289,6 +289,6 @@ $c = $pc[$lang];
     <?php render_foot(); ?>
     <?php render_cookies_banner(); ?>
 
-    <script src="/assets/js/app.js?v=8"></script>
+    <script src="/assets/js/app.js?v=9"></script>
 </body>
 </html>

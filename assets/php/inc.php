@@ -354,7 +354,7 @@ function render_head(string $title, string $desc, string $pageClass = '') {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/css/app.css?v=11" />
+    <link rel="stylesheet" href="/assets/css/app.css?v=12" />
     <?php
 }
 
@@ -373,12 +373,16 @@ function render_nav() {
             <span class="nav__wordmark">FIDORA<span class="nav__wordmark-dot">.</span></span>
         </a>
 
-        <nav class="nav__links" aria-label="Primary">
-            <a href="/#how" data-link><?php echo $nc['nav'][0]; ?></a>
-            <a href="/products/" data-link><?php echo $nc['nav'][1]; ?></a>
-            <a href="/#manifesto" data-link><?php echo $nc['nav'][2]; ?></a>
-            <a href="/#contact" data-link><?php echo $nc['nav'][3]; ?></a>
-            <a href="/partners/" data-link><?php echo $isES?'Partners':($isDE?'Partner':'Partners'); ?></a>
+        <nav class="nav__links" aria-label="Primary" data-lang="<?php echo strtoupper($lang); ?>">
+            <a href="/#how" data-link data-index="01"><?php echo $nc['nav'][0]; ?></a>
+            <a href="/products/" data-link data-index="02"><?php echo $nc['nav'][1]; ?></a>
+            <a href="/#manifesto" data-link data-index="03"><?php echo $nc['nav'][2]; ?></a>
+            <a href="/#contact" data-link data-index="04"><?php echo $nc['nav'][3]; ?></a>
+            <a href="/partners/" data-link data-index="05"><?php echo $isES?'Partners':($isDE?'Partner':'Partners'); ?></a>
+            <div class="nav__mobile-foot">
+                <span><?php echo $isES?'Sistemas complejos que se sienten simples.':($isDE?'Komplexe Systeme, die sich einfach anfühlen.':'Complex systems that feel simple.'); ?></span>
+                <span><?php echo $isES?'© 2026 FIDORA LABS':($isDE?'© 2026 FIDORA LABS':'© 2026 FIDORA LABS'); ?></span>
+            </div>
         </nav>
 
         <div class="nav__actions">

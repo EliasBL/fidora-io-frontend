@@ -190,8 +190,136 @@ html[data-theme="light"] .theme__sun { display: block; }
 html[data-theme="light"] .theme__moon { display: none; }
 
 /* burger */
-.nav__burger { display: none; width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 999px; flex-direction: column; gap: 4px; align-items: center; justify-content: center; }
-.nav__burger span { width: 14px; height: 1px; background: currentColor; }
+.nav__burger {
+    display: none;
+    width: 38px; height: 38px;
+    border: 1px solid var(--line); border-radius: 999px;
+    flex-direction: column; gap: 4px;
+    align-items: center; justify-content: center;
+    position: relative;
+    z-index: 70; /* sits above the open mobile menu overlay */
+}
+.nav__burger span {
+    width: 14px; height: 1px;
+    background: currentColor;
+    transition: transform .35s var(--ease), opacity .2s;
+}
+.nav.is-mobile-open .nav__burger span:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.nav.is-mobile-open .nav__burger span:nth-child(2) { transform: translateY(-5px) rotate(-45deg); }
+
+/* ---------- Mobile menu overlay ---------------------------------
+   Editorial mobile menu: full-viewport, dark/light themed, with
+   mono eyebrow, large display-numbered links, and a small footer
+   band. The burger toggles .is-mobile-open on the .nav container
+   (so the burger can morph into an X). --------------------------- */
+.nav__links--mobile {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh; /* dynamic viewport height — excludes mobile browser chrome */
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 96px var(--pad-x) 0;
+    background: var(--bg);
+    color: var(--fg);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity .35s var(--ease), transform .35s var(--ease);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.nav.is-mobile-open .nav__links--mobile {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* Decorative top eyebrow strip. Mirrors the .section__index
+   pattern used elsewhere on the site. ----------------------------- */
+.nav__links--mobile::before {
+    content: "FIDORA · MENU · " attr(data-lang);
+    position: absolute;
+    top: 18px;
+    left: var(--pad-x);
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+}
+
+/* Close affordance in the top-right corner. Pairs with the
+   burger (which has now morphed into an X). ---------------------- */
+.nav__links--mobile::after {
+    content: "ESC";
+    position: absolute;
+    top: 18px;
+    right: var(--pad-x);
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+}
+
+.nav__links--mobile a {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 0;
+    font-size: clamp(1.4rem, 5vw, 1.85rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--fg);
+    border-top: 1px solid var(--line);
+    text-align: left;
+    position: relative;
+    transition: color .25s var(--ease), padding-left .35s var(--ease);
+}
+.nav__links--mobile a::before {
+    content: attr(data-index);
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--fg-soft);
+    font-weight: 400;
+    text-transform: uppercase;
+}
+.nav__links--mobile a:last-child { border-bottom: 1px solid var(--line); }
+.nav__links--mobile a:hover {
+    color: var(--fg-mute);
+    padding-left: 8px;
+}
+.nav__links--mobile a:active { color: var(--fg); }
+/* kill the underline-on-hover for the mobile menu */
+.nav__links--mobile a::after { display: none; }
+
+/* Footer band: small mono utility row pinned to the bottom of
+   the overlay (lang + theme reminder + tag line). ---------------- */
+.nav__mobile-foot {
+    margin-top: auto;
+    padding: 24px 0 32px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-soft);
+}
+.nav__mobile-foot span { white-space: nowrap; }
 
 /* ---------- Buttons ------------------------------------------------- */
 .btn {
@@ -933,6 +1061,7 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
         grid-template-columns: auto 1fr;
     }
     .nav__links { display: none; }
+    .nav__links.nav__links--mobile { display: flex; }
     .nav__burger { display: inline-flex; }
     .nav__actions { justify-self: end; }
     .contact__inner { grid-template-columns: 1fr; gap: 48px; }
