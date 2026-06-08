@@ -5,10 +5,10 @@ $key = 'cookies';
 $c = $legalCopy[$key][$lang];
 $metaTitle = $c['title'] . ' — FIDORA Labs';
 $metaDesc  = $isES
-    ? 'Política de cookies de FIDORA LABS S.L. Tipos de cookies, control y duración.'
+    ? 'Política de cookies de FIDORA LABS LLC. Tipos de cookies, control y duración.'
     : ($isEN
-        ? 'FIDORA LABS S.L. cookie policy. Types of cookies, control, and duration.'
-        : 'Cookie-Richtlinie von FIDORA LABS S.L. Cookie-Typen, Kontrolle und Dauer.');
+        ? 'FIDORA LABS LLC. cookie policy. Types of cookies, control, and duration.'
+        : 'Cookie-Richtlinie von FIDORA LABS LLC. Cookie-Typen, Kontrolle und Dauer.');
 $updated = $isES ? 'Última actualización: Junio 2026'
        : ($isEN ? 'Last updated: June 2026'
                 : 'Zuletzt aktualisiert: Juni 2026');
@@ -46,6 +46,6 @@ $updated = $isES ? 'Última actualización: Junio 2026'
     <?php render_foot(); ?>
     <?php render_cookies_banner(); ?>
 
-    <script src="/assets/js/app.js?v=4"></script>
+    <script src="/assets/js/app.js?v=6"></script>
 </body>
 </html>

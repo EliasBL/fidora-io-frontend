@@ -97,7 +97,7 @@ $copy = [
             ['Legal',     ['/legal/privacidad.php', '/legal/aviso-legal.php', '/legal/cookies.php']],
         ],
         'foot_legal_labels' => ['Privacidad', 'Aviso legal', 'Cookies'],
-        'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS', 'CONSTRUIDO Y ALOJADO EN LA UE', 'v2.0 — EDICIÓN 2026'],
+        'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS LLC.', 'CONSTRUIDO Y ALOJADO EN LA UE', 'v2.0 — EDICIÓN 2026'],
     ],
 
     'en' => [
@@ -190,7 +190,7 @@ $copy = [
             ['Legal',    ['/legal/privacidad.php', '/legal/aviso-legal.php', '/legal/cookies.php']],
         ],
         'foot_legal_labels' => ['Privacy', 'Legal notice', 'Cookies'],
-        'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS S.L.', 'BUILT &amp; HOSTED IN THE EU', 'v2.0 — 2026 EDITION'],
+        'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS LLC.', 'BUILT &amp; HOSTED IN THE EU', 'v2.0 — 2026 EDITION'],
     ],
 
     'de' => [
@@ -283,7 +283,7 @@ $copy = [
             ['Recht',    ['/legal/privacidad.php', '/legal/aviso-legal.php', '/legal/cookies.php']],
         ],
         'foot_legal_labels' => ['Datenschutz', 'Impressum', 'Cookies'],
-        'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS S.L.', 'GEBAUT &amp; GEHOSTET IN DER EU', 'v2.0 — AUSGABE 2026'],
+        'foot_bottom'      => ['© ' . date('Y') . ' FIDORA LABS LLC.', 'GEBAUT &amp; GEHOSTET IN DER EU', 'v2.0 — AUSGABE 2026'],
     ],
 ];
 
@@ -304,8 +304,6 @@ $c = $copy[$lang];
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-
-    <link rel="stylesheet" href="/assets/css/app.css?v=7" />
 </head>
 <body>
 
@@ -424,7 +422,6 @@ $c = $copy[$lang];
                 </ul>
                 <div class="product__ctas">
                     <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
-                    <a class="product__cta product__cta--more" href="/products/?lang=<?php echo $lang; ?>#vozai"><span><?php echo $c['prod_view_more']; ?></span><i></i></a>
                 </div>
             </article>
 
@@ -444,7 +441,6 @@ $c = $copy[$lang];
                 </ul>
                 <div class="product__ctas">
                     <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
-                    <a class="product__cta product__cta--more" href="/products/?lang=<?php echo $lang; ?>#whatsapp"><span><?php echo $c['prod_view_more']; ?></span><i></i></a>
                 </div>
             </article>
 
@@ -463,9 +459,15 @@ $c = $copy[$lang];
                 </ul>
                 <div class="product__ctas">
                     <a class="product__cta" href="#contact"><span><?php echo $c['prod_cta']; ?></span><i></i></a>
-                    <a class="product__cta product__cta--more" href="/products/?lang=<?php echo $lang; ?>#labs"><span><?php echo $c['prod_view_more']; ?></span><i></i></a>
                 </div>
             </article>
+        </div>
+
+        <div class="products__more">
+            <a class="btn btn--ghost" href="/products/?lang=<?php echo $lang; ?>">
+                <span><?php echo $c['prod_view_more']; ?></span>
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </a>
         </div>
     </section>
 
@@ -543,6 +545,6 @@ $c = $copy[$lang];
     <!-- COOKIES -->
     <?php render_cookies_banner(); ?>
 
-    <script src="/assets/js/app.js?v=4"></script>
+    <script src="/assets/js/app.js?v=6"></script>
 </body>
 </html>

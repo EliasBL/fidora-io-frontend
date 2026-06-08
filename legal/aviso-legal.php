@@ -5,10 +5,10 @@ $key = 'aviso-legal';
 $c = $legalCopy[$key][$lang];
 $metaTitle = $c['title'] . ' — FIDORA Labs';
 $metaDesc  = $isES
-    ? 'Aviso legal de FIDORA LABS S.L. Información del titular del sitio web conforme a la LSSICE.'
+    ? 'Aviso legal de FIDORA LABS LLC. Información del titular del sitio web conforme a la LSSICE.'
     : ($isEN
-        ? 'Legal notice of FIDORA LABS S.L. Owner information as required by the LSSICE.'
-        : 'Impressum von FIDORA LABS S.L. Inhaberinformation gemäß LSSICE.');
+        ? 'Legal notice of FIDORA LABS LLC. Owner information as required by the LSSICE.'
+        : 'Impressum von FIDORA LABS LLC. Inhaberinformation gemäß LSSICE.');
 $updated = $isES ? 'Última actualización: Junio 2026'
        : ($isEN ? 'Last updated: June 2026'
                 : 'Zuletzt aktualisiert: Juni 2026');
@@ -45,6 +45,6 @@ $updated = $isES ? 'Última actualización: Junio 2026'
     <?php render_foot(); ?>
     <?php render_cookies_banner(); ?>
 
-    <script src="/assets/js/app.js?v=4"></script>
+    <script src="/assets/js/app.js?v=6"></script>
 </body>
 </html>

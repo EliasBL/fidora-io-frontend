@@ -390,8 +390,9 @@
 
         const existing = readConsent();
         if (!existing) {
-            // small delay so the banner doesn't pop in before the page settles
-            setTimeout(show, 800);
+            // Show the banner once the page is interactive. Short delay
+            // so users notice it without it feeling intrusive.
+            setTimeout(show, 250);
         }
 
         // Re-open the banner from the footer / dedicated trigger.
@@ -404,8 +405,11 @@
         });
 
         banner.addEventListener('click', (e) => {
-            const action = e.target?.dataset?.cookieAction;
-            if (!action) return;
+            // Walk up to the nearest button so the inner <span> child
+            // doesn't break the action lookup.
+            const btn = e.target.closest('[data-cookie-action]');
+            if (!btn) return;
+            const action = btn.dataset.cookieAction;
             if (action === 'accept') {
                 writeConsent({ essential: true, analytics: true, marketing: true });
                 hide();
@@ -419,31 +423,6 @@
                 const marketing  = !!$('[data-cookie-pref="marketing"]', banner)?.checked;
                 writeConsent({ essential: true, analytics, marketing });
                 hide();
-            }
-        });
-    }
-    const burger = $('#burger');
-    const navLinks = $('.nav__links');
-    if (burger && navLinks) {
-        burger.addEventListener('click', () => {
-            const isOpen = navLinks.classList.toggle('is-open');
-            navLinks.style.display = isOpen ? 'flex' : '';
-            navLinks.style.position = 'fixed';
-            navLinks.style.inset = '64px 0 0 0';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.alignItems = 'center';
-            navLinks.style.justifyContent = 'center';
-            navLinks.style.background = 'var(--bg)';
-            navLinks.style.zIndex = '40';
-            navLinks.style.fontSize = '20px';
-            if (!isOpen) {
-                navLinks.removeAttribute('style');
-            }
-        });
-        navLinks.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                navLinks.classList.remove('is-open');
-                navLinks.removeAttribute('style');
             }
         });
     }

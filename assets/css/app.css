@@ -722,6 +722,14 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
 }
 .product__cta--more:hover { color: var(--fg); }
 
+.products__more {
+    max-width: var(--maxw);
+    margin: 40px auto 0;
+    padding: 0 var(--pad-x);
+    display: flex;
+    justify-content: center;
+}
+
 /* ---------- MANIFESTO --------------------------------------------- */
 .manifesto {
     position: relative;
@@ -1219,38 +1227,39 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
 }
 
 /* ---------- Sub-page shell -------------------------------------
-   Generic page hero, content sections, and legal typography. ----- */
-.page {
-    padding: 140px var(--pad-x) 80px;
+   Generic page hero, content sections, and legal typography. -----
+   The .subhero mirrors the visual language of the one-pager's
+   .hero (eyebrow + huge display title + lede) but is purely
+   typographic — no background image, no scroll effects. The
+   light theme inherits automatically through the existing
+   --fg / --fg-mute / --line tokens. ------------------------------- */
+.subhero {
+    padding: 160px var(--pad-x) 80px;
     max-width: var(--maxw);
     margin: 0 auto;
     position: relative;
     z-index: 1;
 }
-.page__head {
-    max-width: 880px;
-    margin: 0 auto 64px;
-    text-align: left;
-}
-.page__eyebrow {
+.subhero__eyebrow {
     display: inline-block;
     color: var(--fg-soft);
-    margin-bottom: 24px;
+    margin-bottom: 28px;
 }
-.page__title {
-    font-size: clamp(2.4rem, 1.6rem + 4vw, 5.5rem);
-    line-height: 0.98;
-    letter-spacing: -0.04em;
+.subhero__title {
+    font-size: clamp(2.6rem, 1.8rem + 4.5vw, 6.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
     font-weight: 800;
-    margin: 0 0 24px;
+    margin: 0 0 32px;
     max-width: 16ch;
+    color: var(--fg);
 }
-.page__title em {
+.subhero__title em {
     font-style: italic;
     font-weight: 300;
     color: var(--fg-mute);
 }
-.page__lede {
+.subhero__lede {
     font-size: var(--fs-lede);
     line-height: 1.5;
     color: var(--fg-mute);
@@ -1258,92 +1267,65 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     max-width: 60ch;
 }
 
-/* Product page */
-.product-detail {
-    padding: 60px var(--pad-x) 120px;
-    max-width: var(--maxw);
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-}
-.product-detail + .product-detail { padding-top: 0; }
-.product-detail__head {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: end;
-    padding-bottom: 40px;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 48px;
-}
-.product-detail__tag { color: var(--fg-soft); display: block; margin-bottom: 14px; }
-.product-detail__name {
-    font-size: clamp(2.4rem, 1.6rem + 4vw, 5rem);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    line-height: 0.95;
-    margin: 0 0 18px;
-    max-width: 12ch;
-}
-.product-detail__name em { font-style: italic; font-weight: 300; color: var(--fg-mute); }
-.product-detail__desc {
-    color: var(--fg-mute);
-    font-size: var(--fs-lede);
-    line-height: 1.5;
-    margin: 0 0 28px;
-    max-width: 56ch;
-}
-.product-detail__price {
-    display: flex; align-items: baseline; gap: 10px;
-    margin-bottom: 28px;
-}
-.product-detail__price .mono { color: var(--fg-soft); }
-.product-detail__price strong {
-    font-size: clamp(1.6rem, 1.2rem + 1vw, 2.2rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-}
-.product-detail__ctas { display: flex; gap: 12px; flex-wrap: wrap; }
-
-.product-detail__grid {
+/* On the products page, the .products section is reused. The grid
+   for one full-width card uses products__grid--one. */
+.products__grid--one { grid-template-columns: 1fr; }
+.product--wide {
+    min-height: 0;
+    padding: 48px 48px 40px;
     display: grid;
     grid-template-columns: 1.2fr 1fr;
-    gap: 64px;
+    gap: 48px;
+    align-items: start;
 }
-.product-detail__col h3 {
-    font-size: var(--fs-h3);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    margin: 0 0 16px;
+.product--wide .product__head { margin-bottom: 0; }
+.product--wide .product__list { margin-bottom: 0; }
+.product--wide .product__ctas {
+    grid-column: 1 / -1;
+    margin-top: 32px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
 }
-.product-detail__col p { color: var(--fg-mute); line-height: 1.6; }
-.product-detail__list {
+@media (max-width: 880px) {
+    .product--wide { grid-template-columns: 1fr; padding: 32px 28px; }
+}
+
+/* Partners: "why" list inside the contact copy column. ---------- */
+.partners__why {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 40px 0 0;
     display: grid;
-    gap: 4px;
+    gap: 0;
 }
-.product-detail__list li {
+.partners__why li {
+    padding: 20px 0;
+    border-bottom: 1px dashed var(--line);
     display: grid;
     grid-template-columns: 28px 1fr;
-    gap: 14px;
-    padding: 14px 0;
-    border-bottom: 1px dashed var(--line);
-    color: var(--fg);
-    font-size: 15px;
+    gap: 16px;
+    align-items: start;
 }
-.product-detail__list li::before {
+.partners__why li::before {
     content: "→";
     color: var(--fg-soft);
     font-family: var(--ff-mono);
     font-size: 12px;
-    align-self: center;
+    padding-top: 4px;
 }
-
-@media (max-width: 880px) {
-    .product-detail__head,
-    .product-detail__grid { grid-template-columns: 1fr; gap: 32px; }
+.partners__why li:last-child { border-bottom: 0; }
+.partners__why h3 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 6px;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+}
+.partners__why p {
+    margin: 0;
+    color: var(--fg-mute);
+    font-size: 14px;
+    line-height: 1.55;
 }
 
 /* Legal pages */

@@ -5,10 +5,10 @@ $key = 'privacidad';
 $c = $legalCopy[$key][$lang];
 $metaTitle = $c['title'] . ' — FIDORA Labs';
 $metaDesc  = $isES
-    ? 'Política de privacidad de FIDORA LABS S.L. Información sobre el tratamiento de datos personales según el RGPD.'
+    ? 'Política de privacidad de FIDORA LABS LLC. Información sobre el tratamiento de datos personales según el RGPD.'
     : ($isEN
-        ? 'FIDORA LABS S.L. privacy policy. Information on the processing of personal data under the GDPR.'
-        : 'Datenschutzerklärung von FIDORA LABS S.L. Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO.');
+        ? 'FIDORA LABS LLC. privacy policy. Information on the processing of personal data under the GDPR.'
+        : 'Datenschutzerklärung von FIDORA LABS LLC. Informationen zur Verarbeitung personenbezogener Daten gemäß DSGVO.');
 $updated = $isES ? 'Última actualización: Junio 2026'
        : ($isEN ? 'Last updated: June 2026'
                 : 'Zuletzt aktualisiert: Juni 2026');
@@ -45,6 +45,6 @@ $updated = $isES ? 'Última actualización: Junio 2026'
     <?php render_foot(); ?>
     <?php render_cookies_banner(); ?>
 
-    <script src="/assets/js/app.js?v=4"></script>
+    <script src="/assets/js/app.js?v=6"></script>
 </body>
 </html>

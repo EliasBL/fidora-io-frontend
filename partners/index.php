@@ -4,7 +4,7 @@ require_once __DIR__ . '/../assets/php/inc.php';
 $pc = [
     'es' => [
         'meta_title' => 'Become a partner — FIDORA Labs',
-        'meta_desc'  => '¿Revendes, integras o complementas lo que hacemos? Hablemos. FIDORA LABS S.L. busca partners en Europa y US.',
+        'meta_desc'  => '¿Revendes, integras o complementas lo que hacemos? Hablemos. FIDORA LABS LLC. busca partners en Europa y US.',
         'eyebrow'    => 'PARTNERS · 2026',
         'title_a'    => 'Hazlo con nosotros. ',
         'title_em'   => 'No en contra.',
@@ -35,7 +35,7 @@ $pc = [
     ],
     'en' => [
         'meta_title' => 'Become a partner — FIDORA Labs',
-        'meta_desc'  => 'Resell, integrate, or complement what we do. FIDORA LABS S.L. is looking for partners in Europe and the US.',
+        'meta_desc'  => 'Resell, integrate, or complement what we do. FIDORA LABS LLC. is looking for partners in Europe and the US.',
         'eyebrow'    => 'PARTNERS · 2026',
         'title_a'    => 'Build with us. ',
         'title_em'   => 'Not against us.',
@@ -66,7 +66,7 @@ $pc = [
     ],
     'de' => [
         'meta_title' => 'Partner werden — FIDORA Labs',
-        'meta_desc'  => 'Sie vertreiben, integrieren oder ergänzen, was wir tun. FIDORA LABS S.L. sucht Partner in Europa und den USA.',
+        'meta_desc'  => 'Sie vertreiben, integrieren oder ergänzen, was wir tun. FIDORA LABS LLC. sucht Partner in Europa und den USA.',
         'eyebrow'    => 'PARTNER · 2026',
         'title_a'    => 'Mit uns, nicht gegen uns. ',
         'title_em'   => '',
@@ -110,21 +110,23 @@ $isES = $lang === 'es';
 
     <?php render_nav(); ?>
 
-    <section class="page">
-        <header class="page__head">
-            <span class="page__eyebrow mono"><?php echo $c['eyebrow']; ?></span>
-            <h1 class="page__title"><?php echo $c['title_a']; ?><em><?php echo $c['title_em']; ?></em></h1>
-            <p class="page__lede"><?php echo $c['lede']; ?></p>
-        </header>
+    <section class="subhero">
+        <span class="subhero__eyebrow mono"><?php echo $c['eyebrow']; ?></span>
+        <h1 class="subhero__title"><?php echo $c['title_a']; ?><em><?php echo $c['title_em']; ?></em></h1>
+        <p class="subhero__lede"><?php echo $c['lede']; ?></p>
     </section>
 
     <section class="contact" id="contact">
         <div class="contact__inner">
             <div class="contact__copy">
-                <h2 class="section__title"><?php echo $c['why_title']; ?></h2>
-                <ul class="product-detail__list" style="margin-top:24px">
+                <span class="section__index mono"><?php echo $isES?'POR QUÉ · 2026':($isDE?'WARUM · 2026':'WHY · 2026'); ?></span>
+                <h2 class="section__title" style="text-align:left;margin-top:16px"><?php echo $c['why_title']; ?></h2>
+                <ul class="partners__why">
                     <?php foreach ($c['why'] as $w): ?>
-                        <li><span><strong><?php echo $w['h']; ?></strong><br /><span style="color:var(--fg-mute)"><?php echo $w['p']; ?></span></span></li>
+                        <li>
+                            <h3><?php echo $w['h']; ?></h3>
+                            <p><?php echo $w['p']; ?></p>
+                        </li>
                     <?php endforeach; ?>
                 </ul>
             </div>
@@ -188,6 +190,6 @@ $isES = $lang === 'es';
     <?php render_foot(); ?>
     <?php render_cookies_banner(); ?>
 
-    <script src="/assets/js/app.js?v=4"></script>
+    <script src="/assets/js/app.js?v=6"></script>
 </body>
 </html>
