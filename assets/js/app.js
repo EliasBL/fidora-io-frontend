@@ -68,14 +68,18 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
     toReveal.forEach(el => revealIO.observe(el));
 
-    /* ---------- Hero parallax (subtle, scroll-linked) ----------- */
-    const heroImg = $('.hero__media img');
-    if (heroImg && !prefersReduced) {
+    /* ---------- Hero parallax (subtle, scroll-linked) -----------
+       Two image sources are supported: the index hero
+       (.hero__media img) and the sub-page heroes ([data-subhero-img]).
+       They share the same transform for visual consistency. ------- */
+    const parallaxImgs = $$('.hero__media img, [data-subhero-img]');
+    if (parallaxImgs.length && !prefersReduced) {
         let ticking = false;
         const update = () => {
             const y = Math.min(window.scrollY, 800);
             const scale = 1.05 + (y / 800) * 0.06;
-            heroImg.style.transform = `translateY(${y * 0.18}px) scale(${scale})`;
+            const transform = `translateY(${y * 0.18}px) scale(${scale})`;
+            parallaxImgs.forEach(img => { img.style.transform = transform; });
             ticking = false;
         };
         window.addEventListener('scroll', () => {

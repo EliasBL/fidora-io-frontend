@@ -3,12 +3,12 @@ require_once __DIR__ . '/../assets/php/inc.php';
 
 $pc = [
     'es' => [
-        'meta_title' => 'Become a partner — FIDORA Labs',
+        'meta_title' => 'Partners — FIDORA Labs',
         'meta_desc'  => '¿Revendes, integras o complementas lo que hacemos? Hablemos. FIDORA LABS LLC. busca partners en Europa y US.',
         'eyebrow'    => 'PARTNERS · 2026',
-        'title_a'    => 'Hazlo con nosotros. ',
-        'title_em'   => 'No en contra.',
+        'title'      => 'Hazlo con nosotros.',
         'lede'       => 'Revendes, integras o complementas lo que hacemos. Si tienes clientes que necesitan voz o WhatsApp atendido de verdad, hablemos. Te damos margen, soporte y acceso a la misma infraestructura que usamos nosotros.',
+        'scroll'     => 'BAJA',
         'why_title'  => 'Por qué ser partner',
         'why' => [
             ['h' => 'Stack que ya funciona', 'p' => 'No tienes que vender humo. VozAI y WhatsApp Engine están en producción, en Europa, en clientes reales.'],
@@ -34,12 +34,12 @@ $pc = [
         ],
     ],
     'en' => [
-        'meta_title' => 'Become a partner — FIDORA Labs',
+        'meta_title' => 'Partners — FIDORA Labs',
         'meta_desc'  => 'Resell, integrate, or complement what we do. FIDORA LABS LLC. is looking for partners in Europe and the US.',
         'eyebrow'    => 'PARTNERS · 2026',
-        'title_a'    => 'Build with us. ',
-        'title_em'   => 'Not against us.',
+        'title'      => 'Build with us.',
         'lede'       => 'You resell, integrate, or complement what we do. If you have customers who need voice or WhatsApp actually handled, let’s talk. We give you margin, support, and access to the same infrastructure we use.',
+        'scroll'     => 'SCROLL',
         'why_title'  => 'Why partner',
         'why' => [
             ['h' => 'A stack that already works', 'p' => 'You don’t have to sell vapour. VozAI and WhatsApp Engine are in production, in Europe, with real customers.'],
@@ -65,12 +65,12 @@ $pc = [
         ],
     ],
     'de' => [
-        'meta_title' => 'Partner werden — FIDORA Labs',
+        'meta_title' => 'Partner — FIDORA Labs',
         'meta_desc'  => 'Sie vertreiben, integrieren oder ergänzen, was wir tun. FIDORA LABS LLC. sucht Partner in Europa und den USA.',
         'eyebrow'    => 'PARTNER · 2026',
-        'title_a'    => 'Mit uns, nicht gegen uns. ',
-        'title_em'   => '',
+        'title'      => 'Mit uns, nicht gegen uns.',
         'lede'       => 'Sie vertreiben, integrieren oder ergänzen, was wir tun. Wenn Sie Kunden haben, die Sprache oder WhatsApp wirklich brauchen, sprechen Sie uns an. Wir geben Ihnen Marge, Support und Zugang zur gleichen Infrastruktur.',
+        'scroll'     => 'SCROLLEN',
         'why_title'  => 'Warum Partner werden',
         'why' => [
             ['h' => 'Ein Stack, der bereits funktioniert', 'p' => 'Sie verkaufen keinen heißen Luft. VozAI und WhatsApp Engine sind in Produktion, in Europa, bei echten Kunden.'],
@@ -110,22 +110,48 @@ $isES = $lang === 'es';
 
     <?php render_nav(); ?>
 
-    <section class="subhero">
-        <span class="subhero__eyebrow mono"><?php echo $c['eyebrow']; ?></span>
-        <h1 class="subhero__title"><?php echo $c['title_a']; ?><em><?php echo $c['title_em']; ?></em></h1>
-        <p class="subhero__lede"><?php echo $c['lede']; ?></p>
+    <!-- Sub-hero. Same visual language as the index .hero: a
+         cinematic background image, a left-anchored eyebrow + big
+         title + lede, and the same scroll-triggered parallax. The
+         image is anchored to the left half (.subhero--img-left). -->
+    <section class="hero subhero subhero--img-left">
+        <div class="subhero__media" aria-hidden="true">
+            <img src="/assets/images/partners.jpg" alt="" data-subhero-img />
+            <div class="hero__veil"></div>
+            <div class="hero__scan"></div>
+        </div>
+
+        <div class="hero__eyebrow">
+            <span class="mono"><?php echo $c['eyebrow']; ?></span>
+        </div>
+
+        <div class="hero__inner">
+            <h1 class="hero__title" data-split-title><?php echo $c['title']; ?></h1>
+            <p class="hero__lede"><?php echo $c['lede']; ?></p>
+        </div>
+
+        <a href="#why" class="hero__scroll" aria-label="Scroll">
+            <span class="mono"><?php echo $c['scroll']; ?></span>
+            <span class="hero__scroll-line"></span>
+        </a>
     </section>
 
-    <section class="contact" id="contact">
+    <!-- "Why" + form. Two columns on desktop: left = narrative, right
+         = form. Stacks on mobile. The form is the same component as
+         on the index /contact section. -->
+    <section class="contact subhero-after" id="why">
         <div class="contact__inner">
             <div class="contact__copy">
                 <span class="section__index mono"><?php echo $isES?'POR QUÉ · 2026':($isDE?'WARUM · 2026':'WHY · 2026'); ?></span>
-                <h2 class="section__title" style="text-align:left;margin-top:16px"><?php echo $c['why_title']; ?></h2>
+                <h2 class="section__title partners__title"><?php echo $c['why_title']; ?></h2>
                 <ul class="partners__why">
                     <?php foreach ($c['why'] as $w): ?>
                         <li>
-                            <h3><?php echo $w['h']; ?></h3>
-                            <p><?php echo $w['p']; ?></p>
+                            <span class="partners__why-arrow" aria-hidden="true">→</span>
+                            <div>
+                                <h3><?php echo $w['h']; ?></h3>
+                                <p><?php echo $w['p']; ?></p>
+                            </div>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -170,10 +196,6 @@ $isES = $lang === 'es';
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="field">
-                    <label for="cmessage"><?php echo $f['message']; ?></label>
-                    <textarea id="cmessage" name="message" rows="4" required></textarea>
-                </div>
                 <label class="field field--check">
                     <input type="checkbox" required />
                     <span><?php echo $f['consent']; ?></span>
@@ -190,6 +212,6 @@ $isES = $lang === 'es';
     <?php render_foot(); ?>
     <?php render_cookies_banner(); ?>
 
-    <script src="/assets/js/app.js?v=6"></script>
+    <script src="/assets/js/app.js?v=8"></script>
 </body>
 </html>

@@ -1227,44 +1227,113 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
 }
 
 /* ---------- Sub-page shell -------------------------------------
-   Generic page hero, content sections, and legal typography. -----
-   The .subhero mirrors the visual language of the one-pager's
-   .hero (eyebrow + huge display title + lede) but is purely
-   typographic — no background image, no scroll effects. The
-   light theme inherits automatically through the existing
-   --fg / --fg-mute / --line tokens. ------------------------------- */
+   .subhero extends .hero with a background image. Two modifiers:
+   .subhero--img-left  → image anchored to the LEFT half (partners)
+   .subhero--img-right → image anchored to the RIGHT half (products)
+   The image is masked with a gradient so the text always reads on
+   the dark veil. Same parallax as the index hero (JS reads
+   [data-subhero-img] and applies the scroll transform). ---------- */
 .subhero {
-    padding: 160px var(--pad-x) 80px;
-    max-width: var(--maxw);
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
+    min-height: 100vh;
 }
-.subhero__eyebrow {
-    display: inline-block;
+.subhero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    /* Default (--img-left): image shows on the left half. */
+    -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 55%, transparent 100%);
+            mask-image: linear-gradient(90deg, #000 0%, #000 55%, transparent 100%);
+}
+.subhero--img-right .subhero__media {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%, #000 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 45%, #000 100%);
+}
+.subhero__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Mirrored processing to the index hero so the image stays
+       cinematic regardless of theme. */
+    filter: grayscale(0.35) contrast(1.05) brightness(0.6);
+    will-change: transform;
+}
+html[data-theme="light"] .subhero {
+    background: #000;
+}
+html[data-theme="light"] .subhero__media img {
+    filter: grayscale(0.35) contrast(1.05) brightness(0.55);
+}
+
+/* On sub-pages the hero title is a single line (no <br>), so the
+   per-line rise animation on the index hero is replaced with a
+   single fade-up. */
+.hero__title[data-split-title] {
+    max-width: 18ch;
+    opacity: 0;
+    transform: translateY(28px);
+    animation: subheroRise .9s var(--ease) forwards;
+}
+@keyframes subheroRise {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* The contact section that follows a subhero needs less top padding
+   than the one on the index (where the previous section already
+   ended far below the hero). */
+.subhero-after { padding-top: 100px; }
+
+/* The "why" title inside the contact section is huge by default
+   (--fs-h2). On the partners page we want it to read as a section
+   header, not the main title. Tone it down. */
+.partners__title {
+    font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.6rem) !important;
+    letter-spacing: -0.025em !important;
+    margin-top: 16px !important;
+    text-align: left !important;
+    max-width: none;
+}
+
+/* Partners: "why" list inside the contact copy column. The li
+   uses a real wrapper <div> for h3+p so the second cell stays
+   the full width (avoids the previous "1 word per row" grid
+   bug caused by ::before taking col 1 and h3 taking col 2). */
+.partners__why {
+    list-style: none;
+    padding: 0;
+    margin: 40px 0 0;
+    display: grid;
+    gap: 0;
+}
+.partners__why li {
+    padding: 22px 0;
+    border-bottom: 1px dashed var(--line);
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 16px;
+    align-items: start;
+}
+.partners__why-arrow {
     color: var(--fg-soft);
-    margin-bottom: 28px;
+    font-family: var(--ff-mono);
+    font-size: 13px;
+    padding-top: 4px;
+    line-height: 1;
 }
-.subhero__title {
-    font-size: clamp(2.6rem, 1.8rem + 4.5vw, 6.5rem);
-    line-height: 0.95;
-    letter-spacing: -0.045em;
-    font-weight: 800;
-    margin: 0 0 32px;
-    max-width: 16ch;
+.partners__why li:last-child { border-bottom: 0; }
+.partners__why h3 {
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 6px;
     color: var(--fg);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
 }
-.subhero__title em {
-    font-style: italic;
-    font-weight: 300;
-    color: var(--fg-mute);
-}
-.subhero__lede {
-    font-size: var(--fs-lede);
-    line-height: 1.5;
-    color: var(--fg-mute);
+.partners__why p {
     margin: 0;
-    max-width: 60ch;
+    color: var(--fg-mute);
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 /* On the products page, the .products section is reused. The grid
@@ -1290,42 +1359,127 @@ html[data-theme="light"] .stack__layer::before { background: repeating-linear-gr
     .product--wide { grid-template-columns: 1fr; padding: 32px 28px; }
 }
 
-/* Partners: "why" list inside the contact copy column. ---------- */
-.partners__why {
-    list-style: none;
-    padding: 0;
-    margin: 40px 0 0;
-    display: grid;
-    gap: 0;
+/* ---------- Products page: clean per-product sections ----------
+   Replaces the 3-column .products grid on the sub-page. Each
+   product gets its own full-width band, separated by a single
+   hairline. No internal grid lines, no nested card borders. */
+.productpage {
+    padding: 100px 0;
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--line);
 }
-.partners__why li {
-    padding: 20px 0;
-    border-bottom: 1px dashed var(--line);
+.productpage:first-of-type { border-top: 0; }
+.productpage__inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 var(--pad-x);
     display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px 80px;
     align-items: start;
 }
-.partners__why li::before {
-    content: "→";
-    color: var(--fg-soft);
-    font-family: var(--ff-mono);
-    font-size: 12px;
-    padding-top: 4px;
+.productpage__head {
+    grid-column: 1 / -1;
+    max-width: 880px;
 }
-.partners__why li:last-child { border-bottom: 0; }
-.partners__why h3 {
-    font-size: 16px;
-    font-weight: 500;
-    margin: 0 0 6px;
+.productpage__head .section__index {
+    display: inline-block;
+    margin-bottom: 24px;
+}
+.productpage__name {
+    font-size: clamp(2.4rem, 1.6rem + 4vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin: 0 0 16px;
     color: var(--fg);
-    letter-spacing: -0.01em;
+    max-width: 12ch;
 }
-.partners__why p {
-    margin: 0;
+.productpage__sub {
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.2rem, 1rem + 0.8vw, 1.6rem);
     color: var(--fg-mute);
-    font-size: 14px;
-    line-height: 1.55;
+    margin: 0;
+    line-height: 1.3;
+    max-width: 32ch;
+}
+.productpage__body {
+    grid-column: 1 / 2;
+    display: grid;
+    gap: 18px;
+    align-content: start;
+}
+.productpage__lede {
+    font-size: var(--fs-lede);
+    line-height: 1.5;
+    color: var(--fg-mute);
+    margin: 0;
+    max-width: 48ch;
+}
+.productpage__how {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--fg);
+    margin: 0;
+    max-width: 50ch;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+.productpage__meta {
+    grid-column: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding-top: 8px;
+}
+.productpage__price {
+    display: flex; align-items: baseline; gap: 10px;
+}
+.productpage__price .mono { color: var(--fg-soft); }
+.productpage__price strong {
+    font-family: var(--ff-sans);
+    font-size: clamp(1.6rem, 1.2rem + 1vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+}
+.productpage__list {
+    grid-column: 1 / -1;
+    list-style: none;
+    padding: 32px 0 0;
+    margin: 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 48px;
+}
+.productpage__list li {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 15px;
+    color: var(--fg);
+    line-height: 1.45;
+}
+.productpage__list li::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--fg);
+    margin-top: 9px;
+    align-self: flex-start;
+}
+@media (max-width: 880px) {
+    .productpage { padding: 64px 0; }
+    .productpage__inner { grid-template-columns: 1fr; gap: 28px; }
+    .productpage__body,
+    .productpage__meta,
+    .productpage__list { grid-column: 1; }
+    .productpage__list { grid-template-columns: 1fr; }
 }
 
 /* Legal pages */

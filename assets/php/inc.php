@@ -354,7 +354,7 @@ function render_head(string $title, string $desc, string $pageClass = '') {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/assets/css/app.css?v=9" />
+    <link rel="stylesheet" href="/assets/css/app.css?v=11" />
     <?php
 }
 
@@ -375,10 +375,9 @@ function render_nav() {
 
         <nav class="nav__links" aria-label="Primary">
             <a href="/#how" data-link><?php echo $nc['nav'][0]; ?></a>
-            <a href="/#products" data-link><?php echo $nc['nav'][1]; ?></a>
+            <a href="/products/" data-link><?php echo $nc['nav'][1]; ?></a>
             <a href="/#manifesto" data-link><?php echo $nc['nav'][2]; ?></a>
             <a href="/#contact" data-link><?php echo $nc['nav'][3]; ?></a>
-            <a href="/products/" data-link><?php echo $isES?'Producto':($isDE?'Produkt':'Product'); ?></a>
             <a href="/partners/" data-link><?php echo $isES?'Partners':($isDE?'Partner':'Partners'); ?></a>
         </nav>
 
