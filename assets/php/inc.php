@@ -373,7 +373,7 @@ function render_nav() {
             <span class="nav__wordmark">FIDORA<span class="nav__wordmark-dot">.</span></span>
         </a>
 
-        <nav class="nav__links" aria-label="Primary" data-lang="<?php echo strtoupper($lang); ?>">
+        <nav class="nav__links" aria-label="Primary" data-overlay-lang="<?php echo strtoupper($lang); ?>">
             <a href="/#how" data-link data-index="01"><?php echo $nc['nav'][0]; ?></a>
             <a href="/products/" data-link data-index="02"><?php echo $nc['nav'][1]; ?></a>
             <a href="/#manifesto" data-link data-index="03"><?php echo $nc['nav'][2]; ?></a>

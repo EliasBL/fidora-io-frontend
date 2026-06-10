@@ -243,7 +243,7 @@ html[data-theme="light"] .theme__moon { display: none; }
 /* Decorative top eyebrow strip. Mirrors the .section__index
    pattern used elsewhere on the site. ----------------------------- */
 .nav__links--mobile::before {
-    content: "FIDORA · MENU · " attr(data-lang);
+    content: "FIDORA · MENU · " attr(data-overlay-lang);
     position: absolute;
     top: 18px;
     left: var(--pad-x);
